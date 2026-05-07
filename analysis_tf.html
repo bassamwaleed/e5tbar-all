@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>امتحان (صح / خطأ) - المالية العامة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        h2 {
+            color: #4a4a4a;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .question-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.5;
+            min-height: 80px; /* لضمان ثبات الحجم */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .tf-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .tf-btn {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 1.5em;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            background: white;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .tf-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* تنسيق زر صح */
+        .btn-true:hover:not(:disabled) {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        /* تنسيق زر خطأ */
+        .btn-false:hover:not(:disabled) {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        /* عند الاختيار الصحيح */
+        .tf-btn.correct-answer {
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+            color: white !important;
+        }
+
+        /* عند الاختيار الخاطئ */
+        .tf-btn.wrong-answer {
+            background-color: #dc3545 !important;
+            border-color: #dc3545 !important;
+            color: white !important;
+            opacity: 0.7;
+        }
+        
+        /* لتلوين الزر الصحيح الذي لم يختاره المستخدم */
+        .tf-btn.show-correct {
+            background-color: #28a745 !important;
+            border-color: #28a745 !important;
+            color: white !important;
+            opacity: 0.8;
+        }
+
+        .tf-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .score-area {
+            margin-top: 25px;
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.1em;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: #764ba2;
+        }
+
+        /* شريط التقدم */
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        } 
+        
+        /* زر الواتساب العائم */
+        .whatsapp-float {
+            position: fixed;
+            width: 60px;
+            height: 60px;
+            bottom: 30px;
+            right: 30px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card">
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+
+        <div class="question-number">السؤال <span id="q-curr">1</span> من <span id="total-q">0</span></div>
+        
+        <div id="quiz-container">
+            <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+            
+            <div class="tf-buttons">
+                <!-- 0 تعني صواب حسب الكود الأصلي -->
+                <button class="tf-btn btn-true" id="btn-0" onclick="checkAnswer(0)">
+                    ✅ صواب
+                </button>
+                <!-- 1 تعني خطأ حسب الكود الأصلي -->
+                <button class="tf-btn btn-false" id="btn-1" onclick="checkAnswer(1)">
+                    ❌ خطأ
+                </button>
+            </div>
+
+            <div class="score-area" id="score-text">النتيجة: 0</div>
+        </div>
+        
+        <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
+    </div>
+
+    <script>
+        // 0 = صواب
+        // 1 = خطأ
+        const questions = [
+        
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        // تحديث العدد الكلي للأسئلة
+        document.getElementById('total-q').innerText = questions.length;
+
+        function loadQuestion() {
+            const q = questions[currentQuestion];
+            document.getElementById('question-text').innerText = q.t;
+            document.getElementById('q-curr').innerText = currentQuestion + 1;
+            
+            // تحديث شريط التقدم
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            // إعادة تفعيل الأزرار وإزالة الألوان
+            const btns = document.querySelectorAll('.tf-btn');
+            btns.forEach(btn => {
+                btn.disabled = false;
+                btn.classList.remove('correct-answer', 'wrong-answer', 'show-correct');
+            });
+        }
+
+        function checkAnswer(userChoice) {
+            // تعطيل الأزرار
+            const btns = document.querySelectorAll('.tf-btn');
+            btns.forEach(btn => btn.disabled = true);
+
+            const correctChoice = questions[currentQuestion].a; // 0 أو 1
+            const selectedBtn = document.getElementById('btn-' + userChoice);
+            const correctBtn = document.getElementById('btn-' + correctChoice);
+
+            if (userChoice === correctChoice) {
+                selectedBtn.classList.add('correct-answer');
+                score++;
+            } else {
+                selectedBtn.classList.add('wrong-answer');
+                correctBtn.classList.add('show-correct');
+            }
+
+            document.getElementById('score-text').innerText = `النتيجة: ${score} من ${questions.length}`;
+
+            // الانتقال التلقائي
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    document.getElementById('progress-fill').style.width = '100%';
+                    document.getElementById('quiz-container').innerHTML = `
+                        <h3>🎉 انتهى الامتحان!</h3>
+                        <p style="font-size:1.5em; margin: 20px 0;">نتيجتك النهائية: <br> <strong>${score}</strong> من <strong>${questions.length}</strong></p>
+                        <button class="tf-btn" onclick="location.reload()" style="background:#764ba2; color:white; border:none; width:auto; padding: 15px 30px;">إعادة الاختبار</button>
+                    `;
+                }
+            }, 1200);
+        }
+
+        loadQuestion();
+    </script>
+
+    <!-- زر واتساب -->
+    <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+        <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+        </svg>
+    </a>
+
+</body>
+</html>

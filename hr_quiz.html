@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك أسئلة مادة  اداره الموارد البشريه</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* === زر تفاصيل الحفلة أعلى الشمال === */
+        .top-left-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+
+        .top-left-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        /* === زر الترس (الإعدادات) أعلى اليمين === */
+        .settings-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .settings-toggle-btn:hover {
+            background: #764ba2;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* === عداد الإجابات الاحترافي === */
+        .live-counter {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .counter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        .count-correct { color: #28a745; }
+        .count-wrong { color: #dc3545; }
+
+        /* === تصميم التايمر === */
+        .timer-badge {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .timer-badge.danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            animation: pulse-danger 1s infinite alternate;
+        }
+
+        @keyframes pulse-danger {
+            from { box-shadow: 0 0 5px rgba(220,53,69,0.3); transform: scale(1); }
+            to { box-shadow: 0 0 15px rgba(220,53,69,0.6); transform: scale(1.02); }
+        }
+
+        .controls-container {
+            display: none; /* مخفية افتراضياً */
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #764ba2;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .num-input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 55px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .top-btn {
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-btn:hover { background-color: #e2e6ea; transform: translateY(-2px); }
+
+        .start-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .start-btn:hover { background-color: #5a6fd6; color: white; }
+
+        .toggle-btn.active { background-color: #764ba2; color: white; border-color: #764ba2; }
+
+        .question-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 18px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .question {
+            font-size: 1.35em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center; 
+        }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option-btn {
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.2s ease;
+            color: #555;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: #764ba2;
+            transform: translateX(-5px);
+        }
+
+        .option-btn:disabled { cursor: default; transform: none; }
+
+        .option-btn.correct { background-color: #d4edda; border-color: #28a745; color: #155724; font-weight: bold;}
+        .option-btn.wrong { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover { color: #764ba2; }
+
+        .mistakes-container {
+            text-align: right;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-right: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mistake-q { font-weight: bold; margin-bottom: 8px; color: #333; }
+        .mistake-wrong { color: #dc3545; font-size: 0.95em; }
+        .mistake-correct { color: #28a745; font-size: 0.95em; font-weight: bold; }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* نافذة الحفلة المنبثقة */
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .ad-modal-overlay.show { display: flex; opacity: 1; }
+
+        .ad-content {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a202c 100%);
+            padding: 20px 15px;
+            border-radius: 15px;
+            width: 90%; max-width: 350px;
+            text-align: center; position: relative;
+            border: 2px solid #ffd700;
+            transform: scale(0.8); transition: transform 0.4s ease;
+            color: white;
+        }
+        .ad-modal-overlay.show .ad-content { transform: scale(1); }
+
+        .ad-close-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: #e53e3e; color: white; border: none;
+            border-radius: 50%; font-size: 18px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .ad-close-btn:hover { background: #c53030; transform: scale(1.1); }
+
+        .contact-options { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+
+        .ad-action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748; padding: 10px 15px; border-radius: 15px;
+            font-size: 0.95em; font-weight: bold; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .ad-action-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4); }
+
+        @media (max-width: 480px) {
+            .top-left-badge { font-size: 0.8em; padding: 8px 12px; top: 15px; left: 15px; }
+            .quiz-card { padding: 30px 20px; margin-top: 70px; }
+            .live-counter { font-size: 0.9em; gap: 15px; }
+            .question { font-size: 1.2em; }
+            .option-btn { font-size: 1em; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر تفاصيل الحفلة أعلى الشمال -->
+    <button class="top-left-badge" onclick="openAd()">
+        🎓 تفاصيل حفلة التخرج
+    </button>
+
+    <div class="quiz-card">
+        
+        <!-- زر الترس للإعدادات أعلى اليمين -->
+        <button class="settings-toggle-btn" onclick="toggleSettingsPanel()" title="إعدادات الاختبار">⚙️</button>
+
+        <!-- عداد الإجابات المباشر -->
+        <div class="live-counter">
+            <div class="counter-item count-correct">
+                <span>✅ صح:</span>
+                <span id="correct-count">0</span>
+            </div>
+            <div class="counter-item count-wrong">
+                <span>❌ غلط:</span>
+                <span id="wrong-count">0</span>
+            </div>
+        </div>
+
+        <!-- مؤقت الاختبار -->
+        <div id="timer-container" class="timer-badge" style="display: none;">
+            ⏳ الوقت المتبقي: <span id="time-display">00:00</span>
+        </div>
+
+        <!-- لوحة التحكم في الأسئلة (مخفية وتظهر بالترس) -->
+        <div class="controls-container" id="controls-panel">
+            <div class="control-row">
+                <button id="shuffle-btn" class="top-btn toggle-btn" onclick="toggleShuffle()">
+                    <span>🔢</span> الترتيب: عادي
+                </button>
+                <button id="show-num-btn" class="top-btn toggle-btn active" onclick="toggleShowNumbers()">
+                    <span>🆔</span> رقم السؤال: ظاهر
+                </button>
+                <button id="timer-btn" class="top-btn toggle-btn" onclick="toggleTimer()">
+                    <span>⏱️</span> مؤقت: معطل
+                </button>
+            </div>
+            <div class="control-row" id="timer-settings" style="display: none;">
+                <span class="control-label">مدة الاختبار:</span>
+                <input type="number" id="timer-minutes" class="num-input" min="1" value="10" style="width: 60px;">
+                <span class="control-label">دقيقة</span>
+            </div>
+            <div class="control-row">
+                <span class="control-label">من:</span>
+                <input type="number" id="q-start" class="num-input" min="1" value="1">
+                <span class="control-label">إلى:</span>
+                <input type="number" id="q-end" class="num-input" min="1" value="10">
+                <span style="font-size: 0.8em; color: #777;">(المجموع: <span id="total-available">0</span>)</span>
+            </div>
+            <div class="control-row">
+                <button onclick="applySettings()" class="top-btn start-btn" style="width: 100%; font-size: 1.1em; padding: 10px;">تطبيق وبدء</button>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        
+        <div class="question-number">السؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+        
+        <div id="quiz-container">
+            <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+            <div class="options" id="options-container">
+                <!-- الخيارات ستظهر هنا -->
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
+    </div>
+
+    <!-- نافذة إعلان حفلة التخرج -->
+    <div id="graduationAd" class="ad-modal-overlay">
+        <div class="ad-content">
+            <button class="ad-close-btn" onclick="closeAd()">&times;</button>
+            
+            <div style="font-size: 35px; margin-bottom: 5px;">🎓✨</div>
+            <h2 style="color: #ffd700; margin-bottom: 10px; font-weight: 800; font-size: 1.25em; text-shadow: none;">حفلة تخرج دفعة 2026</h2>
+            
+            <div style="color: #e2e8f0; font-size: 0.9em; line-height: 1.5; margin-bottom: 15px;">
+                <strong>أخواتي وأبطال دفعة 2026 🌟</strong><br>
+                أربع سنين عدوا بحلوهم ومرهم، ضحكنا وتعبنا وسهرنا مع بعض، وجه الوقت اللي نتوج فيه تعب السنين دي كلها بحفلة تليق بينا وتفرح أهالينا اللي تعبوا عشاننا.<br>
+                <span style="color: #f56565; font-weight: bold;">مستنيينكم نختم المشوار سوا.. العدد محدود!</span>
+            </div>
+            
+            <!-- زر الانضمام لجروب الحفلة -->
+            <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 10px 15px;">
+                <span style="font-size: 1.2em;">📢</span> انضم لجروب الحفلة الآن
+            </a>
+
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1em;">للحجز والاستفسار:</h4>
+            
+            <div class="contact-options">
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أ. خالد</a>
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">بسام وليد</a>
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أيمن حازم</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuestions = [            
+{
+        "t": "تركز إدارة الموارد البشرية في العصر الحديث على المورد البشري لأنه:",
+        "o": ["أقل تكلفة من الموارد", "أساس تحقيق الميزة التنافسية", "سهل الاستبدال", "لا يحتاج إلى تطوير"],
+        "a": 1
+    },
+    {
+        "t": "تبدأ عملية الاهتمام بالمورد البشري بـ:",
+        "o": ["البحث والاستقطاب", "المكافأة", "المتابعة", "التقاعد"],
+        "a": 0
+    },
+    {
+        "t": "من أهداف تقييم أداء المورد البشري:",
+        "o": ["تقليل عدد العاملين", "إلغاء التدريب", "تحديد فجوة الأداء", "زيادة ساعات العمل"],
+        "a": 2
+    },
+    {
+        "t": "يقصد بفجوة الأداء:",
+        "o": ["الفرق بين الرواتب", "الفرق بين عدد الموظفين والإدارة", "الفرق بين الأداء الحالي والمطلوب", "الفرق بين الأقسام"],
+        "a": 2
+    },
+    {
+        "t": "يشمل تخطيط الموارد البشرية:",
+        "o": ["تخطيط أنشطة التدريب والنقل والترقية", "إلغاء الحوافز", "تخفيض الرواتب", "تقليل ساعات العمل"],
+        "a": 0
+    },
+    {
+        "t": "تعد إدارة الموارد البشرية عنصراً أساسياً في نجاح المنظمة لأن:",
+        "o": ["تعتمد على التكنولوجيا فقط", "تقلل من عدد الموظفين", "الأفراد يمثلون استثمارًا إذا أحسن إدارته", "تركز على الجوانب المالية فقط"],
+        "a": 2
+    },
+    {
+        "t": "تسهم سياسات الموارد البشرية في رفع الإنتاجية من خلال:",
+        "o": ["زيادة ساعات العمل فقط", "تقليل الحوافز", "فرض الرقابة الشديد", "إشباع حاجات الأفراد النفسية والاقتصادية والاجتماعية"],
+        "a": 3
+    },
+    {
+        "t": "تهيئة بيئة العمل المناسبة تؤدي إلى:",
+        "o": ["زيادة المشكلات الوظيفية", "خفض مستوى الأداء", "تقليل المشكلات الوظيفية وتنمية المهارات", "إلغاء التدريب"],
+        "a": 2
+    },
+    {
+        "t": "يساهم التدريب المستمر في:",
+        "o": ["تقليل خبرات الموظفين", "زيادة الغياب", "تحسين جودة العمل والابتكار", "إضعاف الكفاءة"],
+        "a": 2
+    },
+    {
+        "t": "يجب أن تراعي برامج الموارد البشرية تحقيق:",
+        "o": ["مصالح الإدارة فقط", "التوازن بين حاجات الأفراد وأهداف المنظمة", "مصالح الموظفين فقط", "تقليل عدد العاملين"],
+        "a": 1
+    },
+    {
+        "t": "تأثير العولمة على سوق العمل يظهر في:",
+        "o": ["استقرار أسواق العمل التقليدية", "تقليل الطلب على الموظفين المتخصصين", "خلق تحديات لإدارة الموارد البشرية", "منع استخدام التقنيات الحديثة"],
+        "a": 2
+    },
+    {
+        "t": "العمالة المشروطة تعني:",
+        "o": ["موظفون يتم استدعاؤهم عند الحاجة لأداء مهام", "موظفون دائمون دون تغيير", "موظفون بدون مهارات", "موظفون يعملون في أي مكان وزمان بدون شروط"],
+        "a": 0
+    },
+    {
+        "t": "تهدف سياسات الموارد البشرية في ظل التنافس العالمي إلى:",
+        "o": ["جذب واستقطاب القوى العاملة", "تجاهل الابتكار", "تقليل عدد الموظفين", "الحد من استخدام التكنولوجيا"],
+        "a": 0
+    },
+    {
+        "t": "المنافسة على الموارد البشرية:",
+        "o": ["محصورة داخل الحدود الوطنية فقط", "مفتوحة على نطاق عالمي", "لا تشمل الدول المتقدمة", "تحدث فقط في القطاع العام"],
+        "a": 1
+    },
+    {
+        "t": "صراع استقطاب العقول والكفاءات البشرية:",
+        "o": ["حديث العهد وبدأ مؤخراً", "محصور بالدول النامية فقط", "صراع عالمي قديم", "لا يؤثر على سياسات الموارد البشرية"],
+        "a": 2
+    },
+    {
+        "t": "التحديات في إدارة الموارد البشرية تنتج عن:",
+        "o": ["عوامل داخلية فقط", "عوامل خارجية فقط", "عوامل داخلية وخارجية", "عوامل مالية فقط"],
+        "a": 2
+    },
+    {
+        "t": "17) من أمثلة التغيرات الخارجية:",
+        "o": [
+            "أ) الرواتب",
+            "ب) التكنولوجيا",
+            "ج) الحوافز",
+            "د) تقييم الأداء"
+        ],
+        "a": 1
+    },
+    {
+        "t": "18) البيئة الديناميكية تعني:",
+        "o": [
+            "أ) بيئة ثابتة",
+            "ب) بيئة متغيرة باستمرار",
+            "ج) بيئة مغلقة",
+            "د) بيئة غير مؤثرة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "19) من أهم تحديات الموارد البشرية:",
+        "o": [
+            "أ) تقليل الأجور",
+            "ب) مقاومة التغيير",
+            "ج) زيادة الإجازات",
+            "د) تقليل العمالة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "20) الهدف من إدارة التغيير هو:",
+        "o": [
+            "أ) تثبيت الوضع",
+            "ب) تقليل الإنتاج",
+            "ج) التكيف مع المتغيرات",
+            "د) إلغاء التكنولوجيا"
+        ],
+        "a": 2
+    },
+    {
+        "t": "21) الإدارة الإلكترونية تعتبر مثالاً على:",
+        "o": [
+            "أ) التغير التكنولوجي",
+            "ب) التغير الاجتماعي",
+            "ج) التغير الثقافي",
+            "د) التغير القانوني"
+        ],
+        "a": 0
+    },
+    {
+        "t": "22) مقاومة التغيير من الموظفين ترجع إلى:",
+        "o": [
+            "أ) الراحة فقط",
+            "ب) زيادة الرواتب",
+            "ج) الخوف والقلق",
+            "د) الخبرة العالية"
+        ],
+        "a": 2
+    },
+    {
+        "t": "23)الصدمة الفنية تعني:",
+        "o": [
+            "أ) الفشل المالي",
+            "ب) عدم القدرة على استخدام التكنولوجيا",
+            "ج) زيادة الإنتاج",
+            "د) التدريب المستمر"
+        ],
+        "a": 1
+    },
+    {
+        "t": "24) من صفات الموظف المناسب للتغيير:",
+        "o": [
+            "أ) الجمود",
+            "ب) الخوف",
+            "ج) المرونة",
+            "د) الرفض"
+        ],
+        "a": 2
+    },
+    {
+        "t": "25) الخوف على الوظيفة يؤدي إلى:",
+        "o": [
+            "أ) قبول التغيير",
+            "ب) مقاومة التغيير",
+            "ج) زيادة الإنتاج",
+            "د) التطوير"
+        ],
+        "a": 1
+    },
+    {
+        "t": "26) تهدف عملية تصميم الوظيفة إلى",
+        "o": [
+            "أ) تحديد مؤهلات شاغل الوظيفة",
+            "ب) تحديد مضمون العمل ومستواه ونطاقه",
+            "ج) تحديد الأجور والحوافز",
+            "د) تقييم أداء العاملي"
+        ],
+        "a": 1
+    },
+    {
+        "t": "27) تهدف عملية تحليل الوظيفة إلى",
+        "o": [
+            "أ) تحديد عدد العاملين المطلوبين",
+            "ب) تحديد الهيكل التنظيمي للمؤسسة",
+            "ج) تحديد واجبات ومسؤوليات الوظيفة ومؤهلات شاغلها",
+            "د) تحديد سياسات الترقية"
+        ],
+        "a": 2
+    },
+    {
+        "t": "28) من مسؤوليات إدارة الموارد البشرية في تصميم الوظائف",
+        "o": [
+            "أ) وضع الخطط التسويقية",
+            "ب) ضمان تحقيق الأهداف الاستراتيجية للمؤسسة",
+            "ج) إدارة العلاقات العامة",
+            "د) تحديد أسعار المنتجات"
+        ],
+        "a": 1
+    },
+    {
+        "t": "29) يساعد التصميم الفعال للوظائف على",
+        "o": [
+            "أ) خفض الأجور",
+            "ب) زيادة عدد العاملين",
+            "ج) مواءمة مسؤوليات الوظيفة مع احتياجات العمل",
+            "د) تقليل التدريب"
+        ],
+        "a": 2
+    },
+    {
+        "t": "30) تهدف مواءمة مسؤوليات الوظيفة مع احتياجات العمل إلى",
+        "o": [
+            "أ) تحقيق التوازن المالي",
+            "ب) دعم أهداف الشركة الاستراتيجية",
+            "ج) تحسين العلاقات الاجتماعية",
+            "د) تقليل ساعات العمل"
+        ],
+        "a": 1
+    },
+    {
+        "t": "31) يجب على إدارة الموارد البشرية تحديد",
+        "o": [
+            "أ) الهيكل المالي للمؤسسة",
+            "ب) المهارات المطلوبة لمختلف الأدوار الوظيفية",
+            "ج) حجم المبيعات",
+            "د) سياسات التسعير"
+        ],
+        "a": 1
+    },
+    {
+        "t": "32) تسهم إدارة الموارد البشرية في بناء قوة عاملة",
+        "o": [
+            "أ) قليلة العدد",
+            "ب) منخفضة التكلفة",
+            "ج) عالية التدريب ومتحمسة",
+            "د) مؤقتة"
+        ],
+        "a": 2
+    },
+    {
+        "t": "33) يقصد بـ نطاق الوظيفة (Job Scope):",
+        "o": [
+            "أ) درجة الاستقلالية في اتخاذ القرار",
+            "ب) مستوى الأجور والحوافز",
+            "ج) مدى تنوع المهام والواجبات التي يقوم بها شاغل الوظيفة",
+            "د) مستوى الخبرة"
+        ],
+        "a": 2
+    },
+    {
+        "t": "يُعد توسيع نطاق الوظيفة شكلاً من أشكال:",
+        "o": [
+            "تحليل الوظائف",
+            "تقييم الأداء",
+            "تخطيط المسار الوظيفي",
+            "إعادة تصميم الوظائف"
+        ],
+        "a": 3
+    },
+    {
+        "t": "يقوم توسيع نطاق الوظيفة على:",
+        "o": [
+            "دمج مهام من نفس المستوى الوظيفي",
+            "تقليل عدد العاملين",
+            "دمج مهام من مستويات إدارية مختلفة",
+            "زيادة الرقابة الإدارية"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يهدف توسيع نطاق العمل إلى:",
+        "o": [
+            "زيادة الروتين الوظيفي",
+            "تقليل الإنتاجية",
+            "زيادة الإنتاجية وتقليل المهام المتكررة",
+            "إلغاء التخصص الوظيفي"
+        ],
+        "a": 2
+    },
+    {
+        "t": "من أهداف توسيع نطاق الوظيفة:",
+        "o": [
+            "خفض الأجور",
+            "ضمان استمرار تحفيز العاملين",
+            "زيادة ساعات العمل",
+            "تقليل التدريب"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تسهم ممارسة توسيع نطاق الوظيفة في:",
+        "o": [
+            "زيادة الرتابة والملل",
+            "الحد من تنوع المهارات",
+            "تنويع المهارات وتحديد المهام",
+            "تقليل مسؤوليات العامل"
+        ],
+        "a": 2
+    },
+    {
+        "t": "يساعد توسيع نطاق الوظيفة على الحد من:",
+        "o": [
+            "الإنتاج",
+            "التدريب",
+            "الحوافز",
+            "الرتابة الوظيفية"
+        ],
+        "a": 3
+    },
+    {
+        "t": "تُستخدم مواصفات شاغل الوظيفة بشكل أساسي في:",
+        "o": [
+            "الترفيه",
+            "التخزين",
+            "الإنتاج",
+            "الاستقطاب والتعيين"
+        ],
+        "a": 3
+    },
+    {
+        "t": "تحليل الوظيفة يعني:",
+        "o": [
+            "تقييم الأداء",
+            "تدريب العاملين",
+            "تحديد الرواتب",
+            "جمع معلومات عن الوظيفة ومتطلباتها"
+        ],
+        "a": 3
+    },
+    {
+        "t": "من أهداف تحليل الوظيفة:",
+        "o": [
+            "زيادة التكاليف",
+            "وضع الشخص المناسب في المكان المناسب",
+            "تقليل عدد الوظائف",
+            "زيادة الروتين"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحليل الوظيفة يساعد في:",
+        "o": [
+            "زيادة التداخل بين الوظائف",
+            "منع التداخل بين الوظائف",
+            "تجاهل المهام",
+            "تقليل الإنتاج"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من نتائج تحليل الوظيفة:",
+        "o": [
+            "وضوح المهام",
+            "غموض الوظائف",
+            "عدم التنظيم",
+            "زيادة المشاكل"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تحليل الوظيفة يساهم في:",
+        "o": [
+            "معرفة متطلبات الوظيفة",
+            "إلغاء الوظائف",
+            "زيادة الإجازات",
+            "تقليل الخبرة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يعتمد الوصف الوظيفي على:",
+        "o": [
+            "تحليل الوظيفة",
+            "التدريب",
+            "التسويق",
+            "المحاسبة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "مواصفات شاغل الوظيفة تعتمد على:",
+        "o": [
+            "تحليل الوظيفة",
+            "المرتب",
+            "مكان العمل",
+            "عدد الموظفين"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تحليل الوظيفة يُعد من:",
+        "o": [
+            "أدوات التسويق",
+            "أدوات الموارد البشرية",
+            "أدوات الإنتاج",
+            "أدوات المحاسبة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من فوائد تحليل الوظيفة:",
+        "o": [
+            "زيادة العشوائية",
+            "التأكد من احتياج المنظمة للوظائف",
+            "إلغاء التخطيط",
+            "تقليل الكفاءة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحليل الوظيفة يؤدي إلى:",
+        "o": [
+            "اختيار موظفين غير مناسبين",
+            "اختيار الموظف المناسب للوظيفة المناسبة",
+            "زيادة الأخطاء",
+            "تقليل التنظيم"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يُقصد بالاستقطاب:",
+        "o": [
+            "تدريب العاملين",
+            "البحث عن المرشحين المناسبين للوظائف",
+            "تقييم الأداء",
+            "تحديد الرواتب"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يجب قبل الاستقطاب مراجعة:",
+        "o": [
+            "خطة التسويق",
+            "خطة القوى العاملة",
+            "خطة الإنتاج",
+            "خطة المبيعات"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من أهداف الاستقطاب:",
+        "o": [
+            "جذب المرشحين الأكفاء",
+            "تقليل عدد الموظفين",
+            "زيادة التكاليف",
+            "تقليل الجودة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "غموض الوظائف يؤدي إلى:",
+        "o": [
+            "نجاح الاستقطاب",
+            "صعوبة نجاح الاستقطاب",
+            "زيادة الكفاءة",
+            "تحسين الأداء"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يتطلب الاستقطاب وجود:",
+        "o": [
+            "توصيف دقيق للوظائف",
+            "زيادة العمالة",
+            "تقليل المهام",
+            "عشوائية العمل"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الاستقطاب يهدف إلى توفير:",
+        "o": [
+            "موظفين غير مؤهلين",
+            "وعاء من الأفراد المؤهلين",
+            "عدد قليل من العاملين",
+            "عمالة مؤقتة فقط"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من شروط القيام بعملية الاستقطاب:",
+        "o": [
+            "زيادة الإنتاج",
+            "التأكد من الحاجة لشغل الوظيفة",
+            "تقليل العمالة",
+            "زيادة المرتبات"
+        ],
+        "a": 1
+    },
+    {
+        "t": "ما المقصود بعملية الاختيار؟",
+        "o": [
+            "جذب المتقدمين للوظائف",
+            "تدريب العاملين",
+            "المفاضلة بين المتقدمين لاختيار الأصلح",
+            "تحديد الأجور"
+        ],
+        "a": 2
+    },
+    {
+        "t": "الهدف الأساسي من الاختيار هو:",
+        "o": [
+            "زيادة عدد المتقدمين",
+            "اختيار الشخص المناسب للوظيفة",
+            "تقليل الإنتاج",
+            "إلغاء المقابلات"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تبدأ عملية الاختيار بعد:",
+        "o": [
+            "الترقية",
+            "الاستقطاب",
+            "إنهاء الخدمة",
+            "تقييم الأداء"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من أدوات عملية الاختيار:",
+        "o": [
+            "الإعلان فقط",
+            "المقابلات والاختبارات",
+            "الإجازات",
+            "الترقيات"
+        ],
+        "a": 1
+    },
+    {
+        "t": "عملية الاختيار تهدف إلى:",
+        "o": [
+            "استبعاد جميع المتقدمين",
+            "المفاضلة بين المتقدمين",
+            "تدريب الموظفين",
+            "إنهاء العقود"
+        ],
+        "a": 1
+    },
+    {
+        "t": "أي مرحلة تأتي قبل الاختيار؟",
+        "o": [
+            "التدريب",
+            "الاستقطاب",
+            "التقييم",
+            "الفصل"
+        ],
+        "a": 1
+    },
+    {
+        "t": "المقابلة الشخصية تعتبر:",
+        "o": [
+            "مرحلة من مراحل الاختيار",
+            "مرحلة من الإجازات",
+            "نظام رواتب",
+            "إعلان وظيفي"
+        ],
+        "a": 0
+    },
+    {
+        "t": "من فوائد التدريب:",
+        "o": [
+            "زيادة إنتاجية الموظف",
+            "تقليل الإنتاج",
+            "زيادة الأخطاء",
+            "تقليل المهارات"
+        ],
+        "a": 0
+    },
+    {
+        "t": "رفع إنتاجية الموظف يكون نتيجة:",
+        "o": [
+            "تقليل المعرفة",
+            "زيادة المعارف والمهارات",
+            "زيادة الغياب",
+            "تقليل التدريب"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من نتائج التدريب:",
+        "o": [
+            "انخفاض الأداء",
+            "تقليل الكفاءة",
+            "زيادة الأخطاء",
+            "رفع مستوى رضا العملاء"
+        ],
+        "a": 3
+    },
+    {
+        "t": "من آثار التدريب على العاملين:",
+        "o": [
+            "ضعف الروح المعنوية",
+            "رفع الروح المعنوية",
+            "زيادة التوتر فقط",
+            "تقليل الخبرة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "رفع مهارات العاملين يؤدي إلى:",
+        "o": [
+            "زيادة التغيب",
+            "تقليل الكفاءة",
+            "إلغاء الوظائف",
+            "تحسين الأداء"
+        ],
+        "a": 3
+    },
+    {
+        "t": "التدريب يساهم في:",
+        "o": [
+            "زيادة دوران العمل",
+            "تقليل دوران العمل",
+            "إلغاء العمل",
+            "تقليل الإنتاج"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الهدف من التدريب هو:",
+        "o": [
+            "إضعاف العامل",
+            "تقليل المعرفة",
+            "زيادة الأخطاء",
+            "تطوير مهاراته"
+        ],
+        "a": 3
+    },
+
+
+    ];
+
+               // تعيين الأرقام التعريفية للأسئلة
+        originalQuestions.forEach((q, index) => {
+            q.id = index + 1;
+        });
+
+        // تحديث الحد الأقصى للإدخال
+        document.getElementById('q-start').max = originalQuestions.length;
+        document.getElementById('q-end').max = originalQuestions.length;
+        document.getElementById('q-end').value = originalQuestions.length;
+        document.getElementById('total-available').innerText = originalQuestions.length;
+
+        let questions = [...originalQuestions];
+        let currentQuestion = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isRandom = false; 
+        let showNumbers = true; 
+        let wrongAnswers = []; 
+
+        // === متغيرات التايمر ===
+        let isTimerEnabled = false;
+        let timerInterval = null;
+        let timeRemaining = 0; // بالثواني
+
+        function toggleSettingsPanel() {
+            const p = document.getElementById('controls-panel');
+            p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleShuffle() {
+            isRandom = !isRandom;
+            const btn = document.getElementById('shuffle-btn');
+            if (isRandom) {
+                btn.innerHTML = "<span>🔀</span> الترتيب: عشوائي";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🔢</span> الترتيب: عادي";
+                btn.classList.remove('active');
+            }
+        }
+
+        function toggleShowNumbers() {
+            showNumbers = !showNumbers;
+            const btn = document.getElementById('show-num-btn');
+            if (showNumbers) {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: ظاهر";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: مخفي";
+                btn.classList.remove('active');
+            }
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                updateQuestionDisplay();
+            }
+        }
+
+        function toggleTimer() {
+            isTimerEnabled = !isTimerEnabled;
+            const btn = document.getElementById('timer-btn');
+            const timerSettings = document.getElementById('timer-settings');
+            
+            if (isTimerEnabled) {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: مفعل";
+                btn.classList.add('active');
+                timerSettings.style.display = 'flex';
+            } else {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: معطل";
+                btn.classList.remove('active');
+                timerSettings.style.display = 'none';
+            }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const s = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('time-display').innerText = `${m}:${s}`;
+            
+            const timerContainer = document.getElementById('timer-container');
+            if (timeRemaining <= 60 && timeRemaining > 0) {
+                timerContainer.classList.add('danger');
+            } else {
+                timerContainer.classList.remove('danger');
+            }
+        }
+
+        function applySettings() {
+            let start = parseInt(document.getElementById('q-start').value);
+            let end = parseInt(document.getElementById('q-end').value);
+            
+            if (isNaN(start) || start < 1) start = 1;
+            if (isNaN(end) || end > originalQuestions.length) end = originalQuestions.length;
+            if (start > end) start = end;
+
+            document.getElementById('q-start').value = start;
+            document.getElementById('q-end').value = end;
+
+            let selectedQuestions = originalQuestions.slice(start - 1, end);
+
+            if (isRandom) {
+                for (let i = selectedQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [selectedQuestions[i], selectedQuestions[j]] = [selectedQuestions[j], selectedQuestions[i]];
+                }
+            }
+
+            questions = selectedQuestions;
+            document.getElementById('q-total').innerText = questions.length;
+            toggleSettingsPanel(); // إخفاء الإعدادات بعد الضغط
+            restartQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            wrongAnswers = []; 
+            document.getElementById('correct-count').innerText = "0";
+            document.getElementById('wrong-count').innerText = "0";
+
+            // التعامل مع التايمر
+            if (timerInterval) clearInterval(timerInterval);
+            const timerContainer = document.getElementById('timer-container');
+            
+            if (isTimerEnabled) {
+                const minutes = parseInt(document.getElementById('timer-minutes').value) || 10;
+                timeRemaining = minutes * 60;
+                timerContainer.style.display = 'inline-block';
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        showFinalResult(true); // انتهاء الوقت
+                    }
+                }, 1000);
+            } else {
+                timerContainer.style.display = 'none';
+            }
+
+            if (questions.length === 0) return;
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+                <div class="options" id="options-container"></div>
+            `;
+            loadQuestion();
+        }
+
+        function updateQuestionDisplay() {
+            const q = questions[currentQuestion];
+            const qTextElement = document.getElementById('question-text');
+            if (showNumbers) {
+                qTextElement.innerText = q.id + ". " + q.t;
+            } else {
+                qTextElement.innerText = q.t;
+            }
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) return showFinalResult();
+
+            updateQuestionDisplay();
+            document.getElementById('q-curr').innerText = currentQuestion + 1;
+            
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const letters = ['أ', 'ب', 'ج', 'د'];
+
+            questions[currentQuestion].o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${letters[index]} - </span><span>${opt}</span>`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            const correctIndex = questions[currentQuestion].a;
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('correct');
+                score++;
+                correctCount++;
+                document.getElementById('correct-count').innerText = correctCount;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[correctIndex].classList.add('correct');
+                wrongCount++;
+                document.getElementById('wrong-count').innerText = wrongCount;
+                wrongAnswers.push({
+                    q: questions[currentQuestion].t,
+                    selected: questions[currentQuestion].o[selectedIndex],
+                    correct: questions[currentQuestion].o[correctIndex],
+                    qNum: questions[currentQuestion].id 
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showFinalResult();
+                }
+            }, 1200);
+        }
+
+        function showFinalResult(isTimeOut = false) {
+            if (timerInterval) clearInterval(timerInterval); // إيقاف التايمر عند الانتهاء
+            
+            document.getElementById('progress-fill').style.width = '100%';
+            
+            let titleText = isTimeOut ? "⏳ انتهى الوقت!" : "🎉 انتهى الامتحان!";
+            
+            let resultHTML = `
+                <h3 style="${isTimeOut ? 'color: #dc3545;' : ''}">${titleText}</h3>
+                <div class="live-counter" style="margin:20px 0;">
+                    <span class="count-correct">صح: ${correctCount}</span>
+                    <span class="count-wrong">غلط: ${wrongCount}</span>
+                </div>
+                <p>متنسانيش بدعوه حلوه وصلي علي النبي ❤️</p>
+                <button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer;">إعادة الاختبار</button>
+            `;
+            if (wrongAnswers.length > 0) {
+                resultHTML += `
+                    <br>
+                    <button class="top-btn start-btn" onclick="showMistakes()" style="background:#e74c3c; width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">عرض الإجابات الخاطئة</button>
+                `;
+            }
+            document.getElementById('quiz-container').innerHTML = resultHTML;
+        }
+
+        function showMistakes() {
+            let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
+            wrongAnswers.forEach(item => {
+                mistakesHTML += `
+                    <div class="mistake-item">
+                        <div class="mistake-q">س${item.qNum}: ${item.q}</div>
+                        <div class="mistake-wrong">❌ إجابتك: ${item.selected}</div>
+                        <div class="mistake-correct">✅ الصح: ${item.correct}</div>
+                    </div>
+                `;
+            });
+            mistakesHTML += `</div><button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">إعادة الاختبار</button>`;
+            document.getElementById('quiz-container').innerHTML = mistakesHTML;
+        }
+
+        function closeAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.classList.remove('show');
+            setTimeout(() => { adModal.style.display = 'none'; }, 400);
+        }
+
+        function openAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.style.display = 'flex';
+            setTimeout(() => adModal.classList.add('show'), 50);
+        }
+
+        applySettings();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة المراجعة الشاملة - الفرقة الرابعة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            color: #fff;
+            position: relative;
+            overflow-x: hidden;
+            padding: 80px 20px 0 20px;
+            box-sizing: border-box;
+        }
+
+        body::after {
+            content: '';
+            height: 110px;
+            width: 100%;
+            flex-shrink: 0;
+            display: block;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.03) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .top-right-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .top-right-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+        }
+
+        .header-note {
+            position: relative;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            color: #fff;
+            font-size: 0.95em;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.6));
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-top: auto;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 30px 25px;
+            border-radius: 30px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 90%;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+            margin-bottom: auto;
+        }
+
+        .heartfelt-message {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(246, 211, 101, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.05em;
+            color: #e2e8f0;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .heartfelt-message h3 {
+            color: #f6d365;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.25em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
+        h1 {
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 2em;
+            font-weight: 800;
+            background: linear-gradient(to right, #fff, #a1c4fd);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 2px 4px 8px rgba(0,0,0,0.2);
+            line-height: 1.3;
+        }
+
+        /* === تنسيقات أزرار المواد === */
+        .subjects-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .subject-btn {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 16px;
+            font-size: 1.15em;
+            color: #fff;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            font-weight: 700;
+            font-family: 'Tajawal', sans-serif;
+            text-align: right;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .subject-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .subject-btn .icon {
+            margin-left: 15px;
+            font-size: 1.4em;
+        }
+
+        /* === أزرار الاختيارات (داخل النافذة المنبثقة) === */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            padding: 16px;
+            margin: 10px 0;
+            font-size: 1.2em;
+            color: white;
+            border-radius: 16px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            box-sizing: border-box;
+            font-weight: 700;
+        }
+
+        .btn-quiz {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.3);
+            border: none;
+        }
+
+        .btn-tf {
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.3);
+            border: none;
+        }
+
+        .btn:hover { transform: translateY(-3px) scale(1.02); }
+
+        .group-btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            border: none;
+            box-shadow: 0 8px 20px rgba(17, 153, 142, 0.3);
+            font-size: 1.1em;
+            color: #fff;
+            padding: 14px;
+            border-radius: 16px;
+            text-decoration: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .group-btn:hover { background: linear-gradient(135deg, #15b3a6 0%, #42f588 100%); transform: translateY(-3px); }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 1em;
+            line-height: 1.6;
+            color: rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 15px;
+        }
+        
+        .footer-text h3 { margin: 0; font-size: 1.2em; color: #fff; font-weight: 700; }
+        .footer-text p { margin: 5px 0 0; font-size: 0.9em; color: #ff9a9e; }
+
+        .visitor-counter {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,0,0,0.2);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .visitor-label { font-size: 0.75em; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; }
+
+        .whatsapp-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .whatsapp-float {
+            width: 60px; height: 60px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: #FFF; border-radius: 50%; text-align: center; font-size: 30px;
+            box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; position: relative;
+        }
+
+        .whatsapp-float::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 50%; border: 2px solid #25D366; animation: pulse 2s linear infinite;
+        }
+
+        @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.3); opacity: 0; } }
+        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
+
+        .whatsapp-text {
+            font-size: 11px; color: #fff; background-color: rgba(0, 0, 0, 0.7);
+            padding: 5px 8px; border-radius: 8px; text-align: center;
+            max-width: 120px; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* === النوافذ المنبثقة (Modals) === */
+        .ad-modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); z-index: 2000;
+            justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease;
+        }
+
+        .ad-modal-overlay.show { display: flex; opacity: 1; }
+
+        .ad-content {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a202c 100%);
+            padding: 25px 20px; border-radius: 20px; width: 90%; max-width: 400px; 
+            max-height: 85vh; overflow-y: auto; text-align: center; position: relative;
+            border: 2px solid #ffd700; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.2);
+            transform: scale(0.8); transition: transform 0.3s ease;
+        }
+        
+        /* شكل خاص لنافذة اختيار المادة */
+        .quiz-type-content { border-color: #667eea; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(102, 126, 234, 0.3); }
+
+        .ad-content::-webkit-scrollbar { width: 6px; }
+        .ad-content::-webkit-scrollbar-thumb { background-color: #ffd700; border-radius: 10px; }
+        .ad-modal-overlay.show .ad-content { transform: scale(1); }
+
+        .ad-close-btn {
+            position: absolute; top: 10px; right: 10px; background: #e53e3e; color: white;
+            border: 2px solid #fff; border-radius: 50%; font-size: 20px; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center; cursor: pointer;
+            transition: all 0.3s; z-index: 10;
+        }
+        .ad-close-btn:hover { background: #c53030; transform: scale(1.1); }
+
+        .ad-title { color: #ffd700; font-size: 1.6em; font-weight: 800; margin-bottom: 12px; margin-top: 10px; }
+        .quiz-type-title { color: #fff; font-size: 1.4em; }
+        
+        .ad-desc { color: #e2e8f0; font-size: 1em; line-height: 1.6; margin-bottom: 15px; }
+
+        .contact-options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+
+        .ad-action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 10px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748; padding: 10px 20px; border-radius: 20px; font-weight: bold; text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        .ad-action-btn:hover { transform: translateY(-3px); }
+        .ad-icon { font-size: 35px; margin-bottom: 8px; }
+
+        .countdown-box {
+            display: none; margin-bottom: 20px; padding: 8px;
+            background: rgba(255, 215, 0, 0.1); border: 1px dashed #ffd700;
+            border-radius: 15px; color: #ffd700; font-weight: bold; font-size: 0.85em;
+        }
+        #countdown-timer { font-size: 1.3em; display: inline-block; min-width: 25px; color: #fff; }
+
+        @media (max-width: 768px) {
+            body { padding-top: 70px; }
+            .top-right-badge { top: 12px; right: 12px; padding: 8px 12px; font-size: 0.85em; }
+            .header-note { margin-bottom: 15px; font-size: 0.85em; padding: 10px 15px; width: 92%; }
+            .container { padding: 25px 20px; }
+            h1 { font-size: 1.7em; margin-bottom: 15px; }
+            .subject-btn { padding: 14px; font-size: 1.05em; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; }
+            .whatsapp-container { bottom: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر تفاصيل الحفلة -->
+    <button class="top-right-badge" onclick="openAd()">🎓 تفاصيل حفلة التخرج</button>
+
+    <!-- التنبيه -->
+    <div class="header-note">
+        ⚠️ تنبيه: صلي علي النبي, متعتمدش علي الموقع اعتماد كامل، الهدف منه مراجعة ما ذاكرته.
+    </div>
+
+    <!-- ================= الواجهة الرئيسية ================= -->
+    <div class="container">
+        <h1>بوابة المراجعة الشاملة</h1>
+        
+        <div class="heartfelt-message">
+            <h3>إخواتي ودفعتي (خريجي 2026) ❤️</h3>
+            <p style="margin: 0; font-size: 0.95em;">
+                عملت الموقع ده بمجهود شخصي عشان نساعد بعض ونخفف توتر الامتحانات. أربع سنين بحلوهم ومرهم بيخلصوا.. اختار المادة وابدأ مراجعتك.<br>
+                <strong style="color: #fff;">ربنا يجبر بخاطرنا جميعاً ونفرح بنجاحنا.</strong>
+            </p>
+        </div>
+        
+        <!-- === قائمة المواد === -->
+        <div class="subjects-grid">
+            <button class="subject-btn" onclick="openQuizTypeModal('strategy', 'استراتيجية نظم')">
+                <span class="icon">📊</span> استراتيجية نظم
+            </button>
+            
+            <button class="subject-btn" onclick="openQuizTypeModal('statistics', 'إحصاء تطبيقية')">
+                <span class="icon">📈</span> إحصاء تطبيقية
+            </button>
+            
+            <button class="subject-btn" onclick="openQuizTypeModal('accounting', 'أنظمة معلومات محاسبية')">
+                <span class="icon">💻</span> أنظمة معلومات محاسبية
+            </button>
+            
+            <button class="subject-btn" onclick="openQuizTypeModal('hr', 'إدارة الموارد البشرية')">
+                <span class="icon">👥</span> إدارة الموارد البشرية
+            </button>
+            
+            <button class="subject-btn" onclick="openQuizTypeModal('analysis', 'تحليل وتقييم الشركات')">
+                <span class="icon">🏢</span> تحليل وتقييم الشركات
+            </button>
+            
+            <button class="subject-btn" onclick="openQuizTypeModal('emanagement', 'إدارة إلكترونية')">
+                <span class="icon">🌐</span> إدارة إلكترونية
+            </button>
+        </div>
+
+        <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="group-btn" target="_blank">
+            <span class="icon" style="margin-left: 8px;">🎓</span> جروب حفلة التخرج
+        </a>
+
+        <div class="footer-text">
+            <h3>تصميم: بسام وليد</h3>
+            <p>لا تنسونا من دعواتكم ❤️</p>
+        </div>
+
+        <div class="visitor-counter">
+            <span class="visitor-label">مرات الزيارة</span>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_strategy_home_v2" alt="عدد الزوار" style="height: 22px;">
+        </div>
+    </div>
+
+    <!-- زر الواتساب -->
+    <div class="whatsapp-container">
+        <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+            <svg style="width: 28px; height: 28px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+            </svg>
+        </a>
+        <div class="whatsapp-text">تواصل معنا إذا لاحظت مشكلة</div>
+    </div>
+
+    <!-- نافذة اختيار نوع الاختبار -->
+    <div id="quizTypeModal" class="ad-modal-overlay">
+        <div class="ad-content quiz-type-content">
+            <button class="ad-close-btn" onclick="closeQuizTypeModal()">&times;</button>
+            <div class="ad-icon">📚</div>
+            <div class="ad-title quiz-type-title" id="modalSubjectTitle">اسم المادة</div>
+            <div class="ad-desc">اختر نوع الاختبار الذي تريد مراجعته:</div>
+
+            <a href="#" id="mcqLink" class="btn btn-quiz" onclick="handleQuizSelection(event, this.href)">
+                <span class="icon" style="margin-left: 8px;">📝</span> أسئلة الاختيارات
+            </a>
+
+            <a href="#" id="tfLink" class="btn btn-tf" onclick="handleQuizSelection(event, this.href)">
+                <span class="icon" style="margin-left: 8px;">✅</span> أسئلة صح وخطأ
+            </a>
+        </div>
+    </div>
+
+    <!-- نافذة إعلان حفلة التخرج -->
+    <div id="graduationAd" class="ad-modal-overlay">
+        <div class="ad-content">
+            <button class="ad-close-btn" onclick="closeAd()">&times;</button>
+            
+            <div id="countdown-container" class="countdown-box">
+                سيتم نقلك للامتحان تلقائياً خلال <span id="countdown-timer">10</span> ثواني
+            </div>
+
+            <div class="ad-icon">🎓✨</div>
+            <div class="ad-title">إعلان هام لفرقة رابعة<br><span style="font-size: 0.8em; color: #fff;">خريجي دفعة 2026</span></div>
+            
+            <div class="ad-desc">
+                <strong>أخواتي وأبطال دفعة 2026 🌟</strong><br><br>
+                أربع سنين عدوا بحلوهم ومرهم، ضحكنا وتعبنا وسهرنا مع بعض، وجه الوقت اللي نتوج فيه تعب السنين دي كلها بحفلة تليق بينا.. مستنيينكم نختم المشوار سوا.. العدد محدود جداً!
+            </div>
+            
+            <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none;">
+                انضم لجروب الحفلة الآن
+            </a>
+
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1em;">للحجز والاستفسار:</h4>
+            <div class="contact-options">
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank">أ. خالد</a>
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank">بسام وليد</a>
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank">أيمن حازم</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==========================================
+        // نظام اختيار نوع الاختبار
+        // ==========================================
+        function openQuizTypeModal(baseFileName, subjectName) {
+            // تحديث اسم المادة في النافذة
+            document.getElementById('modalSubjectTitle').innerText = subjectName;
+            
+            // تحديث الروابط بناءً على اسم المادة
+            document.getElementById('mcqLink').href = baseFileName + '_quiz.html';
+            document.getElementById('tfLink').href = baseFileName + '_tf.html';
+
+            // إظهار النافذة
+            const modal = document.getElementById('quizTypeModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 50);
+        }
+
+        function closeQuizTypeModal() {
+            const modal = document.getElementById('quizTypeModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function handleQuizSelection(event, url) {
+            event.preventDefault();
+            closeQuizTypeModal();
+            // الانتظار قليلاً حتى تختفي نافذة الاختيار ثم إظهار إعلان الحفلة والعداد
+            setTimeout(() => {
+                openAd(url);
+            }, 300);
+        }
+
+        // ==========================================
+        // نظام إعلان الحفلة والانتقال التلقائي
+        // ==========================================
+        let targetUrl = null;
+        let countdownInterval = null;
+
+        function closeAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.classList.remove('show');
+            if (countdownInterval) clearInterval(countdownInterval);
+            
+            setTimeout(() => {
+                adModal.style.display = 'none';
+                if (targetUrl) {
+                    window.location.href = targetUrl; // الانتقال للاختبار
+                    targetUrl = null;
+                }
+            }, 300);
+        }
+
+        function openAd(url = null) {
+            targetUrl = url;
+            const adModal = document.getElementById('graduationAd');
+            const countdownContainer = document.getElementById('countdown-container');
+            const countdownSpan = document.getElementById('countdown-timer');
+            
+            adModal.style.display = 'flex';
+            setTimeout(() => adModal.classList.add('show'), 50);
+
+            if (url) {
+                countdownContainer.style.display = 'block';
+                let secondsLeft = 10;
+                countdownSpan.innerText = secondsLeft;
+                
+                countdownInterval = setInterval(() => {
+                    secondsLeft--;
+                    countdownSpan.innerText = secondsLeft;
+                    if (secondsLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        closeAd();
+                    }
+                }, 1000);
+            } else {
+                countdownContainer.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

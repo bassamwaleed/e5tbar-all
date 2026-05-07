@@ -1,0 +1,1203 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك أسئلة مادة إحصاء تطبيقية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* === زر تفاصيل الحفلة أعلى الشمال === */
+        .top-left-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+
+        .top-left-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        /* === زر الترس (الإعدادات) أعلى اليمين === */
+        .settings-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .settings-toggle-btn:hover {
+            background: #764ba2;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* === عداد الإجابات الاحترافي === */
+        .live-counter {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .counter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        .count-correct { color: #28a745; }
+        .count-wrong { color: #dc3545; }
+
+        /* === تصميم التايمر === */
+        .timer-badge {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .timer-badge.danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            animation: pulse-danger 1s infinite alternate;
+        }
+
+        @keyframes pulse-danger {
+            from { box-shadow: 0 0 5px rgba(220,53,69,0.3); transform: scale(1); }
+            to { box-shadow: 0 0 15px rgba(220,53,69,0.6); transform: scale(1.02); }
+        }
+
+        .controls-container {
+            display: none; /* مخفية افتراضياً */
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #764ba2;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .num-input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 55px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .top-btn {
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-btn:hover { background-color: #e2e6ea; transform: translateY(-2px); }
+
+        .start-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .start-btn:hover { background-color: #5a6fd6; color: white; }
+
+        .toggle-btn.active { background-color: #764ba2; color: white; border-color: #764ba2; }
+
+        .question-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 18px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .question {
+            font-size: 1.35em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center; 
+        }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option-btn {
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.2s ease;
+            color: #555;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: #764ba2;
+            transform: translateX(-5px);
+        }
+
+        .option-btn:disabled { cursor: default; transform: none; }
+
+        .option-btn.correct { background-color: #d4edda; border-color: #28a745; color: #155724; font-weight: bold;}
+        .option-btn.wrong { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover { color: #764ba2; }
+
+        .mistakes-container {
+            text-align: right;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-right: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mistake-q { font-weight: bold; margin-bottom: 8px; color: #333; }
+        .mistake-wrong { color: #dc3545; font-size: 0.95em; }
+        .mistake-correct { color: #28a745; font-size: 0.95em; font-weight: bold; }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* نافذة الحفلة المنبثقة */
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .ad-modal-overlay.show { display: flex; opacity: 1; }
+
+        .ad-content {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a202c 100%);
+            padding: 20px 15px;
+            border-radius: 15px;
+            width: 90%; max-width: 350px;
+            text-align: center; position: relative;
+            border: 2px solid #ffd700;
+            transform: scale(0.8); transition: transform 0.4s ease;
+            color: white;
+        }
+        .ad-modal-overlay.show .ad-content { transform: scale(1); }
+
+        .ad-close-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: #e53e3e; color: white; border: none;
+            border-radius: 50%; font-size: 18px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .ad-close-btn:hover { background: #c53030; transform: scale(1.1); }
+
+        .contact-options { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+
+        .ad-action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748; padding: 10px 15px; border-radius: 15px;
+            font-size: 0.95em; font-weight: bold; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .ad-action-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4); }
+
+        @media (max-width: 480px) {
+            .top-left-badge { font-size: 0.8em; padding: 8px 12px; top: 15px; left: 15px; }
+            .quiz-card { padding: 30px 20px; margin-top: 70px; }
+            .live-counter { font-size: 0.9em; gap: 15px; }
+            .question { font-size: 1.2em; }
+            .option-btn { font-size: 1em; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر تفاصيل الحفلة أعلى الشمال -->
+    <button class="top-left-badge" onclick="openAd()">
+        🎓 تفاصيل حفلة التخرج
+    </button>
+
+    <div class="quiz-card">
+        
+        <!-- زر الترس للإعدادات أعلى اليمين -->
+        <button class="settings-toggle-btn" onclick="toggleSettingsPanel()" title="إعدادات الاختبار">⚙️</button>
+
+        <!-- عداد الإجابات المباشر -->
+        <div class="live-counter">
+            <div class="counter-item count-correct">
+                <span>✅ صح:</span>
+                <span id="correct-count">0</span>
+            </div>
+            <div class="counter-item count-wrong">
+                <span>❌ غلط:</span>
+                <span id="wrong-count">0</span>
+            </div>
+        </div>
+
+        <!-- مؤقت الاختبار -->
+        <div id="timer-container" class="timer-badge" style="display: none;">
+            ⏳ الوقت المتبقي: <span id="time-display">00:00</span>
+        </div>
+
+        <!-- لوحة التحكم في الأسئلة (مخفية وتظهر بالترس) -->
+        <div class="controls-container" id="controls-panel">
+            <div class="control-row">
+                <button id="shuffle-btn" class="top-btn toggle-btn" onclick="toggleShuffle()">
+                    <span>🔢</span> الترتيب: عادي
+                </button>
+                <button id="show-num-btn" class="top-btn toggle-btn active" onclick="toggleShowNumbers()">
+                    <span>🆔</span> رقم السؤال: ظاهر
+                </button>
+                <button id="timer-btn" class="top-btn toggle-btn" onclick="toggleTimer()">
+                    <span>⏱️</span> مؤقت: معطل
+                </button>
+            </div>
+            <div class="control-row" id="timer-settings" style="display: none;">
+                <span class="control-label">مدة الاختبار:</span>
+                <input type="number" id="timer-minutes" class="num-input" min="1" value="10" style="width: 60px;">
+                <span class="control-label">دقيقة</span>
+            </div>
+            <div class="control-row">
+                <span class="control-label">من:</span>
+                <input type="number" id="q-start" class="num-input" min="1" value="1">
+                <span class="control-label">إلى:</span>
+                <input type="number" id="q-end" class="num-input" min="1" value="10">
+                <span style="font-size: 0.8em; color: #777;">(المجموع: <span id="total-available">0</span>)</span>
+            </div>
+            <div class="control-row">
+                <button onclick="applySettings()" class="top-btn start-btn" style="width: 100%; font-size: 1.1em; padding: 10px;">تطبيق وبدء</button>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        
+        <div class="question-number">السؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+        
+        <div id="quiz-container">
+            <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+            <div class="options" id="options-container">
+                <!-- الخيارات ستظهر هنا -->
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
+    </div>
+
+    <!-- نافذة إعلان حفلة التخرج -->
+    <div id="graduationAd" class="ad-modal-overlay">
+        <div class="ad-content">
+            <button class="ad-close-btn" onclick="closeAd()">&times;</button>
+            
+            <div style="font-size: 35px; margin-bottom: 5px;">🎓✨</div>
+            <h2 style="color: #ffd700; margin-bottom: 10px; font-weight: 800; font-size: 1.25em; text-shadow: none;">حفلة تخرج دفعة 2026</h2>
+            
+            <div style="color: #e2e8f0; font-size: 0.9em; line-height: 1.5; margin-bottom: 15px;">
+                <strong>أخواتي وأبطال دفعة 2026 🌟</strong><br>
+                أربع سنين عدوا بحلوهم ومرهم، ضحكنا وتعبنا وسهرنا مع بعض، وجه الوقت اللي نتوج فيه تعب السنين دي كلها بحفلة تليق بينا وتفرح أهالينا اللي تعبوا عشاننا.<br>
+                <span style="color: #f56565; font-weight: bold;">مستنيينكم نختم المشوار سوا.. العدد محدود!</span>
+            </div>
+            
+            <!-- زر الانضمام لجروب الحفلة -->
+            <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 10px 15px;">
+                <span style="font-size: 1.2em;">📢</span> انضم لجروب الحفلة الآن
+            </a>
+
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1em;">للحجز والاستفسار:</h4>
+            
+            <div class="contact-options">
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أ. خالد</a>
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">بسام وليد</a>
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أيمن حازم</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuestions = [    
+           {
+        "t": "إن الغرض الرئيسي لأي نظام معلومات محاسبية هو توفير معلومات محاسبية لمختلف المستخدمين الداخليين فقط.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "أن نظم المعلومات الإدارية تعتبر جزءاً لا يتجزأ من نظام المعلومات المحاسبية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "في النظم الميكانيكية لا يشترط أن يكون هناك علاقات منطقية وتكاملية واضحة بين كل عناصر النظام.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "لا يمكن أن تجتمع القنوات المنهجية أو غير المنهجية للمعلومات في الوحدة الإقتصادية الواحدة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "عند وجود قنوات غير منهجية للمعلومات فإن مسئولية إنتاج المعلومات تكون واضحة ومحددة وفقاً لتصميم مسبق.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "في ظل توافر قنوات منهجية للمعلومات فإن إنتاج المعلومات يتم أثناء نمو حجم الوحدة الإقتصادية وإستمرار الحاجة الى هذا النوع من المعلومات.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "يتمثل الفرق بين نظم المعلومات الإدارية ونظم دعم القرار في أن المعلومات التي يقدمها نظام المعلومات الإدارية غير مهيكلة أما نظم دعم القرارات يقدم معلومات مهيكلة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "لا يوجد دور لنظم المعلومات المحاسبية في دعم الاستراتيجيات التنظيمية وتحقيق الاستدامة في ظل التحول الرقمي المتسارع.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "تهدف نظم المعلومات المحاسبية إلى تحويل معلومات إلى بيانات ذات قيمة يمكن الاعتماد عليها في التخطيط والتنظيم والتوجيه والرقابة داخل المنظمة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "لا يشترط توافر التغذية العكسية لتحقيق الانتظام في فعاليات النظام والرقابة عليه.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "توفر المعلومات الدقيقة والملائمة في الوقت المناسب يعد عاملاً حاسماً في دعم عملية اتخاذ القرار وتحسين الأداء المؤسسي.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "تدعم نظم المعلومات المحاسبية المستويات الإدارية كافة، بدءاً من الإدارة التنفيذية وصولاً إلى الإدارة العليا.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "تعد نظم المعلومات المحاسبية من الأدوات الاستراتيجية التي تعمل على تعزيز القدرة على التكيف مع المتغيرات الاقتصادية والتكنولوجية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "من الشروط الأساسية لإنتاج المعلومات الجيدة تطبيق أنظمة عمل مناسبة لحجم وطبيعة نشاط المنشأة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "ظهرت الحاجة إلى مفهوم النظام في المجال الإداري مع الزيادة الكبيرة في حجم التنظيمات الإدارية وزيادة استخدام التقنيات المتطورة وخاصة تقنيات المعلومات.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "يستخدم نظام المعلومات للإدارة في اتخاذ القرارات التي قد تكون ذات أهمية استراتيجية، - إما نظام المعلومات للعمليات فإنه يستخدم على مستوى التشغيل اليومي فقط.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "النظم الخبيرة تستخدم في حل المشاكل المتكررة والتي تتطلب اتخاذ قرارات وتساعد في حل مشاكل الأعمال التجارية والعلمية والصناعية والطبية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "نظم المعلومات المحاسبية عبارة عن مجموعة من الإجراءات التي توفر عند تنفيذها معلومات متنوعة تدعم من عملية صنع واتخاذ القرارات عند كافة مستويات الهيكل التنظيمي للمنشأة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "يجب أن يكون نظام المعلومات المحاسبية قادراً على تزويد الإداريين بالمعلومات التشغيلية التفصيلية حول أداء الشركة.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "يهدف نظام المعلومات المحاسبية إلى معالجة المعلومات من خلال توفير المعلومات لعملية اتخاذ القرار والذي عادة يجب أن يتخذ بالتناسب مع عمليات الوحدة الاقتصادية، التخطيطية والرقابية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "شركات المساهمة توفر المعلومات عادة في شكل قوائم مالية دورية إلى المساهمين، ويجب أن توفر تقارير عن الدخل الخاضع للضريبة إلى الجهات الحكومية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "أن المعلومات الجيدة هي تلك المعلومات الأكثر فائدة في مجال ترشيد القرارات",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "أن منافع المعلومات تتمثل في تبصير الإدارة – وتنويرها عند إتخاذ ما يهمها من قرارات، أى تتمثل في مدى التأثير الذي يمكن أن يطرأ على مجموعات القرارات الإدارية في وجود هذه المعلومات عنه في غيابها",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "تحقيق الكفاءة الإقتصادية لمتخذ القرار ليس إلا الهدف أو المقصد من إنتاج أية معلومات إقتصادية، كما أن كفاءة المعلومة – أى تحقيق منافع تفوق تكاليفها – لن تتحقق إلا من خلال كفاءة مستخدميها",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "عند الحكم على نظام المعلومات إذا كانت تكلفة النظام أقل من للقيمة المتوقعة للمعلومات الكاملة يتم رفض نظام المعلومات.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "عند الحكم على نظام المعلومات إذا كانت تكلفة النظام أكبر للقيمة المتوقعة للمعلومات الكاملة يتم رفض نظام المعلومات.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "عند الحكم على نظام المعلومات إذا كانت تكلفة النظام أكبر من القيمة المتوقعة للمعلومات الكاملة يتم دراسة نظام المعلومات.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "لكي تكون المعلومات مفيدة وفعالة في عملية اتخاذ القرار يجب أن يتوافر فيها مجموعة من الشروط منها أن تتوافر المعلومات في الوقت الملائم.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "لكي تكون المعلومات مفيدة وفعالة في عملية اتخاذ القرار يجب أن يتوافر فيها مجموعة من الشروط منها أن تكون المعلومات كافية.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "حالة عدم التأكد تعني تعذر التنبؤ بالأحداث المتوقعة واحتمالات حدوثها للبدائل المطروحة أمام الإدارة، ولا يعني هذا وجود حالة من الجهل التام بالمشكلة، فقد يتوافر لمتخذ القرار معلومات جزئية عن الأحداث إلا أنه لا يستطيع تخصيص أو تحديد احتمالات حدوثها",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "وفقاً لمعيار أدني الأقصى طالما لا تتوافر المعلومات الكافية لتحديد احتمال لعوائد كل بديل عند كل طلب متوقع؛ لذا نفترض تساوى احتمالات تحقق العوائد عند كل بديل.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "معيار لابلاس هو معيار متحفظ بمقتضاه يتم تحديد أقصى عائد لكل بديل في مصفوفة القرار ويتم اختيار البديل الذي يتضمن أدنى العوائد القصوى.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "مصفوفة الأسف هي في الواقع مصفوفة تكلفة الفرصة البديلة",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "فمتخذ القرار يكون أقل تخوفاً من المخاطر كلما كان أقرب الى التعادل (صفر أرباح ) عما إذا كان يحقق قدراً ملحوظاً من الأرباح قبل إتخاذ القرار.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "تنقسم المخاطر التى تتعرض لها نظم المعلومات المحاسبية فى ظل التشغيل الإلكترونى من حيث مصدرها الى مخاطر داخلية ومخاطر خارجية",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "تنقسم المخاطر التى تتعرض لها نظم المعلومات المحاسبية فى ظل التشغيل الإلكترونى من حيث المتسبب بها الى مخاطر ناتجة عن العنصر البشرى ومخاطر ناتجة عن العنصر الغير البشرى.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "حدود النظام هى أي شيء يقع خارج حدود النظام وتؤثر على عملياته ولا يمكن التحكم فيها بواسطة محلل النظام.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "لا يشترط أن يكون هناك علاقات منطقية وتكاملية واضحة بين كل عناصر النظام .",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 1
+    },
+    {
+        "t": "كلما إرتفعت نسبة هامش الأمان كلما إنخفضت درجة المخاطر المحيطة بالمنتج والعكس صحيح",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "كلما أنخفض الإنحراف المعيارى كلما كان ذلك يعنى إنخفاض درجة المخاطر المحيطة بالمنتج",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "كلما أنخفض معامل الإنحراف كلما كان ذلك يعنى إنخفاض درجة المخاطر المحيطة بالمنتج",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "لأجل تحقيق الانتظام في فعاليات النظام والرقابة عليها لابد من وجود عنصر التغذية العكسية الذي يتولى مهمة المقارنة بين مخرجات النظام الفعلية وبين المخرجات المخططة والمحددة مسبقا.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "بيئة النظام هي أي شيء يقع خارج حدود النظام وتؤثر على عملياته ولا يمكن التحكم فيها بواسطة محلل النظام.",
+        "o": ["العبارة صحيحة", "العبارة خاطئة"],
+        "a": 0
+    },
+    {
+        "t": "قد تتسع حدود النظام لتشمل بعض عناصر البيئة وعندئذ تصبح هذه العناصر من عناصر النظام وليست من عناصر البيئة.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يعمل النظام وفق آليات عمل معينة ومتناسقة حتى يؤدي غرضه فتواجد عناصر النظم وتكاملها لا يكفي وحده بل لا بد من وجود آلية عمل تحكم علاقاتها وتكاملها.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المعرفة تتمثل في الرصيد المتراكم من الخبرة والمعلومات والتجارب والدراسات الطويلة في مجال معين.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "مخرجات النظام لا تعتبر معلومات إلا إذا كانت ذات معنى مفيد لمستخدم هذه المخرجات.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يجب على نظام المعلومات توفير المعلومات الضرورية لمتخذي القرارات ، والابتعاد عن إغراقهم بالمعلومات الزائدة التي ليست لها صلة بموضوع القرارات.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "من الأفضل تصميم نظام وحيد وشامل للمعلومات تكون مهمته إنتاج المعلومات المطلوبة لكافة المواقف.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كلما توفرت فى المعلومات التى يخرجها النظام سمة الإرتدادية كلما أسهمت فى تحسين وتطوير نوعية المخرجات المستقبلية.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يكون الهدف من نشر المعلومات المحاسبية هو خدمة كافة الأطراف دون أي تميز في توجيه هذه المعلومات لخدمة جهة معينة دون الأخرى.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المعلومات المحاسبية يجب أن تكون مبررة إقتصادياً أى زيادة المنافع المتحققة لمستخدم المعلومات عن التكاليف التي تحملها في سبيل الحصول عليها، مع عدم إغفال أهمية المعلومة والتي تتحدد في ضوء مدى تأثيرها في زيادة معرفة متلقيها.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "عند الحكم على نظام المعلومات إذا كانت تكلفة النظام اكبر من القيمة المتوقعة للمعلومات المنقوصة يتم قبول النظام.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "لكي تكون المعلومات مفيدة وفعالة في عملية اتخاذ القرار يجب أن يتوافر فيها مجموعة من الشروط منها أن تكون المعلومات ملائمة للقرار المطلوب اتخاذه.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "لكي تكون المعلومات مفيدة وفعالة في عملية اتخاذ القرار يجب أن يتوافر فيها مجموعة من الشروط منها أن تكون المعلومات صحيحة ودقيقة.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تتأسس عملية اتخاذ القرار على ثلاث عناصر رئيسية هي تحديد الهدف وحصر البدائل والاختيار",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "في التأكد يفترض توافر المعلومات التي تمكن متخذ القرار من المعرفة التامة بالحدث المتوقع ونتائجه. وهو ما يعني أن متخذ القرار على دراية كاملة بالمستقبل؛ ويعلم نتائج كل بديل على وجه اليقين.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "فى حالة المخاطرة فلا توجد معلومات كافية لدى متخذ القرار تمكنه من التنبؤ الدقيق بالأحداث المتوقعة ونتائج كل بديل في ظل كل حدث.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "معيار أقصى الأقصى هو معيار متشائم بمقتضاه يتم تحديد أدنى عائد لكل بديل في مصفوفة القرار، ويتم اختيار البديل الذي يتضمن أكبر العوائد الدنيا",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "معيار أقصى الأدنى هو معيار تفاؤلي حيث يقوم متخذ القرار بتحديد أقصى عائد في كل بديل ويختار البديل الذي يحقق أكبر أقصى عائد",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "معيار سافاج يهدف هذا المعيار لتخفيض الأسف المترتب على إختيار بديل معين، والناشئ عن العوائد المفقودة نتيجة عدم إختيار البدائل الأخرى.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "متخذ القرار المتخوف من المخاطر يفضل المنتجات التى يكون بينها إرتباط سلبى تام أو على الأقل فى شكل منتجات مستقلة عن بعضها البعض",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كلما كان متخذ القرار فى المستوى الإدارى الأدنى كلما حد ذلك من تخوفه تجاه المخاطرة والعكس صحيح",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "كلما ارتفع حجم التعادل يعنى قدرة المنشأة على تغطية التكاليف الإجمالية وبالتالي القدرة على تحقيق صافي ربح ، وأيضاً إنخفاض المخاطر المحيطة بالمنتج .",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "كلما أنخفضت نسبة هامش الأمان كلما إنخفضت درجة المخاطر المحيطة بالمنتج والعكس صحيح",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "كلما أنخفض الإنحراف المعيارى كلما كان ذلك يعنى إنخفاض درجة المخاطر المحيطة بالمنتج",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كلما أنخفض معامل الإنحراف كلما كان ذلك يعنى إنخفاض درجة المخاطر المحيطة بالمنتج",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تنقسم المخاطر التى تتعرض لها نظم المعلومات المحاسبية فى ظل التشغيل الإلكترونى من حيث درجة التعمد الى مخاطر ناتجة عن تصرفات متعمدة ومخاطر ناتجة عن تصرفات غير متعمدة",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تنقسم المخاطر التى تتعرض لها نظم المعلومات المحاسبية فى ظل التشغيل الإلكترونى من حيث الآثار الناتجة عنها الى مخاطر ينتج عنها أضرار مادية و مخاطر فنية ومنطقية",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تعتبر البيانات في الوقت المعاصر مورداً مهم جداً ومصدراً للثروة .",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 1
+    },
+    {
+        "t": "مخرجات النظام لا تعتبر معلومات إلا إذا كانت ذات معنى مفيد لمستخدم هذه المخرجات.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تنقسم القرارات من حيث المدى الزمني الى قرارات قصيرة الأجل و قرارات طويلة الأجل.",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تتأسس عملية اتخاذ القرار على ثلاث عناصر رئيسية هي تحديد الهدف وحصر البدائل والاختيار",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كلما كان متخذ القرار فى المستوى الإدارى الأعلى كلما حد ذلك من تخوفه تجاه المخاطرة والعكس صحيح",
+        "o": [
+            "العبارة صحيحة",
+            "العبارة خاطئة"
+        ],
+        "a": 0
+    },
+    ];
+
+               // تعيين الأرقام التعريفية للأسئلة
+        originalQuestions.forEach((q, index) => {
+            q.id = index + 1;
+        });
+
+        // تحديث الحد الأقصى للإدخال
+        document.getElementById('q-start').max = originalQuestions.length;
+        document.getElementById('q-end').max = originalQuestions.length;
+        document.getElementById('q-end').value = originalQuestions.length;
+        document.getElementById('total-available').innerText = originalQuestions.length;
+
+        let questions = [...originalQuestions];
+        let currentQuestion = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isRandom = false; 
+        let showNumbers = true; 
+        let wrongAnswers = []; 
+
+        // === متغيرات التايمر ===
+        let isTimerEnabled = false;
+        let timerInterval = null;
+        let timeRemaining = 0; // بالثواني
+
+        function toggleSettingsPanel() {
+            const p = document.getElementById('controls-panel');
+            p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleShuffle() {
+            isRandom = !isRandom;
+            const btn = document.getElementById('shuffle-btn');
+            if (isRandom) {
+                btn.innerHTML = "<span>🔀</span> الترتيب: عشوائي";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🔢</span> الترتيب: عادي";
+                btn.classList.remove('active');
+            }
+        }
+
+        function toggleShowNumbers() {
+            showNumbers = !showNumbers;
+            const btn = document.getElementById('show-num-btn');
+            if (showNumbers) {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: ظاهر";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: مخفي";
+                btn.classList.remove('active');
+            }
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                updateQuestionDisplay();
+            }
+        }
+
+        function toggleTimer() {
+            isTimerEnabled = !isTimerEnabled;
+            const btn = document.getElementById('timer-btn');
+            const timerSettings = document.getElementById('timer-settings');
+            
+            if (isTimerEnabled) {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: مفعل";
+                btn.classList.add('active');
+                timerSettings.style.display = 'flex';
+            } else {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: معطل";
+                btn.classList.remove('active');
+                timerSettings.style.display = 'none';
+            }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const s = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('time-display').innerText = `${m}:${s}`;
+            
+            const timerContainer = document.getElementById('timer-container');
+            if (timeRemaining <= 60 && timeRemaining > 0) {
+                timerContainer.classList.add('danger');
+            } else {
+                timerContainer.classList.remove('danger');
+            }
+        }
+
+        function applySettings() {
+            let start = parseInt(document.getElementById('q-start').value);
+            let end = parseInt(document.getElementById('q-end').value);
+            
+            if (isNaN(start) || start < 1) start = 1;
+            if (isNaN(end) || end > originalQuestions.length) end = originalQuestions.length;
+            if (start > end) start = end;
+
+            document.getElementById('q-start').value = start;
+            document.getElementById('q-end').value = end;
+
+            let selectedQuestions = originalQuestions.slice(start - 1, end);
+
+            if (isRandom) {
+                for (let i = selectedQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [selectedQuestions[i], selectedQuestions[j]] = [selectedQuestions[j], selectedQuestions[i]];
+                }
+            }
+
+            questions = selectedQuestions;
+            document.getElementById('q-total').innerText = questions.length;
+            toggleSettingsPanel(); // إخفاء الإعدادات بعد الضغط
+            restartQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            wrongAnswers = []; 
+            document.getElementById('correct-count').innerText = "0";
+            document.getElementById('wrong-count').innerText = "0";
+
+            // التعامل مع التايمر
+            if (timerInterval) clearInterval(timerInterval);
+            const timerContainer = document.getElementById('timer-container');
+            
+            if (isTimerEnabled) {
+                const minutes = parseInt(document.getElementById('timer-minutes').value) || 10;
+                timeRemaining = minutes * 60;
+                timerContainer.style.display = 'inline-block';
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        showFinalResult(true); // انتهاء الوقت
+                    }
+                }, 1000);
+            } else {
+                timerContainer.style.display = 'none';
+            }
+
+            if (questions.length === 0) return;
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+                <div class="options" id="options-container"></div>
+            `;
+            loadQuestion();
+        }
+
+        function updateQuestionDisplay() {
+            const q = questions[currentQuestion];
+            const qTextElement = document.getElementById('question-text');
+            if (showNumbers) {
+                qTextElement.innerText = q.id + ". " + q.t;
+            } else {
+                qTextElement.innerText = q.t;
+            }
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) return showFinalResult();
+
+            updateQuestionDisplay();
+            document.getElementById('q-curr').innerText = currentQuestion + 1;
+            
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const letters = ['أ', 'ب', 'ج', 'د'];
+
+            questions[currentQuestion].o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${letters[index]} - </span><span>${opt}</span>`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            const correctIndex = questions[currentQuestion].a;
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('correct');
+                score++;
+                correctCount++;
+                document.getElementById('correct-count').innerText = correctCount;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[correctIndex].classList.add('correct');
+                wrongCount++;
+                document.getElementById('wrong-count').innerText = wrongCount;
+                wrongAnswers.push({
+                    q: questions[currentQuestion].t,
+                    selected: questions[currentQuestion].o[selectedIndex],
+                    correct: questions[currentQuestion].o[correctIndex],
+                    qNum: questions[currentQuestion].id 
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showFinalResult();
+                }
+            }, 1200);
+        }
+
+        function showFinalResult(isTimeOut = false) {
+            if (timerInterval) clearInterval(timerInterval); // إيقاف التايمر عند الانتهاء
+            
+            document.getElementById('progress-fill').style.width = '100%';
+            
+            let titleText = isTimeOut ? "⏳ انتهى الوقت!" : "🎉 انتهى الامتحان!";
+            
+            let resultHTML = `
+                <h3 style="${isTimeOut ? 'color: #dc3545;' : ''}">${titleText}</h3>
+                <div class="live-counter" style="margin:20px 0;">
+                    <span class="count-correct">صح: ${correctCount}</span>
+                    <span class="count-wrong">غلط: ${wrongCount}</span>
+                </div>
+                <p>متنسانيش بدعوه حلوه وصلي علي النبي ❤️</p>
+                <button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer;">إعادة الاختبار</button>
+            `;
+            if (wrongAnswers.length > 0) {
+                resultHTML += `
+                    <br>
+                    <button class="top-btn start-btn" onclick="showMistakes()" style="background:#e74c3c; width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">عرض الإجابات الخاطئة</button>
+                `;
+            }
+            document.getElementById('quiz-container').innerHTML = resultHTML;
+        }
+
+        function showMistakes() {
+            let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
+            wrongAnswers.forEach(item => {
+                mistakesHTML += `
+                    <div class="mistake-item">
+                        <div class="mistake-q">س${item.qNum}: ${item.q}</div>
+                        <div class="mistake-wrong">❌ إجابتك: ${item.selected}</div>
+                        <div class="mistake-correct">✅ الصح: ${item.correct}</div>
+                    </div>
+                `;
+            });
+            mistakesHTML += `</div><button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">إعادة الاختبار</button>`;
+            document.getElementById('quiz-container').innerHTML = mistakesHTML;
+        }
+
+        function closeAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.classList.remove('show');
+            setTimeout(() => { adModal.style.display = 'none'; }, 400);
+        }
+
+        function openAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.style.display = 'flex';
+            setTimeout(() => adModal.classList.add('show'), 50);
+        }
+
+        applySettings();
+    </script>
+
+</body>
+</html>
