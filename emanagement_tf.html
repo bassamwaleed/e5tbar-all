@@ -1,0 +1,2493 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> بنك الاسئلة ادارة الإلكترونية</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        /* === زر تفاصيل الحفلة أعلى الشمال === */
+        .top-left-badge {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            padding: 10px 18px;
+            border-radius: 20px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: 0.95em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            cursor: pointer;
+            z-index: 1000;
+            border: 2px solid rgba(255,255,255,0.5);
+            transition: all 0.3s;
+        }
+
+        .top-left-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+            margin-top: 50px;
+            margin-bottom: 50px;
+        }
+
+        /* === زر الترس (الإعدادات) أعلى اليمين === */
+        .settings-toggle-btn {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #f1f5f9;
+            border: 1px solid #e2e8f0;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.3em;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            z-index: 100;
+        }
+
+        .settings-toggle-btn:hover {
+            background: #764ba2;
+            color: white;
+            transform: rotate(90deg);
+        }
+
+        /* === عداد الإجابات الاحترافي === */
+        .live-counter {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 10px;
+            margin-bottom: 15px;
+            background: #f8fafc;
+            padding: 12px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+        }
+
+        .counter-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 800;
+            font-size: 1.1em;
+        }
+
+        .count-correct { color: #28a745; }
+        .count-wrong { color: #dc3545; }
+
+        /* === تصميم التايمر === */
+        .timer-badge {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeeba;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            display: inline-block;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .timer-badge.danger {
+            background: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+            animation: pulse-danger 1s infinite alternate;
+        }
+
+        @keyframes pulse-danger {
+            from { box-shadow: 0 0 5px rgba(220,53,69,0.3); transform: scale(1); }
+            to { box-shadow: 0 0 15px rgba(220,53,69,0.6); transform: scale(1.02); }
+        }
+
+        .controls-container {
+            display: none; /* مخفية افتراضياً */
+            background: #fff;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 2px solid #764ba2;
+            flex-direction: column;
+            gap: 12px;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .num-input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 55px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+            font-weight: bold;
+        }
+
+        .top-btn {
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-btn:hover { background-color: #e2e6ea; transform: translateY(-2px); }
+
+        .start-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .start-btn:hover { background-color: #5a6fd6; color: white; }
+
+        .toggle-btn.active { background-color: #764ba2; color: white; border-color: #764ba2; }
+
+        .question-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 18px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .question {
+            font-size: 1.35em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center; 
+        }
+
+        .options { display: flex; flex-direction: column; gap: 12px; }
+
+        .option-btn {
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.2s ease;
+            color: #555;
+            text-align: right;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: #764ba2;
+            transform: translateX(-5px);
+        }
+
+        .option-btn:disabled { cursor: default; transform: none; }
+
+        .option-btn.correct { background-color: #d4edda; border-color: #28a745; color: #155724; font-weight: bold;}
+        .option-btn.wrong { background-color: #f8d7da; border-color: #dc3545; color: #721c24; }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover { color: #764ba2; }
+
+        .mistakes-container {
+            text-align: right;
+            max-height: 350px;
+            overflow-y: auto;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-right: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mistake-q { font-weight: bold; margin-bottom: 8px; color: #333; }
+        .mistake-wrong { color: #dc3545; font-size: 0.95em; }
+        .mistake-correct { color: #28a745; font-size: 0.95em; font-weight: bold; }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* نافذة الحفلة المنبثقة */
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 2000;
+            justify-content: center; align-items: center;
+            opacity: 0; transition: opacity 0.4s ease;
+        }
+        .ad-modal-overlay.show { display: flex; opacity: 1; }
+
+        .ad-content {
+            background: linear-gradient(135deg, #2c3e50 0%, #1a202c 100%);
+            padding: 20px 15px;
+            border-radius: 15px;
+            width: 90%; max-width: 350px;
+            text-align: center; position: relative;
+            border: 2px solid #ffd700;
+            transform: scale(0.8); transition: transform 0.4s ease;
+            color: white;
+        }
+        .ad-modal-overlay.show .ad-content { transform: scale(1); }
+
+        .ad-close-btn {
+            position: absolute; top: 10px; right: 10px;
+            background: #e53e3e; color: white; border: none;
+            border-radius: 50%; font-size: 18px; width: 30px; height: 30px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s;
+        }
+        .ad-close-btn:hover { background: #c53030; transform: scale(1.1); }
+
+        .contact-options { display: flex; flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 8px; margin-top: 10px; }
+
+        .ad-action-btn {
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748; padding: 10px 15px; border-radius: 15px;
+            font-size: 0.95em; font-weight: bold; text-decoration: none;
+            transition: all 0.3s;
+        }
+        .ad-action-btn:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4); }
+
+        @media (max-width: 480px) {
+            .top-left-badge { font-size: 0.8em; padding: 8px 12px; top: 15px; left: 15px; }
+            .quiz-card { padding: 30px 20px; margin-top: 70px; }
+            .live-counter { font-size: 0.9em; gap: 15px; }
+            .question { font-size: 1.2em; }
+            .option-btn { font-size: 1em; padding: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- زر تفاصيل الحفلة أعلى الشمال -->
+    <button class="top-left-badge" onclick="openAd()">
+        🎓 تفاصيل حفلة التخرج
+    </button>
+
+    <div class="quiz-card">
+        
+        <!-- زر الترس للإعدادات أعلى اليمين -->
+        <button class="settings-toggle-btn" onclick="toggleSettingsPanel()" title="إعدادات الاختبار">⚙️</button>
+
+        <!-- عداد الإجابات المباشر -->
+        <div class="live-counter">
+            <div class="counter-item count-correct">
+                <span>✅ صح:</span>
+                <span id="correct-count">0</span>
+            </div>
+            <div class="counter-item count-wrong">
+                <span>❌ غلط:</span>
+                <span id="wrong-count">0</span>
+            </div>
+        </div>
+
+        <!-- مؤقت الاختبار -->
+        <div id="timer-container" class="timer-badge" style="display: none;">
+            ⏳ الوقت المتبقي: <span id="time-display">00:00</span>
+        </div>
+
+        <!-- لوحة التحكم في الأسئلة (مخفية وتظهر بالترس) -->
+        <div class="controls-container" id="controls-panel">
+            <div class="control-row">
+                <button id="shuffle-btn" class="top-btn toggle-btn" onclick="toggleShuffle()">
+                    <span>🔢</span> الترتيب: عادي
+                </button>
+                <button id="show-num-btn" class="top-btn toggle-btn active" onclick="toggleShowNumbers()">
+                    <span>🆔</span> رقم السؤال: ظاهر
+                </button>
+                <button id="timer-btn" class="top-btn toggle-btn" onclick="toggleTimer()">
+                    <span>⏱️</span> مؤقت: معطل
+                </button>
+            </div>
+            <div class="control-row" id="timer-settings" style="display: none;">
+                <span class="control-label">مدة الاختبار:</span>
+                <input type="number" id="timer-minutes" class="num-input" min="1" value="10" style="width: 60px;">
+                <span class="control-label">دقيقة</span>
+            </div>
+            <div class="control-row">
+                <span class="control-label">من:</span>
+                <input type="number" id="q-start" class="num-input" min="1" value="1">
+                <span class="control-label">إلى:</span>
+                <input type="number" id="q-end" class="num-input" min="1" value="10">
+                <span style="font-size: 0.8em; color: #777;">(المجموع: <span id="total-available">0</span>)</span>
+            </div>
+            <div class="control-row">
+                <button onclick="applySettings()" class="top-btn start-btn" style="width: 100%; font-size: 1.1em; padding: 10px;">تطبيق وبدء</button>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        
+        <div class="question-number">السؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+        
+        <div id="quiz-container">
+            <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+            <div class="options" id="options-container">
+                <!-- الخيارات ستظهر هنا -->
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
+    </div>
+
+    <!-- نافذة إعلان حفلة التخرج -->
+    <div id="graduationAd" class="ad-modal-overlay">
+        <div class="ad-content">
+            <button class="ad-close-btn" onclick="closeAd()">&times;</button>
+            
+            <div style="font-size: 35px; margin-bottom: 5px;">🎓✨</div>
+            <h2 style="color: #ffd700; margin-bottom: 10px; font-weight: 800; font-size: 1.25em; text-shadow: none;">حفلة تخرج دفعة 2026</h2>
+            
+            <div style="color: #e2e8f0; font-size: 0.9em; line-height: 1.5; margin-bottom: 15px;">
+                <strong>أخواتي وأبطال دفعة 2026 🌟</strong><br>
+                أربع سنين عدوا بحلوهم ومرهم، ضحكنا وتعبنا وسهرنا مع بعض، وجه الوقت اللي نتوج فيه تعب السنين دي كلها بحفلة تليق بينا وتفرح أهالينا اللي تعبوا عشاننا.<br>
+                <span style="color: #f56565; font-weight: bold;">مستنيينكم نختم المشوار سوا.. العدد محدود!</span>
+            </div>
+            
+            <!-- زر الانضمام لجروب الحفلة -->
+            <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 15px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none; padding: 10px 15px;">
+                <span style="font-size: 1.2em;">📢</span> انضم لجروب الحفلة الآن
+            </a>
+
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1em;">للحجز والاستفسار:</h4>
+            
+            <div class="contact-options">
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أ. خالد</a>
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">بسام وليد</a>
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank" style="padding: 8px 12px; font-size: 0.9em;">أيمن حازم</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const originalQuestions = [           
+{
+        "t": "المنتج الإلكتروني يحتاج نقل مادي",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التوزيع الإلكتروني يقلل عدد الوسطاء",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "التسعير الإلكتروني لا يتأثر بالطلب",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "إدارة العلاقة الإلكترونية تهدف لبناء ولاء طويل الأمد",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الخداع التسويقي لا يؤثر على ثقة العملاء",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الموقع الإلكتروني عنصر مهم في التسويق الإلكتروني",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "المنتجات الرقمية أقل مرونة",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "سرعة الاستجابة تؤثر على رضا العملاء",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الإعلان الإلكتروني أقل انتشارًا",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الإنترنت يزيد التفاعل بين البائع والمشتري",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "القنوات الإلكترونية أطول من التقليدية",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الخداع في العلامة التجارية يعتمد على التشابه",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "التسويق الإلكتروني يقلل التكاليف التشغيلية",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "التوزيع الإلكتروني يعتمد على النقل الفيزيائي",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "المعرفة التنظيمية غير مهمة في E-CRM",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "البيع الإلكتروني يسمح بتفاعل مباشر",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "التسعير الإلكتروني ثابت",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الترويج الإلكتروني بطيء",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "العلاقة مع العملاء تنتهي بعد البيع",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "زيادة المعلومات تزيد رضا العميل",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد على مقارنة توقعات العميل مع الأداء الفعلي للخدمة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "سرعة تحميل الموقع لا تعد من عناصر جودة الخدمة الإلكترونية.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الاستجابة تشمل حل مشكلات العملاء وتقديم الدعم أثناء وبعد الخدمة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية ليس لها تأثير على ولاء العملاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "سهولة التصفح تؤثر على تجربة المستخدم داخل الموقع الإلكتروني.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "ولاء العملاء يعني تعاملهم مع المنظمة لمرة واحدة فقط.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "خدمة ما بعد البيع تعد جزءًا من أبعاد جودة الخدمة الإلكترونية.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد على الفرق بين التوقعات والإدراك الفعلي.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "لا تؤثر سرعة الموقع على رضا العملاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الاستجابة تعني سرعة تفاعل الموقع مع العميل.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية لا علاقة لها بالولاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "سهولة التصفح عنصر أساسي في الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "خدمة ما بعد البيع ليست جزءًا من الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التنظيم الجيد يحسن تجربة المستخدم.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "زيادة الجودة تقلل رضا العملاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الولاء يعني تكرار التعامل مع الموقع.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "بطء التحميل يؤثر سلبًا على الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد فقط على السعر.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الدعم الفني جزء من الاستجابة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "واجهة المستخدم لا تؤثر على الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التفاعل السريع يزيد رضا العميل.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الجودة المرتفعة تؤدي إلى تفضيل الموقع.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "العملاء لا يهتمون بسهولة الاستخدام.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التصميم الجيد يسهم في تحسين الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الاستجابة لا تشمل حل المشكلات.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الجودة تؤثر على سمعة المؤسسة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "تجربة المستخدم عنصر غير مهم.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "زيادة الأخطاء التقنية تقلل الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الأمان الإلكتروني ليس له علاقة بالجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "وضوح المعلومات يحسن الخدمة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة لا تؤثر على المبيعات.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "سهولة الوصول للمعلومات عنصر مهم.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الجودة مفهوم ثابت لا يتغير.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "رضا العميل نتيجة للجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "عدم الاستجابة يقلل الولاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الجودة تؤدي إلى الاحتفاظ بالعملاء.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "لا يوجد علاقة بين الجودة والتنافسية.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "الخدمة الإلكترونية تشمل الدعم بعد الشراء.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "تعقيد الموقع يحسن الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "وقت الاستجابة يؤثر على الانطباع العام.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة تقلل الشكاوى.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "العميل يقارن بين المواقع المختلفة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الجودة لا تؤثر على قرارات الشراء.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التصفح السلس يزيد الرضا.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "المعلومات غير الدقيقة تقلل الجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الخدمة الجيدة تزيد الثقة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "العملاء يفضلون المواقع المعقدة.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "التحسين المستمر ضروري للجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الجودة تؤدي إلى ميزة تنافسية.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الاستجابة البطيئة تؤثر إيجابيًا.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+    {
+        "t": "تجربة المستخدم مرتبطة بالجودة.",
+        "o": ["صواب", "خطأ"],
+        "a": 0
+    },
+    {
+        "t": "الخدمة الإلكترونية لا تحتاج دعم.",
+        "o": ["صواب", "خطأ"],
+        "a": 1
+    },
+{
+        "t": "المنتج الإلكتروني يحتاج نقل مادي",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التوزيع الإلكتروني يقلل عدد الوسطاء",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التسعير الإلكتروني لا يتأثر بالطلب",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "إدارة العلاقة الإلكترونية تهدف لبناء ولاء طويل الأمد",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخداع التسويقي لا يؤثر على ثقة العملاء",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الموقع الإلكتروني عنصر مهم في التسويق الإلكتروني",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المنتجات الرقمية أقل مرونة",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سرعة الاستجابة تؤثر على رضا العملاء",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الإعلان الإلكتروني أقل انتشارًا",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الإنترنت يزيد التفاعل بين البائع والمشتري",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "القنوات الإلكترونية أطول من التقليدية",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الخداع في العلامة التجارية يعتمد على التشابه",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التسويق الإلكتروني يقلل التكاليف التشغيلية",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التوزيع الإلكتروني يعتمد على النقل الفيزيائي",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "المعرفة التنظيمية غير مهمة في E-CRM",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "البيع الإلكتروني يسمح بتفاعل مباشر",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التسعير الإلكتروني ثابت",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الترويج الإلكتروني بطيء",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "العلاقة مع العملاء تنتهي بعد البيع",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "زيادة المعلومات تزيد رضا العميل",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد على مقارنة توقعات العميل مع الأداء الفعلي للخدمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "سرعة تحميل الموقع لا تعد من عناصر جودة الخدمة الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الاستجابة تشمل حل مشكلات العملاء وتقديم الدعم أثناء وبعد الخدمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية ليس لها تأثير على ولاء العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سهولة التصفح تؤثر على تجربة المستخدم داخل الموقع الإلكتروني.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "ولاء العملاء يعني تعاملهم مع المنظمة لمرة واحدة فقط.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "خدمة ما بعد البيع تعد جزءًا من أبعاد جودة الخدمة الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد على الفرق بين التوقعات والإدراك الفعلي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "لا تؤثر سرعة الموقع على رضا العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الاستجابة تعني سرعة تفاعل الموقع مع العميل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية لا علاقة لها بالولاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سهولة التصفح عنصر أساسي في الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "خدمة ما بعد البيع ليست جزءًا من الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التنظيم الجيد يحسن تجربة المستخدم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "زيادة الجودة تقلل رضا العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الولاء يعني تكرار التعامل مع الموقع.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "بطء التحميل يؤثر سلبًا على الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية تعتمد فقط على السعر.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الدعم الفني جزء من الاستجابة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "واجهة المستخدم لا تؤثر على الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التفاعل السريع يزيد رضا العميل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة المرتفعة تؤدي إلى تفضيل الموقع.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "العملاء لا يهتمون بسهولة الاستخدام.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التصميم الجيد يسهم في تحسين الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الاستجابة لا تشمل حل المشكلات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الجودة تؤثر على سمعة المؤسسة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تجربة المستخدم عنصر غير مهم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "زيادة الأخطاء التقنية تقلل الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الأمان الإلكتروني ليس له علاقة بالجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "وضوح المعلومات يحسن الخدمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة لا تؤثر على المبيعات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سهولة الوصول للمعلومات عنصر مهم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة مفهوم ثابت لا يتغير.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "رضا العميل نتيجة للجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "عدم الاستجابة يقلل الولاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة تؤدي إلى الاحتفاظ بالعملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "لا يوجد علاقة بين الجودة والتنافسية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الخدمة الإلكترونية تشمل الدعم بعد الشراء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تعقيد الموقع يحسن الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "وقت الاستجابة يؤثر على الانطباع العام.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة تقلل الشكاوى.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "العميل يقارن بين المواقع المختلفة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة لا تؤثر على قرارات الشراء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التصفح السلس يزيد الرضا.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المعلومات غير الدقيقة تقلل الجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخدمة الجيدة تزيد الثقة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "العملاء يفضلون المواقع المعقدة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التحسين المستمر ضروري للجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة تؤدي إلى ميزة تنافسية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الاستجابة البطيئة تؤثر إيجابيًا.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تجربة المستخدم مرتبطة بالجودة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخدمة الإلكترونية لا تحتاج دعم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "رضا العميل يزيد من الولاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الجودة تقلل من فقدان العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كل العملاء لديهم نفس التوقعات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الأداء الجيد يزيد التفضيل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "جودة الخدمة مفهوم غير مهم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "كلما زادت جودة الخدمة الإلكترونية، زاد احتمال تفضيل العميل للموقع.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التنظيم الجيد للموقع لا يؤثر على سهولة الاستخدام.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "جودة الخدمة الإلكترونية ترتبط فقط بالمنتج وليس بالخدمة المقدمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يهدف نظام إدارة العلاقة الإلكترونية بشكل أساسي إلى تحويل العميل من حالة الرضا (Satisfaction) إلى حالة الولاء (Loyalty).",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يعتبر العائق اللغوي من المحددات التكنولوجية التي تمنع انتشار استخدام الشبكة العالمية في إدارة علاقات العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تقتصر أهمية إدارة العلاقة الإلكترونية على جذب عملاء جدد فقط للمنظمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من مهام المدير الإلكتروني \"تأمين حسابات العملاء\" لضمان نجاح العلاقة الإلكترونية بين الشركات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تعني \"الاستراتيجية\" كعامل مؤثر في E-CRM النظرة الشمولية لإيجاد قيمة للزبون بناءً على بياناته وقطاعه السوقي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تعتبر \"سرعة الاستجابة الفاعلة\" هي الوقت الكافي للرد على استفسارات العملاء بدقة وتوقيت مناسب.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "إدارة العلاقة الإلكترونية (E-CRM) هي مجرد تطبيق تقني ولا ترتبط بالرؤية الاستراتيجية للمنظمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "من فوائد E-CRM تعقب أداء العملاء وسلوكياتهم على الإنترنت لتحسين المبيعات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "\"إدارة الاجتماعات\" إلكترونياً تهدف إلى توثيق الاجتماعات الداخلية لسهولة استرجاعها ومتابعة سير العمل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التحول نحو إدارة العلاقة الإلكترونية هو مجرد \"رفاهية\" اختيارية للمنظمات وليس حتمية تفرضها التغيرات العالمية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "العلاقة الإلكترونية في تخفيض التكاليف وتحسين الربحية وزيادة المبيعات في آن واحد.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يقصد بـ \"التكامل وسلامة المحتوى الإلكتروني\" التأكد من أن المعلومات صحيحة ولم يتم تعديلها أو العبث بها من طرف غير مشروع.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "من أسباب التحول إلى E-CRM الرغبة في إعادة الهيكلة التنظيمية لتتواكب مع التغييرات في البيئة الوظيفية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "\"سرعة تسليم المنتج\" لا تعتبر من محددات نجاح إدارة العلاقة الإلكترونية لأنها تتبع القسم اللوجستي فقط.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "في البيئة الإلكترونية، يمكن للمنظمة تحقيق ميزة تنافسية من خلال سرعة الاستجابة حتى لو لم تكن تقدم أقل سعر في السوق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الاعتماد على التوزيع الإلكتروني يعني بالضرورة زيادة عدد الوسطاء بين المنتج والمستهلك.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "كلما زادت المعلومات المتاحة للعميل عبر الموقع الإلكتروني، زادت قدرته على اتخاذ قرار شرائي واعٍ.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخداع التسويقي قد يحقق مكاسب قصيرة الأجل ولكنه يؤدي غالبًا إلى خسائر طويلة الأجل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المنتجات الإلكترونية تتطلب نفس تكاليف النقل والتخزين الخاصة بالمنتجات التقليدية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "ضعف تصميم الموقع الإلكتروني لا يؤثر على تجربة المستخدم طالما أن المنتج جيد.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التسعير الإلكتروني يتميز بإمكانية التعديل المستمر وفقًا لتغيرات السوق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "العلاقة بين المنظمة والعملاء في البيئة الرقمية تنتهي بمجرد إتمام عملية البيع.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "استخدام البيانات دون تحليلها لا يحقق قيمة حقيقية في إدارة العلاقة مع العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التفاعل الإلكتروني أقل كفاءة من التفاعل التقليدي في جميع الحالات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سرعة الوصول إلى المعلومات تعد من أهم مزايا الإنترنت في التسويق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "القنوات الإلكترونية أكثر تعقيدًا من القنوات التقليدية دائمًا.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الثقة عنصر أساسي في نجاح التعاملات الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كل انخفاض في السعر يؤدي بالضرورة إلى زيادة الطلب في البيئة الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "استخدام الوسائط المتعددة يعزز تجربة المستخدم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التوزيع الإلكتروني يقلل الزمن اللازم لوصول المنتج.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "إدارة العلاقة الإلكترونية تعتمد فقط على التكنولوجيا دون العنصر البشري.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحسين تجربة المستخدم يؤدي إلى زيادة فرص الاحتفاظ بالعملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "في البيئة الرقمية، قد يكون تحسين تجربة المستخدم أكثر تأثيرًا على زيادة المبيعات من تخفيض الأسعار بشكل مباشر.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الاعتماد الكامل على التكنولوجيا دون وجود استراتيجية واضحة لإدارة العلاقة مع العملاء قد يؤدي إلى فشل النظام رغم قوته التقنية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كلما زادت سرعة الموقع الإلكتروني، فإن ذلك لا يؤثر على قرار العميل طالما أن المنتج جيد.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التوزيع الإلكتروني يمكن أن يحقق كفاءة أعلى من التوزيع التقليدي بسبب تقليل الزمن والتكاليف.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخداع التسويقي قد يؤدي إلى بناء ولاء طويل الأمد إذا تم استخدامه بذكاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "وجود معلومات دقيقة وشاملة على الموقع الإلكتروني يقلل من حاجة العميل للتواصل المباشر مع الشركة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "زيادة عدد الوسطاء في القنوات الإلكترونية يؤدي إلى تحسين الكفاءة دائمًا.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "العلاقة بين رضا العميل وولائه علاقة غير مباشرة وضعيفة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "استخدام البيانات بشكل فعال يمكن أن يحسن من جودة القرارات التسويقية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التفاعل الإلكتروني يتيح للمنظمات فهم احتياجات العملاء بشكل أفضل مقارنة بالطرق التقليدية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المنتجات الرقمية تتطلب نفس العمليات اللوجستية للمنتجات التقليدية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "انخفاض الثقة في التعاملات الإلكترونية يؤدي إلى تراجع الأداء التسويقي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الترويج الإلكتروني يقتصر فقط على الإعلانات المدفوعة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سرعة الاستجابة عنصر أساسي في نجاح إدارة العلاقة الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التسعير الإلكتروني لا يتأثر بالمنافسة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "زيادة المعلومات المتاحة قد تربك العميل في بعض الحالات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الموقع الإلكتروني غير المهني لا يؤثر على صورة المنظمة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التوزيع الإلكتروني يتيح الوصول للعملاء في أي وقت.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "إدارة المعرفة عنصر ثانوي في إدارة العلاقة الإلكترونية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحسين جودة الخدمة يؤدي إلى زيادة احتمالية الاحتفاظ بالعملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "في البيئة الرقمية، قد يؤدي تبسيط خطوات الشراء إلى زيادة احتمالية إتمام العملية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "كثرة المعلومات غير المنظمة قد تؤدي إلى نتائج عكسية في اتخاذ القرار.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "السعر هو العامل الوحيد الذي يؤثر على قرار الشراء الإلكتروني.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "ضعف الأمان في الموقع الإلكتروني يؤثر على ثقة العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التفاعل الإلكتروني لا يمكن أن يحل محل التفاعل البشري في أي حالة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحسين تجربة المستخدم قد يزيد من ولاء العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "البيانات غير الدقيقة لا تؤثر على القرارات التسويقية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الخداع التسويقي قد يؤدي إلى فقدان العملاء على المدى الطويل.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التوزيع الإلكتروني يعتمد على البنية التكنولوجية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الموقع البطيء لا يؤثر على تجربة المستخدم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "الشفافية في التعامل تزيد من الثقة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تجاهل شكاوى العملاء لا يؤثر على العلاقة معهم.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "التفاعل المستمر مع العملاء يعزز العلاقة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "المنافسة الإلكترونية أقل من التقليدية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "المعلومات الكاملة تساعد في اتخاذ القرار.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الخدمة السيئة لا تؤثر على الولاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "القنوات الإلكترونية تقلل الزمن.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "التسعير المرن يتغير حسب السوق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "الموقع الجيد لا يؤثر على المبيعات.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تحسين الجودة يؤدي إلى رضا العملاء.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يرى العلماء أن الشبكة الإلكترونية هي \"عصب الحياة التنظيمية\" لأن تأثيرها يمتد إلى خارج حدود المنظمة الجغرافية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "مفهوم \"إدارة علاقات الزبائن\" يركز فقط على العمليات قصيرة الأمد لإتمام عملية بيع واحدة بنجاح.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تعتبر \"هياكل المنظمة وعملياتها\" عاملاً مؤثراً في نجاح E-CRM ، خاصة في مجال الإبداع في المزيج التسويقي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "حتمية الاتصال المستمر بين العملاء تتطلب تقارب الإدارة العليا مع فرق العمل لاتخاذ قرارات جماعية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تقتصر وظيفة \"إدارة الوثائق\" إلكترونياً على حفظ المراسلات الصادرة فقط دون الواردة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يُعتبر الخداع في \"الاسم التجاري\" أسهل في الاكتشاف والمقاضاة القانونية من الخداع الذي يمارسه المنافسون لمنتجات الشركة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يظهر الخداع في \"التوزيع\" من خلال تقديم خدمات التوصيل المجاني مع تسليم وجبات مطابقة تماماً للمواصفات المتفق عليها.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تشير الدراسات إلى أن المستهلك قد يدفع زيادة تصل إلى 50% من سعر السلعة مقابل \"الاسم التجاري\" الموثوق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يعتبر الإعلان مضللاً قانوناً فقط في حالة ذكر تخفيضات وهمية أو إخفاء معلومات وتكاليف جوهرية عن المنتج.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "بلد المنشأ (Country of Origin) يؤثر فقط على السعر ولا علاقة له بإدراك المستهلك للجودة أو قراره الشرائي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سلبية المستهلك وتساهله مع الشركات المخالفة تُعد من الأسباب التي تؤدي إلى تمادي الشركات في ممارسة الخداع الإلكتروني.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    
+    {
+        "t": "يرى العلماء أن الشبكة الإلكترونية هي \"عصب الحياة التنظيمية\" لأن تأثيرها يمتد إلى خارج حدود المنظمة الجغرافية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "مفهوم \"إدارة علاقات الزبائن\" يركز فقط على العمليات قصيرة الأمد لإتمام عملية بيع واحدة بنجاح.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تعتبر \"هياكل المنظمة وعملياتها\" عاملاً مؤثراً في نجاح E-CRM ، خاصة في مجال الإبداع في المزيج التسويقي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "حتمية الاتصال المستمر بين العملاء تتطلب تقارب الإدارة العليا مع فرق العمل لاتخاذ قرارات جماعية.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "تقتصر وظيفة \"إدارة الوثائق\" إلكترونياً على حفظ المراسلات الصادرة فقط دون الواردة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "يُعتبر الخداع في \"الاسم التجاري\" أسهل في الاكتشاف والمقاضاة القانونية من الخداع الذي يمارسه المنافسون لمنتجات الشركة.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يظهر الخداع في \"التوزيع\" من خلال تقديم خدمات التوصيل المجاني مع تسليم وجبات مطابقة تماماً للمواصفات المتفق عليها.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "تشير الدراسات إلى أن المستهلك قد يدفع زيادة تصل إلى 50% من سعر السلعة مقابل \"الاسم التجاري\" الموثوق.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    },
+    {
+        "t": "يعتبر الإعلان مضللاً قانوناً فقط في حالة ذكر تخفيضات وهمية أو إخفاء معلومات وتكاليف جوهرية عن المنتج.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "بلد المنشأ (Country of Origin) يؤثر فقط على السعر ولا علاقة له بإدراك المستهلك للجودة أو قراره الشرائي.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 1
+    },
+    {
+        "t": "سلبية المستهلك وتساهله مع الشركات المخالفة تُعد من الأسباب التي تؤدي إلى تمادي الشركات في ممارسة الخداع الإلكتروني.",
+        "o": [
+            "صواب",
+            "خطأ"
+        ],
+        "a": 0
+    }
+
+        ];
+               // تعيين الأرقام التعريفية للأسئلة
+        originalQuestions.forEach((q, index) => {
+            q.id = index + 1;
+        });
+
+        // تحديث الحد الأقصى للإدخال
+        document.getElementById('q-start').max = originalQuestions.length;
+        document.getElementById('q-end').max = originalQuestions.length;
+        document.getElementById('q-end').value = originalQuestions.length;
+        document.getElementById('total-available').innerText = originalQuestions.length;
+
+        let questions = [...originalQuestions];
+        let currentQuestion = 0;
+        let score = 0;
+        let correctCount = 0;
+        let wrongCount = 0;
+        let isRandom = false; 
+        let showNumbers = true; 
+        let wrongAnswers = []; 
+
+        // === متغيرات التايمر ===
+        let isTimerEnabled = false;
+        let timerInterval = null;
+        let timeRemaining = 0; // بالثواني
+
+        function toggleSettingsPanel() {
+            const p = document.getElementById('controls-panel');
+            p.style.display = (p.style.display === 'flex') ? 'none' : 'flex';
+        }
+
+        function toggleShuffle() {
+            isRandom = !isRandom;
+            const btn = document.getElementById('shuffle-btn');
+            if (isRandom) {
+                btn.innerHTML = "<span>🔀</span> الترتيب: عشوائي";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🔢</span> الترتيب: عادي";
+                btn.classList.remove('active');
+            }
+        }
+
+        function toggleShowNumbers() {
+            showNumbers = !showNumbers;
+            const btn = document.getElementById('show-num-btn');
+            if (showNumbers) {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: ظاهر";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: مخفي";
+                btn.classList.remove('active');
+            }
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                updateQuestionDisplay();
+            }
+        }
+
+        function toggleTimer() {
+            isTimerEnabled = !isTimerEnabled;
+            const btn = document.getElementById('timer-btn');
+            const timerSettings = document.getElementById('timer-settings');
+            
+            if (isTimerEnabled) {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: مفعل";
+                btn.classList.add('active');
+                timerSettings.style.display = 'flex';
+            } else {
+                btn.innerHTML = "<span>⏱️</span> مؤقت: معطل";
+                btn.classList.remove('active');
+                timerSettings.style.display = 'none';
+            }
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeRemaining / 60).toString().padStart(2, '0');
+            const s = (timeRemaining % 60).toString().padStart(2, '0');
+            document.getElementById('time-display').innerText = `${m}:${s}`;
+            
+            const timerContainer = document.getElementById('timer-container');
+            if (timeRemaining <= 60 && timeRemaining > 0) {
+                timerContainer.classList.add('danger');
+            } else {
+                timerContainer.classList.remove('danger');
+            }
+        }
+
+        function applySettings() {
+            let start = parseInt(document.getElementById('q-start').value);
+            let end = parseInt(document.getElementById('q-end').value);
+            
+            if (isNaN(start) || start < 1) start = 1;
+            if (isNaN(end) || end > originalQuestions.length) end = originalQuestions.length;
+            if (start > end) start = end;
+
+            document.getElementById('q-start').value = start;
+            document.getElementById('q-end').value = end;
+
+            let selectedQuestions = originalQuestions.slice(start - 1, end);
+
+            if (isRandom) {
+                for (let i = selectedQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [selectedQuestions[i], selectedQuestions[j]] = [selectedQuestions[j], selectedQuestions[i]];
+                }
+            }
+
+            questions = selectedQuestions;
+            document.getElementById('q-total').innerText = questions.length;
+            toggleSettingsPanel(); // إخفاء الإعدادات بعد الضغط
+            restartQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            correctCount = 0;
+            wrongCount = 0;
+            wrongAnswers = []; 
+            document.getElementById('correct-count').innerText = "0";
+            document.getElementById('wrong-count').innerText = "0";
+
+            // التعامل مع التايمر
+            if (timerInterval) clearInterval(timerInterval);
+            const timerContainer = document.getElementById('timer-container');
+            
+            if (isTimerEnabled) {
+                const minutes = parseInt(document.getElementById('timer-minutes').value) || 10;
+                timeRemaining = minutes * 60;
+                timerContainer.style.display = 'inline-block';
+                updateTimerDisplay();
+                
+                timerInterval = setInterval(() => {
+                    timeRemaining--;
+                    updateTimerDisplay();
+                    if (timeRemaining <= 0) {
+                        clearInterval(timerInterval);
+                        showFinalResult(true); // انتهاء الوقت
+                    }
+                }, 1000);
+            } else {
+                timerContainer.style.display = 'none';
+            }
+
+            if (questions.length === 0) return;
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+                <div class="options" id="options-container"></div>
+            `;
+            loadQuestion();
+        }
+
+        function updateQuestionDisplay() {
+            const q = questions[currentQuestion];
+            const qTextElement = document.getElementById('question-text');
+            if (showNumbers) {
+                qTextElement.innerText = q.id + ". " + q.t;
+            } else {
+                qTextElement.innerText = q.t;
+            }
+        }
+
+        function loadQuestion() {
+            if (currentQuestion >= questions.length) return showFinalResult();
+
+            updateQuestionDisplay();
+            document.getElementById('q-curr').innerText = currentQuestion + 1;
+            
+            const progress = (currentQuestion / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const letters = ['أ', 'ب', 'ج', 'د'];
+
+            questions[currentQuestion].o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerHTML = `<span>${letters[index]} - </span><span>${opt}</span>`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            const correctIndex = questions[currentQuestion].a;
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('correct');
+                score++;
+                correctCount++;
+                document.getElementById('correct-count').innerText = correctCount;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[correctIndex].classList.add('correct');
+                wrongCount++;
+                document.getElementById('wrong-count').innerText = wrongCount;
+                wrongAnswers.push({
+                    q: questions[currentQuestion].t,
+                    selected: questions[currentQuestion].o[selectedIndex],
+                    correct: questions[currentQuestion].o[correctIndex],
+                    qNum: questions[currentQuestion].id 
+                });
+            }
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showFinalResult();
+                }
+            }, 1200);
+        }
+
+        function showFinalResult(isTimeOut = false) {
+            if (timerInterval) clearInterval(timerInterval); // إيقاف التايمر عند الانتهاء
+            
+            document.getElementById('progress-fill').style.width = '100%';
+            
+            let titleText = isTimeOut ? "⏳ انتهى الوقت!" : "🎉 انتهى الامتحان!";
+            
+            let resultHTML = `
+                <h3 style="${isTimeOut ? 'color: #dc3545;' : ''}">${titleText}</h3>
+                <div class="live-counter" style="margin:20px 0;">
+                    <span class="count-correct">صح: ${correctCount}</span>
+                    <span class="count-wrong">غلط: ${wrongCount}</span>
+                </div>
+                <p>متنسانيش بدعوه حلوه وصلي علي النبي ❤️</p>
+                <button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer;">إعادة الاختبار</button>
+            `;
+            if (wrongAnswers.length > 0) {
+                resultHTML += `
+                    <br>
+                    <button class="top-btn start-btn" onclick="showMistakes()" style="background:#e74c3c; width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">عرض الإجابات الخاطئة</button>
+                `;
+            }
+            document.getElementById('quiz-container').innerHTML = resultHTML;
+        }
+
+        function showMistakes() {
+            let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
+            wrongAnswers.forEach(item => {
+                mistakesHTML += `
+                    <div class="mistake-item">
+                        <div class="mistake-q">س${item.qNum}: ${item.q}</div>
+                        <div class="mistake-wrong">❌ إجابتك: ${item.selected}</div>
+                        <div class="mistake-correct">✅ الصح: ${item.correct}</div>
+                    </div>
+                `;
+            });
+            mistakesHTML += `</div><button class="top-btn start-btn" onclick="location.reload()" style="width:100%; padding:15px; border-radius:15px; font-size:1.1em; cursor:pointer; margin-top: 15px;">إعادة الاختبار</button>`;
+            document.getElementById('quiz-container').innerHTML = mistakesHTML;
+        }
+
+        function closeAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.classList.remove('show');
+            setTimeout(() => { adModal.style.display = 'none'; }, 400);
+        }
+
+        function openAd() {
+            const adModal = document.getElementById('graduationAd');
+            adModal.style.display = 'flex';
+            setTimeout(() => adModal.classList.add('show'), 50);
+        }
+
+        applySettings();
+    </script>
+
+</body>
+</html>
