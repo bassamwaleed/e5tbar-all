@@ -138,7 +138,6 @@
             line-height: 1.3;
         }
 
-        /* === تنسيقات أزرار المواد === */
         .subjects-grid {
             display: flex;
             flex-direction: column;
@@ -176,7 +175,13 @@
             font-size: 1.4em;
         }
 
-        /* === أزرار الاختيارات (داخل النافذة المنبثقة) === */
+        /* حالة المادة المعطلة */
+        .subject-btn.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            border-style: dashed;
+        }
+
         .btn {
             display: flex;
             align-items: center;
@@ -240,19 +245,39 @@
         .footer-text p { margin: 5px 0 0; font-size: 0.9em; color: #ff9a9e; }
 
         .visitor-counter {
-            margin-top: 20px;
-            display: flex;
+            margin-top: 25px;
+            display: inline-flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            background: rgba(0,0,0,0.2);
-            padding: 10px;
-            border-radius: 12px;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.03);
+            padding: 15px 25px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
 
-        .visitor-label { font-size: 0.75em; color: rgba(255, 255, 255, 0.6); text-transform: uppercase; }
+        .visitor-label { 
+            font-size: 0.7em; 
+            color: rgba(255, 255, 255, 0.5); 
+            text-transform: uppercase;
+            font-weight: 800;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
-        .whatsapp-container {
+        .visitor-label::before, .visitor-label::after {
+            content: '';
+            width: 15px;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .social-container {
             position: fixed;
             bottom: 20px;
             right: 20px;
@@ -260,33 +285,41 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+        }
+
+        .social-float {
+            width: 60px; height: 60px;
+            color: #FFF; border-radius: 50%; text-align: center; font-size: 30px;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.3s ease; position: relative;
+            text-decoration: none;
         }
 
         .whatsapp-float {
-            width: 60px; height: 60px;
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
-            color: #FFF; border-radius: 50%; text-align: center; font-size: 30px;
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
-            display: flex; align-items: center; justify-content: center;
-            transition: all 0.3s ease; position: relative;
         }
 
-        .whatsapp-float::before {
+        .instagram-float {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 6px 15px rgba(220, 39, 67, 0.4);
+        }
+
+        .social-float::before {
             content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 50%; border: 2px solid #25D366; animation: pulse 2s linear infinite;
+            border-radius: 50%; border: 2px solid rgba(255,255,255,0.5); animation: pulse 2s linear infinite;
         }
 
         @keyframes pulse { 0% { transform: scale(1); opacity: 1; } 100% { transform: scale(1.3); opacity: 0; } }
-        .whatsapp-float:hover { transform: scale(1.1) rotate(5deg); }
+        .social-float:hover { transform: scale(1.1) rotate(5deg); }
 
-        .whatsapp-text {
+        .social-text {
             font-size: 11px; color: #fff; background-color: rgba(0, 0, 0, 0.7);
             padding: 5px 8px; border-radius: 8px; text-align: center;
             max-width: 120px; backdrop-filter: blur(4px); border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* === النوافذ المنبثقة (Modals) === */
         .ad-modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8); backdrop-filter: blur(8px); z-index: 2000;
@@ -303,8 +336,9 @@
             transform: scale(0.8); transition: transform 0.3s ease;
         }
         
-        /* شكل خاص لنافذة اختيار المادة */
         .quiz-type-content { border-color: #667eea; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(102, 126, 234, 0.3); }
+        .maintenance-content { border-color: #f56565; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(245, 101, 101, 0.3); }
+        .announcement-content { border-color: #38ef7d; box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(56, 239, 125, 0.3); }
 
         .ad-content::-webkit-scrollbar { width: 6px; }
         .ad-content::-webkit-scrollbar-thumb { background-color: #ffd700; border-radius: 10px; }
@@ -348,26 +382,22 @@
             .container { padding: 25px 20px; }
             h1 { font-size: 1.7em; margin-bottom: 15px; }
             .subject-btn { padding: 14px; font-size: 1.05em; }
-            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; }
-            .whatsapp-container { bottom: 15px; right: 15px; }
+            .social-float { width: 50px; height: 50px; font-size: 24px; }
+            .social-container { bottom: 15px; right: 15px; gap: 10px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- زر تفاصيل الحفلة -->
     <button class="top-right-badge" onclick="openAd()">🎓 تفاصيل حفلة التخرج</button>
 
-    <!-- التنبيه في أعلى الصفحة -->
     <div class="header-note">
-صلي علي النبي . كل الاسئله ال ف اللينك من بنك الاسئله فا ممكن تلاقي سؤال اتحل ب الغلط مني فا راجع البنك الاصلي للتاكيد ليك    </div>
+        صلي علي النبي . كل الاسئله ال ف اللينك من بنك الاسئله فا ممكن تلاقي سؤال اتحل ب الغلط مني فا راجع البنك الاصلي للتاكيد ليك
+    </div>
 
-
-    <!-- ================= الواجهة الرئيسية ================= -->
     <div class="container">
         <h1>بوابة المراجعة الشاملة - الفرقة الرابعة</h1>
         
-         <!-- رسالة بسام للطلاب -->
         <div class="heartfelt-message">
             <h3>إخواتي ودفعتي (خريجي 2026) ❤️</h3>
             <p style="margin: 0; font-size: 0.95em;">
@@ -377,29 +407,28 @@
             </p>
         </div>
         
-        <!-- === قائمة المواد === -->
         <div class="subjects-grid">
-            <button class="subject-btn" onclick="openQuizTypeModal('strategy', 'استراتيجية نظم')">
+            <button class="subject-btn" id="btn-strategy" onclick="handleSubjectClick('strategy', 'استراتيجية نظم')">
                 <span class="icon">📊</span> استراتيجية نظم
             </button>
             
-            <button class="subject-btn" onclick="openQuizTypeModal('statistics', 'إحصاء تطبيقية')">
+            <button class="subject-btn" id="btn-statistics" onclick="handleSubjectClick('statistics', 'إحصاء تطبيقية')">
                 <span class="icon">📈</span> إحصاء تطبيقية
             </button>
             
-            <button class="subject-btn" onclick="openQuizTypeModal('accounting', 'أنظمة معلومات محاسبية')">
+            <button class="subject-btn" id="btn-accounting" onclick="handleSubjectClick('accounting', 'أنظمة معلومات محاسبية')">
                 <span class="icon">💻</span> أنظمة معلومات محاسبية
             </button>
             
-            <button class="subject-btn" onclick="openQuizTypeModal('hr', 'إدارة الموارد البشرية')">
+            <button class="subject-btn" id="btn-hr" onclick="handleSubjectClick('hr', 'إدارة الموارد البشرية')">
                 <span class="icon">👥</span> إدارة الموارد البشرية
             </button>
             
-            <button class="subject-btn" onclick="openQuizTypeModal('analysis', 'تحليل وتقييم الشركات')">
+            <button class="subject-btn" id="btn-analysis" onclick="handleSubjectClick('analysis', 'تحليل وتقييم الشركات')">
                 <span class="icon">🏢</span> تحليل وتقييم الشركات
             </button>
             
-            <button class="subject-btn" onclick="openQuizTypeModal('emanagement', 'إدارة إلكترونية')">
+            <button class="subject-btn" id="btn-emanagement" onclick="handleSubjectClick('emanagement', 'إدارة إلكترونية')">
                 <span class="icon">🌐</span> إدارة إلكترونية
             </button>
         </div>
@@ -414,19 +443,34 @@
         </div>
 
         <div class="visitor-counter">
-            <span class="visitor-label">مرات الزيارة</span>
-            <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_strategy_home_v2" alt="عدد الزوار" style="height: 22px;">
+            <span class="visitor-label">إحصائيات الزوار</span>
+            <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_final_v1&color=007bff&style=flat-square" alt="عدد الزوار" style="height: 24px; border-radius: 4px;">
         </div>
     </div>
 
-    <!-- زر الواتساب -->
-    <div class="whatsapp-container">
-        <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+    <div class="social-container">
+        <a href="https://www.instagram.com/_beboo_22?igsh=ZTZ2cmtpb2NsZnkw" class="social-float instagram-float" target="_blank" title="تابعنا على إنستجرام">
+            <svg style="width: 28px; height: 28px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.607.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.062 1.366-.332 2.633-1.308 3.608-.975.975-2.242 1.245-3.607 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.062-2.633-.332-3.608-1.308-.975-.975-1.245-2.242-1.308-3.607-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.245 3.607-1.308 1.266-.058 1.646-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+        </a>
+        <a href="https://wa.me/201286094595" class="social-float whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
             <svg style="width: 28px; height: 28px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
             </svg>
         </a>
-        <div class="whatsapp-text">تواصل معنا إذا لاحظت مشكلة</div>
+        <div class="social-text">تواصل معنا إذا لاحظت مشكلة</div>
+    </div>
+
+    <!-- نافذة الإشعار العام (Announcement Modal) -->
+    <div id="announcementModal" class="ad-modal-overlay">
+        <div class="ad-content announcement-content">
+            <button class="ad-close-btn" onclick="closeAnnouncementModal()">&times;</button>
+            <div class="ad-icon">🔔</div>
+            <div class="ad-title" style="color: #38ef7d;">إشعار جديد فنان</div>
+            <div class="ad-desc" id="announcementText">اكتب رسالتك هنا..</div>
+            <button class="ad-action-btn" onclick="closeAnnouncementModal()" style="width: 100%; border: none; cursor: pointer; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white;">شكراً، علم!</button>
+        </div>
     </div>
 
     <!-- نافذة اختيار نوع الاختبار -->
@@ -447,13 +491,23 @@
         </div>
     </div>
 
-    <!-- نافذة إعلان حفلة التخرج -->
+    <!-- نافذة "جاري العمل" -->
+    <div id="maintenanceModal" class="ad-modal-overlay">
+        <div class="ad-content maintenance-content">
+            <button class="ad-close-btn" onclick="closeMaintenanceModal()">&times;</button>
+            <div class="ad-icon">🛠️</div>
+            <div class="ad-title" id="maintenanceSubjectTitle" style="color: #f56565;">عذراً، المادة مغلقة</div>
+            <div class="ad-desc" id="maintenanceMessage">ثواني يا فنان، جاري تحديث بنك الأسئلة حالياً لتقديم أفضل تجربة مراجعة.</div>
+            <button class="ad-action-btn" onclick="closeMaintenanceModal()" style="width: 100%; border: none; cursor: pointer;">حسناً، سأنتظر</button>
+        </div>
+    </div>
+
     <div id="graduationAd" class="ad-modal-overlay">
         <div class="ad-content">
             <button class="ad-close-btn" onclick="closeAd()">&times;</button>
             
             <div id="countdown-container" class="countdown-box">
-                ثواني يا فنان هتدخل الامتحان بعد ثواني  <span id="countdown-timer">10</span> ثواني
+                ثواني يا فنان هتدخل الامتحان بعد ثواني <span id="countdown-timer">10</span> ثواني
             </div>
 
             <div class="ad-icon">🎓✨</div>
@@ -479,17 +533,83 @@
 
     <script>
         // ==========================================
-        // نظام اختيار نوع الاختبار
+        // لوحة التحكم في الإشعارات (Notification Panel)
         // ==========================================
+        const globalAnnouncement = {
+            active: true, // اجعلها true لتفعيل الإشعار للجميع فور دخولهم
+            message: "صلي علي النبي فن❤️ جاري تحديث مادة إدارة الموارد البشرية وإضافة بنك أسئلة جديد.."
+        };
+
+        // ==========================================
+        // لوحة التحكم في المواد (Subject Panel)
+        // ==========================================
+        const subjectSettings = {
+            strategy: { active: true, message: "ثواني يا صحبي، جاري مراجعة وتجهيز أسئلة الاستراتيجية لتكون شاملة." },
+            statistics: { active: true, message: "ثواني يا فنان، بنك أسئلة الإحصاء يتم تحديثه حالياً." },
+            accounting: { active: true, message: "نعمل الآن على رفع بنك الأسئلة الخاص بمادة المحاسبة." },
+            hr: { active: true, message: "ثواني يا فنان، مادة الموارد البشرية ستكون متاحة قريباً جداً." },
+            analysis: { active: true, message: "جاري التأكد من صحة حلول بنك أسئلة تحليل الشركات." },
+            emanagement: { active: true, message: "نصلي على النبي، مادة الإدارة الإلكترونية تحت التجهيز." }
+        };
+
+        function updateButtonsUI() {
+            for (const subject in subjectSettings) {
+                const btn = document.getElementById('btn-' + subject);
+                if (btn && !subjectSettings[subject].active) {
+                    btn.classList.add('disabled');
+                    btn.title = "المادة مغلقة مؤقتاً";
+                }
+            }
+        }
+
+        function checkAnnouncement() {
+            if (globalAnnouncement.active) {
+                document.getElementById('announcementText').innerText = globalAnnouncement.message;
+                const modal = document.getElementById('announcementModal');
+                modal.style.display = 'flex';
+                setTimeout(() => modal.classList.add('show'), 1000); // يظهر بعد ثانية واحدة من الدخول
+            }
+        }
+
+        window.onload = function() {
+            updateButtonsUI();
+            checkAnnouncement();
+        };
+
+        function closeAnnouncementModal() {
+            const modal = document.getElementById('announcementModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        function handleSubjectClick(id, name) {
+            const config = subjectSettings[id];
+            if (config.active) {
+                openQuizTypeModal(id, name);
+            } else {
+                showMaintenanceModal(name, config.message);
+            }
+        }
+
+        function showMaintenanceModal(subjectName, message) {
+            document.getElementById('maintenanceSubjectTitle').innerText = subjectName;
+            document.getElementById('maintenanceMessage').innerText = message;
+            const modal = document.getElementById('maintenanceModal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 50);
+        }
+
+        function closeMaintenanceModal() {
+            const modal = document.getElementById('maintenanceModal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
         function openQuizTypeModal(baseFileName, subjectName) {
-            // تحديث اسم المادة في النافذة
             document.getElementById('modalSubjectTitle').innerText = subjectName;
-            
-            // تحديث الروابط بناءً على اسم المادة
             document.getElementById('mcqLink').href = baseFileName + '_quiz.html';
             document.getElementById('tfLink').href = baseFileName + '_tf.html';
 
-            // إظهار النافذة
             const modal = document.getElementById('quizTypeModal');
             modal.style.display = 'flex';
             setTimeout(() => modal.classList.add('show'), 50);
@@ -504,15 +624,11 @@
         function handleQuizSelection(event, url) {
             event.preventDefault();
             closeQuizTypeModal();
-            // الانتظار قليلاً حتى تختفي نافذة الاختيار ثم إظهار إعلان الحفلة والعداد
             setTimeout(() => {
                 openAd(url);
             }, 300);
         }
 
-        // ==========================================
-        // نظام إعلان الحفلة والانتقال التلقائي
-        // ==========================================
         let targetUrl = null;
         let countdownInterval = null;
 
@@ -524,7 +640,7 @@
             setTimeout(() => {
                 adModal.style.display = 'none';
                 if (targetUrl) {
-                    window.location.href = targetUrl; // الانتقال للاختبار
+                    window.location.href = targetUrl;
                     targetUrl = null;
                 }
             }, 300);
