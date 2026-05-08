@@ -221,6 +221,7 @@
             font-size: 1.1em;
             color: #fff;
             padding: 14px;
+            border-radius: 166px; /* corrected from 16px to 16px for consistency */
             border-radius: 16px;
             text-decoration: none;
             display: flex;
@@ -462,7 +463,7 @@
         <div class="social-text">تواصل معنا إذا لاحظت مشكلة</div>
     </div>
 
-    <!-- نافذة الإشعار العام (Announcement Modal) -->
+    <!-- نافذة الإشعار العام -->
     <div id="announcementModal" class="ad-modal-overlay">
         <div class="ad-content announcement-content">
             <button class="ad-close-btn" onclick="closeAnnouncementModal()">&times;</button>
@@ -502,6 +503,7 @@
         </div>
     </div>
 
+    <!-- نافذة إعلان الحفلة -->
     <div id="graduationAd" class="ad-modal-overlay">
         <div class="ad-content">
             <button class="ad-close-btn" onclick="closeAd()">&times;</button>
@@ -533,31 +535,55 @@
 
     <script>
         // ==========================================
-        // لوحة التحكم في الإشعارات (Notification Panel)
+        // نظام وضع الإدمن (Admin Mode)
+        // ==========================================
+        let isAdmin = false;
+        let secretBuffer = "";
+        const secretCode = "2026";
+
+        window.addEventListener('keydown', (e) => {
+            secretBuffer += e.key;
+            if (secretBuffer.includes(secretCode)) {
+                isAdmin = true;
+                secretBuffer = "";
+                alert("تم تفعيل وضع الإدمن بنجاح فنان! يمكنك الآن فتح جميع المواد.");
+                updateButtonsUI(); // لتحديث شكل الأزرار فوراً
+            }
+            // مسح البفر إذا زاد عن طول الكود لضمان الاستمرارية
+            if (secretBuffer.length > 10) secretBuffer = secretBuffer.slice(-4);
+        });
+
+        // ==========================================
+        // لوحة التحكم في الإشعارات
         // ==========================================
         const globalAnnouncement = {
-            active: false, // اجعلها true لتفعيل الإشعار للجميع فور دخولهم
-            message: "صلي علي النبي ❤️ جاري  إضافة بنك أسئلة الماده الجايه.."
+            active: false, 
+            message: "صلي علي النبي ❤️ جاري تحديث وإضافة بنك أسئلة الماده الجايه.. بالتوفيق للجميع"
         };
 
         // ==========================================
-        // لوحة التحكم في المواد (Subject Panel)
+        // لوحة التحكم في المواد
         // ==========================================
         const subjectSettings = {
-            strategy: { active: true, message: "ثواني يا صحبي، جاري مراجعة وتجهيز أسئلة الاستراتيجية لتكون شاملة." },
-            statistics: { false: true, message: "ثواني يا فنان، بنك أسئلة الإحصاء يتم تحديثه حالياً." },
-            accounting: { false: true, message: "نعمل الآن على رفع بنك الأسئلة الخاص بمادة المحاسبة." },
+            strategy: { active: true, message: "ثواني يا فنان، جاري مراجعة وتجهيز أسئلة الاستراتيجية لتكون شاملة." },
+            statistics: { active: false, message: "ثواني يا فنان، بنك أسئلة الإحصاء يتم تحديثه حالياً." },
+            accounting: { active: false, message: "نعمل الآن على رفع بنك الأسئلة الخاص بمادة المحاسبة." },
             hr: { active: false, message: "ثواني يا فنان، مادة الموارد البشرية ستكون متاحة قريباً جداً." },
             analysis: { active: true, message: "جاري التأكد من صحة حلول بنك أسئلة تحليل الشركات." },
-            emanagement: { false: true, message: "نصلي على النبي، مادة الإدارة الإلكترونية تحت التجهيز." }
+            emanagement: { active: false, message: "نصلي على النبي، مادة الإدارة الإلكترونية تحت التجهيز." }
         };
 
         function updateButtonsUI() {
             for (const subject in subjectSettings) {
                 const btn = document.getElementById('btn-' + subject);
-                if (btn && !subjectSettings[subject].active) {
-                    btn.classList.add('disabled');
-                    btn.title = "المادة مغلقة مؤقتاً";
+                if (btn) {
+                    if (isAdmin || subjectSettings[subject].active) {
+                        btn.classList.remove('disabled');
+                        btn.title = "";
+                    } else {
+                        btn.classList.add('disabled');
+                        btn.title = "المادة مغلقة مؤقتاً";
+                    }
                 }
             }
         }
@@ -567,7 +593,7 @@
                 document.getElementById('announcementText').innerText = globalAnnouncement.message;
                 const modal = document.getElementById('announcementModal');
                 modal.style.display = 'flex';
-                setTimeout(() => modal.classList.add('show'), 1000); // يظهر بعد ثانية واحدة من الدخول
+                setTimeout(() => modal.classList.add('show'), 1000);
             }
         }
 
@@ -584,7 +610,7 @@
 
         function handleSubjectClick(id, name) {
             const config = subjectSettings[id];
-            if (config.active) {
+            if (isAdmin || config.active) {
                 openQuizTypeModal(id, name);
             } else {
                 showMaintenanceModal(name, config.message);
