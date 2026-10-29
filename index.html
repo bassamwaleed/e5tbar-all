@@ -60,7 +60,6 @@
             100% { transform: translate(30px, -25px) scale(0.94); }
         }
 
-        /* شبكة هندسية شفافة للعمق البصري */
         .bg-grid-mesh {
             position: fixed;
             inset: 0;
@@ -125,13 +124,22 @@
             box-shadow: 0 16px 35px -6px rgba(59, 130, 246, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.5);
         }
 
+        .free-btn {
+            background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
+            box-shadow: 0 10px 28px -6px rgba(16, 185, 129, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+            transition: all 0.3s ease;
+        }
+        .free-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 35px -6px rgba(16, 185, 129, 0.75);
+        }
+
         .text-gradient {
             background: linear-gradient(135deg, #ffffff 0%, #7dd3fc 50%, #c084fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        /* كلاسات حركات شاشة التحميل */
         .spin-slow { animation: spin 3s linear infinite; }
         .spin-reverse { animation: spin-rev 2s linear infinite; }
         @keyframes spin-rev { from { transform: rotate(360deg); } to { transform: rotate(0deg); } }
@@ -148,9 +156,8 @@
     </div>
     <div class="bg-grid-mesh"></div>
 
-    <!-- شاشة التحميل الممتعة (تظهر فقط وقت الانتظار) -->
+    <!-- شاشة التحميل الممتعة -->
     <div id="loading-overlay" class="fixed inset-0 bg-[#040711]/95 backdrop-blur-2xl z-[100] hidden flex-col items-center justify-center">
-        <!-- انيميشن اللوجو والدوائر -->
         <div class="relative w-32 h-32 flex items-center justify-center mb-8">
             <div class="absolute inset-0 border-t-4 border-cyan-400 rounded-full animate-spin shadow-[0_0_20px_#22d3ee]"></div>
             <div class="absolute inset-3 border-r-4 border-purple-500 rounded-full spin-reverse shadow-[0_0_20px_#a855f7]"></div>
@@ -158,14 +165,13 @@
             <div class="text-4xl animate-pulse">⚡</div>
         </div>
         
-        <h2 class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4 text-center">
-            جاري التحقق من بياناتك...
+        <h2 id="loading-title" class="text-2xl sm:text-3xl font-black text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-purple-500 mb-4 text-center">
+            جاري تجهيز المنصة...
         </h2>
         
-        <!-- صندوق النصائح المتغيرة لكسر الملل -->
         <div class="liquid-glass rounded-2xl px-6 py-4 max-w-sm w-full mx-4 text-center min-h-[82px] flex items-center justify-center">
             <p id="loading-tip" class="text-sm sm:text-base text-cyan-100 font-bold leading-relaxed fade-transition opacity-100">
-                جاري الاتصال بقاعدة البيانات... 🚀
+                جاري فتح بنوك الأسئلة... 🚀
             </p>
         </div>
 
@@ -186,26 +192,25 @@
                 <div>
                     <div class="flex items-center gap-2">
                         <span class="font-black text-base sm:text-lg text-white tracking-tight">بوابة البصمجية</span>
-                        <span class="text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 border border-cyan-400/30 px-2 py-0.5 rounded-full">PRO</span>
+                        <span id="header-mode-badge" class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">مجاني 🔓</span>
                     </div>
                     <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">المنصة التفاعلية الذكية لبنوك الأسئلة والاختبارات</p>
                 </div>
             </div>
 
-            <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الحصول%20على%20كود%20تفعيل%20في%20بوابة%20البصمجية" target="_blank"
+            <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاستفسار%20عن%20منصة%20بوابة%20البصمجية" target="_blank"
                class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3.5 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
                 <span>💬</span>
-            <span>طلب كود اشتراك</span>
-        </a>
+                <span id="header-cta-text">تواصل معنا</span>
+            </a>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة على الموبايل واللاب -->
+    <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة -->
     <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1 overflow-hidden gap-2 sm:gap-3">
         
-        <!-- 1. كارت تسجيل الدخول الرئيسي (ملموم ومتسنتر) -->
+        <!-- 1. الكارت الرئيسي (يتغير تلقائياً بين الوضع المجاني السريع ووضع الكود المدفوع) -->
         <div class="w-full max-w-md liquid-glass rounded-[26px] p-4 sm:p-6 relative overflow-hidden shrink-0">
-            <!-- لمعة ديكورية أعلى الكارت -->
             <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
@@ -214,44 +219,45 @@
                     <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                     <span>الفرقة الأولى • الثانية • الثالثة • الرابعة</span>
                 </div>
-                <h1 class="text-xl sm:text-2xl font-black text-gradient">تسجيل دخول الطالب</h1>
-                <p class="text-[11px] text-slate-400 mt-0.5">أدخل بياناتك وكود التفعيل للانتقال الفوري إلى قسم فرقتك</p>
+                <h1 id="card-main-title" class="text-xl sm:text-2xl font-black text-gradient">اختر فرقتك وابدأ فوراً</h1>
+                <p id="card-sub-title" class="text-[11px] text-slate-400 mt-0.5">المنصة متاحة حالياً مجاناً لجميع الطلاب للتدريب والمراجعة</p>
             </div>
 
             <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-[11px] p-2 rounded-xl mb-2.5 font-bold text-center"></div>
 
             <form onsubmit="handleLogin(event)" class="space-y-2.5 text-right relative">
+                <!-- في الوضع المجاني: الاسم اختياري / في الوضع المدفوع: إجباري -->
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم الطالب الثلاثي</label>
-                    <input type="text" id="student-name" required placeholder="مثال: أحمد محمد علي" 
+                    <label id="name-label" class="block text-[11px] font-bold text-slate-300 mb-1">اسم الطالب (اختياري)</label>
+                    <input type="text" id="student-name" placeholder="اكتب اسمك ليظهر في الترحيب..." 
                         class="liquid-input w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
                 </div>
 
-                <div class="grid grid-cols-2 gap-2.5">
+                <div id="year-code-grid" class="grid grid-cols-1 gap-2.5">
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-300 mb-1">الفرقة الدراسية</label>
-                        <select id="student-year" required class="liquid-input w-full rounded-xl px-2.5 py-2 text-xs sm:text-sm text-white outline-none cursor-pointer">
-                            <option value="year1/index.html" selected class="bg-slate-900">الفرقة الأولى</option>
-                            <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية</option>
-                            <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة</option>
-                            <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة</option>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">اختر الفرقة الدراسية</label>
+                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3 py-2.5 text-xs sm:text-sm font-bold text-white outline-none cursor-pointer">
+                            <option value="year1/index.html" selected class="bg-slate-900">🎓 الفرقة الأولى</option>
+                            <option value="year2/index.html" class="bg-slate-900">🎓 الفرقة الثانية</option>
+                            <option value="year3/index.html" class="bg-slate-900">🎓 الفرقة الثالثة</option>
+                            <option value="year4/index.html" class="bg-slate-900">🎓 الفرقة الرابعة</option>
                         </select>
                     </div>
 
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-300 mb-1">كود التفعيل</label>
-                        <input type="password" id="activation-code" required placeholder="أدخل الكود..." 
+                    <!-- حقل الكود (يختفي تلقائياً في الوضع المجاني ويظهر في الوضع المدفوع) -->
+                    <div id="code-field-wrapper" class="hidden">
+                        <label class="block text-[11px] font-bold text-amber-300 mb-1">🔑 كود التفعيل</label>
+                        <input type="password" id="activation-code" placeholder="أدخل الكود..." 
                             class="liquid-input w-full rounded-xl px-3 py-2 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
                     </div>
                 </div>
 
-                <button type="submit" id="login-btn" class="glow-btn w-full text-white font-black py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2">
-                    <span>دخول إلى قسم الفرقة</span>
-                    <span>←</span>
+                <button type="submit" id="login-btn" class="free-btn w-full text-slate-950 font-black py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2">
+                    <span id="login-btn-text">🚀 دخول مجاني لاختيار الامتحان فوراً</span>
                 </button>
             </form>
 
-            <!-- شريط المميزات المدمج أسفل الفورم داخل الكارت -->
+            <!-- شريط المميزات المدمج أسفل الفورم -->
             <div class="mt-3.5 pt-3 border-t border-white/10 grid grid-cols-3 gap-1.5 text-center">
                 <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1.5 px-1">
                     <div class="text-xs">⚡</div>
@@ -278,12 +284,11 @@
                         <p id="aff-title" class="text-[10px] font-black text-white truncate"></p>
                     </div>
                 </a>
-                <!-- نقاط التنقل بين الصور -->
                 <div id="aff-dots" class="flex items-center justify-center gap-1 py-0.5"></div>
             </div>
         </div>
 
-        <!-- 2. شريط المميزات الثلاثي المدمج (يظهر بالكامل على شاشة الموبايل واللاب بدون تمرير) -->
+        <!-- 2. شريط المميزات الثلاثي المدمج -->
         <div class="w-full max-w-md sm:max-w-3xl grid grid-cols-3 gap-2 shrink-0">
             <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
                 <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">🎯</div>
@@ -304,33 +309,122 @@
             <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
                 <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">🔒</div>
                 <div>
-                    <h3 class="text-[10px] sm:text-xs font-black text-white">كود خاص</h3>
-                    <p class="text-[9px] text-slate-400 hidden sm:block">حماية لجهاز الطالب</p>
+                    <h3 class="text-[10px] sm:text-xs font-black text-white">تدريب متكامل</h3>
+                    <p class="text-[9px] text-slate-400 hidden sm:block">تقييم فوري لمستواك</p>
                 </div>
             </div>
         </div>
 
     </main>
 
-    <!-- نافذة لوحة تحكم الإدمن -->
+    <!-- نافذة توجيه الطالب للاشتراك عندما يكتب كود خاطئ في الوضع المدفوع -->
+    <div id="sub-guide-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-md text-right border border-amber-400/40 relative">
+            <button onclick="closeSubGuideModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
+            
+            <div class="text-center mb-4">
+                <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-3xl mx-auto mb-2">🔐</div>
+                <h3 id="sub-modal-reason" class="text-base sm:text-lg font-black text-amber-300">كود التفعيل غير صحيح أو غير مسجل!</h3>
+                <p class="text-xs text-slate-300 mt-1">للدخول إلى بنوك الأسئلة والامتحانات التفاعلية، تحتاج إلى كود تفعيل خاص بك.</p>
+            </div>
+
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3.5 space-y-2 text-xs text-slate-200 mb-4">
+                <div class="font-black text-cyan-300 mb-1">💡 كيف تعمل منصة بوابة البصمجية؟</div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400">✔</span>
+                    <span>كود اشتراك شخصي يفتح لك جميع بنوك الأسئلة (اختياري + صح وخطأ) لفرقتك الدراسية.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400">✔</span>
+                    <span>تدريب ذكي مع تصحيح فوري، مؤقت زمني، ومراجعة شاملة لأخطائك بعد كل امتحان.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-amber-400">🔒</span>
+                    <span>الكود يعمل على جهازك الشخصي طوال فترة الامتحانات بدون انقطاع.</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <a id="whatsapp-sub-link" href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاشتراك%20والحصول%20على%20كود%20تفعيل%20في%20بوابة%20البصمجية" target="_blank"
+                   class="w-full py-3 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 hover:scale-[1.01] transition">
+                    <span>💬</span>
+                    <span>اضغط هنا للتواصل عبر واتساب واستلام كودك فوراً</span>
+                </a>
+                <button onclick="closeSubGuideModal()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300">
+                    لدي كود بالفعل، سأحاول كتابته مرة أخرى
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدخال باسورد الأدمن السريعة (تظهر عند الضغط 5 مرات على الفوتر) -->
+    <div id="admin-pin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 w-full max-w-xs text-center border border-cyan-400/40">
+            <h3 class="text-sm font-black text-cyan-300 mb-2">👑 دخول لوحة تحكم الإدمن</h3>
+            <p class="text-[11px] text-slate-400 mb-3">أدخل الرمز السري للإدارة للمتابعة</p>
+            <input type="password" id="admin-pin-input" placeholder="الرمز السري..." class="liquid-input w-full rounded-xl px-3 py-2 text-center font-mono text-sm text-white outline-none mb-3">
+            <div class="flex gap-2">
+                <button onclick="verifyAdminPin()" class="glow-btn flex-1 py-2 rounded-xl text-xs font-black text-white">دخول</button>
+                <button onclick="document.getElementById('admin-pin-modal').classList.add('hidden');document.getElementById('admin-pin-modal').classList.remove('flex');" class="bg-white/10 px-4 py-2 rounded-xl text-xs font-bold text-slate-300">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة لوحة تحكم الإدمن الشاملة -->
     <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-3">
         <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[92dvh] flex flex-col justify-between overflow-hidden border border-cyan-400/40">
             <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 shrink-0">
                 <div>
                     <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن السحابية</h2>
-                    <p class="text-[10px] text-slate-400">إدارة أكواد الطلاب + بانرات الأفلييت</p>
+                    <p class="text-[10px] text-slate-400">التحكم في مجانية الموقع + الأكواد + بانرات الأفلييت</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
 
-            <!-- تبويبات لوحة الإدمن (أكواد الطلاب / إعلانات الأفلييت) -->
-            <div class="grid grid-cols-2 gap-2 mb-3 shrink-0">
-                <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-xs font-black transition">🔑 أكواد الطلاب</button>
-                <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-xs font-black transition">📢 بانرات الأفلييت</button>
+            <!-- تبويبات لوحة الإدمن الثلاثة -->
+            <div class="grid grid-cols-3 gap-1.5 mb-3 shrink-0">
+                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[11px] font-black transition">⚙️ وضع الموقع</button>
+                <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition">🔑 أكواد الطلاب</button>
+                <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition">📢 بانرات الأفلييت</button>
+            </div>
+
+            <!-- قسم 0: التحكم في وضع الموقع (مجاني أم مدفوع بالأكواد) -->
+            <div id="admin-mode-section" class="flex-1 flex flex-col justify-between overflow-y-auto space-y-3 text-right pr-1">
+                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-4 space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-white">حالة المنصة الحالية لجميع الطلاب:</span>
+                        <span id="admin-current-mode-badge" class="text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">🔓 وضع مجاني مفتوح</span>
+                    </div>
+                    <p class="text-[11px] text-slate-400 leading-relaxed">
+                        اختر كيف يظهر الموقع للطلاب الآن (يتم التحديث فوراً لدى جميع الطلاب عبر قاعدة البيانات السحابية):
+                    </p>
+
+                    <div class="grid grid-cols-1 gap-2.5 pt-1">
+                        <button onclick="setPlatformMode(true)" id="btn-set-free" class="p-3.5 rounded-2xl border-2 border-emerald-400 bg-emerald-500/15 text-right transition flex items-center justify-between">
+                            <div>
+                                <div class="text-xs sm:text-sm font-black text-emerald-300">🔓 الوضع المجاني المفتوح (Free Mode)</div>
+                                <div class="text-[10px] text-slate-300 mt-0.5">يدخل الطالب مباشرة لاختيار فرقته وامتحانه بدون طلب أي كود تفعيل.</div>
+                            </div>
+                            <span class="text-xl">🚀</span>
+                        </button>
+
+                        <button onclick="setPlatformMode(false)" id="btn-set-paid" class="p-3.5 rounded-2xl border border-white/15 bg-white/5 text-right transition flex items-center justify-between">
+                            <div>
+                                <div class="text-xs sm:text-sm font-black text-amber-300">🔒 الوضع المدفوع بالأكواد (Paid Code Mode)</div>
+                                <div class="text-[10px] text-slate-300 mt-0.5">يُلزم الطالب بإدخال كود التفعيل مع قفل الكود على جهازه وتوجيه غير المشتركين للواتساب.</div>
+                            </div>
+                            <span class="text-xl">🔑</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="bg-cyan-500/10 border border-cyan-400/30 rounded-2xl p-3 text-[11px] text-cyan-200">
+                    💡 <b>نصيحة:</b> يمكنك ترك الموقع على <b>الوضع المجاني</b> الآن حتى يتعود الطلاب عليه، وعند اقتراب الامتحانات اضغط على <b>الوضع المدفوع بالأكواد</b> ليتحول الموقع فوراً!
+                </div>
             </div>
 
             <!-- قسم 1: إدارة الأكواد -->
-            <div id="admin-codes-section" class="flex-1 flex flex-col overflow-hidden">
+            <div id="admin-codes-section" class="hidden flex-1 flex-col overflow-hidden">
                 <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
                     <div class="grid grid-cols-2 gap-2">
                         <div>
@@ -378,7 +472,6 @@
                         </div>
                     </div>
 
-                    <!-- معاينة سريعة للصورة المختارة -->
                     <div id="upload-preview-box" class="hidden items-center justify-between bg-white/5 border border-emerald-400/30 rounded-xl p-2">
                         <div class="flex items-center gap-2">
                             <img id="upload-preview-img" src="" class="w-14 h-9 rounded-lg object-cover border border-white/10">
@@ -388,7 +481,7 @@
                     </div>
 
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-300 mb-1">2️⃣ رابط الأفلييت أو المنتج (الذي يفتح عند الضغط على الصورة):</label>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">2️⃣ رابط الأفلييت أو المنتج:</label>
                         <input type="url" id="ad-target-url" placeholder="https://amazon.eg/..." class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-cyan-300 outline-none" dir="ltr">
                     </div>
                     <div class="flex gap-2">
@@ -437,6 +530,71 @@
         let adCarouselTimer = null;
         let rulesError = false;
 
+        // حالة الموقع الافتراضية: مجاني مفتوح (true) حتى يغيره الأدمن من لوحته
+        let isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
+
+        function updateUIForMode() {
+            const headerBadge = document.getElementById("header-mode-badge");
+            const headerCta = document.getElementById("header-cta-text");
+            const mainTitle = document.getElementById("card-main-title");
+            const subTitle = document.getElementById("card-sub-title");
+            const nameLabel = document.getElementById("name-label");
+            const nameInput = document.getElementById("student-name");
+            const gridBox = document.getElementById("year-code-grid");
+            const codeWrapper = document.getElementById("code-field-wrapper");
+            const codeInput = document.getElementById("activation-code");
+            const loginBtn = document.getElementById("login-btn");
+            const loginBtnText = document.getElementById("login-btn-text");
+
+            // عناصر لوحة الإدمن
+            const adminBadge = document.getElementById("admin-current-mode-badge");
+            const btnFree = document.getElementById("btn-set-free");
+            const btnPaid = document.getElementById("btn-set-paid");
+
+            if (isFreeMode) {
+                headerBadge.innerText = "مجاني 🔓";
+                headerBadge.className = "text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full";
+                headerCta.innerText = "تواصل معنا";
+                mainTitle.innerText = "اختر فرقتك وابدأ الاختبار فوراً";
+                subTitle.innerText = "المنصة متاحة مجاناً لجميع الطلاب للتدريب والمراجعة الذكية";
+                nameLabel.innerText = "اسم الطالب (اختياري)";
+                nameInput.required = false;
+                gridBox.className = "grid grid-cols-1 gap-2.5";
+                codeWrapper.classList.add("hidden");
+                codeInput.required = false;
+                loginBtn.className = "free-btn w-full text-slate-950 font-black py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2";
+                loginBtnText.innerText = "🚀 دخول مجاني لاختيار الامتحان فوراً ←";
+
+                if (adminBadge) {
+                    adminBadge.innerText = "🔓 وضع مجاني مفتوح";
+                    adminBadge.className = "text-xs font-black px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-400/30";
+                    btnFree.className = "p-3.5 rounded-2xl border-2 border-emerald-400 bg-emerald-500/15 text-right transition flex items-center justify-between";
+                    btnPaid.className = "p-3.5 rounded-2xl border border-white/15 bg-white/5 text-right transition flex items-center justify-between opacity-75";
+                }
+            } else {
+                headerBadge.innerText = "PRO 🔒";
+                headerBadge.className = "text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full";
+                headerCta.innerText = "طلب كود اشتراك";
+                mainTitle.innerText = "تسجيل دخول المشتركين";
+                subTitle.innerText = "أدخل اسمك وكود التفعيل الخاص بك للانتقال إلى قسم فرقتك";
+                nameLabel.innerText = "اسم الطالب الثلاثي";
+                nameInput.required = true;
+                gridBox.className = "grid grid-cols-2 gap-2.5";
+                codeWrapper.classList.remove("hidden");
+                codeInput.required = true;
+                loginBtn.className = "glow-btn w-full text-white font-black py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2";
+                loginBtnText.innerText = "دخول إلى قسم الفرقة ←";
+
+                if (adminBadge) {
+                    adminBadge.innerText = "🔒 وضع مدفوع بالأكواد";
+                    adminBadge.className = "text-xs font-black px-3 py-1 rounded-full bg-amber-500/20 text-amber-300 border border-amber-400/30";
+                    btnPaid.className = "p-3.5 rounded-2xl border-2 border-amber-400 bg-amber-500/15 text-right transition flex items-center justify-between";
+                    btnFree.className = "p-3.5 rounded-2xl border border-white/15 bg-white/5 text-right transition flex items-center justify-between opacity-75";
+                }
+            }
+        }
+        updateUIForMode();
+
         function getDeviceFingerprint() {
             let fp = "DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height + "-" + navigator.language;
             return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
@@ -446,6 +604,15 @@
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
+
+                // الاستماع لوضع المنصة (مجاني أم مدفوع) لحظياً من Firebase
+                onSnapshot(doc(db, 'platform_settings', 'config'), (docSnap) => {
+                    if (docSnap.exists() && typeof docSnap.data().isFreeMode === 'boolean') {
+                        isFreeMode = docSnap.data().isFreeMode;
+                        localStorage.setItem("basmagia_free_mode", isFreeMode ? "true" : "false");
+                        updateUIForMode();
+                    }
+                });
 
                 const codesRef = collection(db, 'student_codes');
                 onSnapshot(codesRef, (snapshot) => {
@@ -472,6 +639,23 @@
             }
         }
         initCloudDatabase();
+
+        // تغيير وضع الموقع بين المجاني والمدفوع من لوحة الإدمن
+        window.setPlatformMode = async function(freeState) {
+            isFreeMode = freeState;
+            localStorage.setItem("basmagia_free_mode", freeState ? "true" : "false");
+            updateUIForMode();
+            if (db) {
+                try {
+                    await setDoc(doc(db, 'platform_settings', 'config'), {
+                        isFreeMode: freeState,
+                        updatedAt: new Date().toLocaleString("ar-EG")
+                    });
+                } catch (e) {
+                    console.warn("Could not sync mode to cloud:", e);
+                }
+            }
+        };
 
         // ==========================================
         // تشغيل بانر الأفلييت المتنقل (إذا وجد)
@@ -522,21 +706,25 @@
         };
 
         window.switchAdminTab = function(tab) {
+            const isMode = tab === 'mode';
             const isCodes = tab === 'codes';
+            const isAds = tab === 'ads';
+
+            document.getElementById("admin-mode-section").classList.toggle("hidden", !isMode);
+            document.getElementById("admin-mode-section").classList.toggle("flex", isMode);
             document.getElementById("admin-codes-section").classList.toggle("hidden", !isCodes);
             document.getElementById("admin-codes-section").classList.toggle("flex", isCodes);
-            document.getElementById("admin-ads-section").classList.toggle("hidden", isCodes);
-            document.getElementById("admin-ads-section").classList.toggle("flex", !isCodes);
+            document.getElementById("admin-ads-section").classList.toggle("hidden", !isAds);
+            document.getElementById("admin-ads-section").classList.toggle("flex", isAds);
 
-            document.getElementById("tab-codes-btn").className = isCodes
-                ? "bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-xs font-black transition"
-                : "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-xs font-black transition";
-            document.getElementById("tab-ads-btn").className = !isCodes
-                ? "bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-xs font-black transition"
-                : "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-xs font-black transition";
+            const activeCls = "bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[11px] font-black transition";
+            const idleCls = "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition";
+
+            document.getElementById("tab-mode-btn").className = isMode ? activeCls : idleCls;
+            document.getElementById("tab-codes-btn").className = isCodes ? activeCls : idleCls;
+            document.getElementById("tab-ads-btn").className = isAds ? activeCls : idleCls;
         };
 
-        // ضغط وتحويل الصورة المرفوعة من الجهاز لتناسب Firebase بسرعة فائقة
         let uploadedImageDataUrl = "";
         window.handleImageUpload = function(e) {
             const file = e.target.files[0];
@@ -618,9 +806,6 @@
 
         const masterCodes = ["20206", "VIP-2026"];
 
-        // ==========================================
-        // أنظمة واجهة المستخدم والتفاعل (شاشة التحميل)
-        // ==========================================
         const funTips = [
             "جاري تجهيز بيئة المذاكرة الخاصة بك... 🚀",
             "هل تعلم؟ التركيز لمدة 25 دقيقة يضاعف استيعابك 🧠",
@@ -659,23 +844,51 @@
             clearInterval(tipInterval);
         }
 
+        // نافذة توجيه الطالب للاشتراك عند إدخال كود خاطئ
+        window.openSubGuideModal = function(reasonText, studentName, yearText) {
+            if (reasonText) document.getElementById("sub-modal-reason").innerText = reasonText;
+            const msg = encodeURIComponent(`السلام عليكم يا أ. بسام، أنا الطالب (${studentName || 'جديد'}) في (${yearText}) وأريد الاشتراك والحصول على كود تفعيل في منصة بوابة البصمجية.`);
+            document.getElementById("whatsapp-sub-link").href = `https://wa.me/201286094595?text=${msg}`;
+            document.getElementById("sub-guide-modal").classList.remove("hidden");
+            document.getElementById("sub-guide-modal").classList.add("flex");
+        };
+
+        window.closeSubGuideModal = function() {
+            document.getElementById("sub-guide-modal").classList.add("hidden");
+            document.getElementById("sub-guide-modal").classList.remove("flex");
+        };
+
         window.handleLogin = async function(e) {
             e.preventDefault();
-            const name = document.getElementById("student-name").value.trim();
-            const targetFolderUrl = document.getElementById("student-year").value;
+            const rawName = document.getElementById("student-name").value.trim();
+            const name = rawName || "طالب البصمجية";
+            const selectEl = document.getElementById("student-year");
+            const targetFolderUrl = selectEl.value;
+            const yearLabel = selectEl.options[selectEl.selectedIndex].text;
             const code = document.getElementById("activation-code").value.trim().toUpperCase();
             const errBox = document.getElementById("auth-error");
 
             errBox.classList.add("hidden");
-            showLoading();
 
+            // 1. إذا كان الموقع في الوضع المجاني المفتوح -> يدخل فوراً لاختيار الامتحان!
+            if (isFreeMode && !masterCodes.includes(code)) {
+                showLoading();
+                sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code: "FREE", folderUrl: targetFolderUrl, role: "student" }));
+                setTimeout(() => {
+                    window.location.href = targetFolderUrl;
+                }, 700);
+                return;
+            }
+
+            // 2. إذا كان الموقع في الوضع المدفوع بالأكواد
+            showLoading();
             const deviceId = getDeviceFingerprint();
 
             try {
                 // دخول الأدمن
                 if (masterCodes.includes(code)) {
                     sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl, role: "admin" }));
-                    setTimeout(() => window.location.href = targetFolderUrl, 1000);
+                    setTimeout(() => window.location.href = targetFolderUrl, 800);
                     return;
                 }
 
@@ -683,7 +896,11 @@
                     const codeDocRef = doc(db, 'student_codes', code);
                     const codeSnap = await getDoc(codeDocRef);
 
-                    if (!codeSnap.exists()) throw new Error("⚠️ كود التفعيل غير موجود أو غير صحيح!");
+                    if (!codeSnap.exists()) {
+                        hideLoading();
+                        openSubGuideModal("🔑 الكود الذي أدخلته غير صحيح أو غير مسجل!", name, yearLabel);
+                        return;
+                    }
 
                     const data = codeSnap.data();
 
@@ -692,7 +909,9 @@
                     }
 
                     if (data.lockedDevice && data.lockedDevice !== deviceId) {
-                        throw new Error("🔒 عفواً! هذا الكود تم تفعيله مسبقاً على جهاز طالب آخر ولا يمكن مشاركته.");
+                        hideLoading();
+                        openSubGuideModal("🔒 هذا الكود مفعل بالفعل على جهاز طالب آخر!", name, yearLabel);
+                        return;
                     }
 
                     await updateDoc(codeDocRef, {
@@ -705,7 +924,7 @@
                     
                     setTimeout(() => {
                         window.location.href = targetFolderUrl;
-                    }, 1200);
+                    }, 1000);
                 } else {
                     throw new Error("⚠️ تعذر الاتصال بقاعدة البيانات حالياً.");
                 }
@@ -717,7 +936,7 @@
         };
 
         // ==========================================
-        // دوال لوحة تحكم الإدمن
+        // دوال فتح لوحة تحكم الإدمن (في الوضعين المجاني والمدفوع)
         // ==========================================
         let clicks = 0;
         window.triggerAdmin = function() {
@@ -726,16 +945,34 @@
                 clicks = 0;
                 const pass = document.getElementById("activation-code").value.trim();
                 if (pass === "20206") {
-                    document.getElementById("admin-modal").classList.remove("hidden");
-                    document.getElementById("admin-modal").classList.add("flex");
-                    renderAdminCodesList();
+                    openAdminPanelNow();
                 } else {
-                    const errBox = document.getElementById("auth-error");
-                    errBox.innerText = "💡 لفتح لوحة الإدمن: اكتب كود الإدمن (20206) في خانة كود التفعيل ثم اضغط هنا 5 مرات.";
-                    errBox.classList.remove("hidden");
+                    document.getElementById("admin-pin-input").value = "";
+                    document.getElementById("admin-pin-modal").classList.remove("hidden");
+                    document.getElementById("admin-pin-modal").classList.add("flex");
+                    document.getElementById("admin-pin-input").focus();
                 }
             }
         };
+
+        window.verifyAdminPin = function() {
+            const pin = document.getElementById("admin-pin-input").value.trim();
+            if (pin === "20206") {
+                document.getElementById("admin-pin-modal").classList.add("hidden");
+                document.getElementById("admin-pin-modal").classList.remove("flex");
+                sessionStorage.setItem("basmagia_user", JSON.stringify({ name: "أ. بسام وليد (إدمن)", code: "20206", role: "admin" }));
+                openAdminPanelNow();
+            } else {
+                alert("❌ الرمز السري غير صحيح!");
+            }
+        };
+
+        function openAdminPanelNow() {
+            document.getElementById("admin-modal").classList.remove("hidden");
+            document.getElementById("admin-modal").classList.add("flex");
+            updateUIForMode();
+            renderAdminCodesList();
+        }
 
         window.closeAdminModal = function() {
             document.getElementById("admin-modal").classList.add("hidden");
@@ -808,7 +1045,7 @@
                         </div>
                         <div class="flex items-center gap-1.5 shrink-0">
                             ${isLocked ? `<button onclick="unlockDevice('${item.code}')" class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-lg text-[10px] font-bold">🔓 فك</button>` : ''}
-                            <button onclick="deleteCloudCode('${item.code}')" class="bg-rose-500/20 text-rose-300 px-2 py-1 rounded-lg text-[10px] font-bold">حذف</button>
+                            <button onclick="deleteCloudCode('${item.code}')" class="bg-rose-500/20 text-rose-300 px-2.5 py-1 rounded-lg text-[10px] font-bold">حذف</button>
                         </div>
                     </div>
                 `;
