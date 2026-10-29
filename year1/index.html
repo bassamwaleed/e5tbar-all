@@ -12,8 +12,9 @@
             font-family: 'Cairo', sans-serif;
             background-color: #040711;
             color: #f8fafc;
-            min-height: 100dvh;
-            overflow-x: hidden;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
             position: relative;
         }
         .ambient-canvas {
@@ -104,118 +105,118 @@
         </div>
     </nav>
 
-    <!-- المحتوى الرئيسي: البانر الإعلاني + شبكة المواد الاحترافية -->
-    <main class="flex-1 w-full max-w-5xl mx-auto flex flex-col justify-center py-3 relative z-10 space-y-3.5">
+    <!-- المحتوى الرئيسي المتسنتر على قد شاشة الموبايل واللاب بدون Scroll -->
+    <main class="flex-1 w-full max-w-5xl mx-auto flex flex-col justify-center py-1.5 relative z-10 gap-2.5 overflow-hidden">
 
         <!-- بانر الأفلييت الذكي المتنقل (مخفي تماماً إذا لم يضف الأدمن أي إعلانات) -->
-        <div id="affiliate-banner-wrapper" class="hidden w-full max-w-3xl mx-auto">
-            <div class="liquid-card rounded-2xl p-1.5 border border-cyan-400/30 relative overflow-hidden group">
-                <span class="absolute top-3 left-3 z-10 bg-black/70 backdrop-blur-md text-[10px] font-extrabold text-cyan-300 px-2.5 py-0.5 rounded-full border border-white/15">عرض خاص للطلاب 🔥</span>
-                <a id="aff-link" href="#" target="_blank" rel="noopener noreferrer" class="block relative rounded-xl overflow-hidden aspect-[16/4.5] sm:aspect-[16/4] bg-slate-900/70">
+        <div id="affiliate-banner-wrapper" class="hidden w-full max-w-3xl mx-auto shrink-0">
+            <div class="liquid-card rounded-2xl p-1 border border-cyan-400/30 relative overflow-hidden group">
+                <span class="absolute top-2 left-2 z-10 bg-black/70 backdrop-blur-md text-[9px] font-extrabold text-cyan-300 px-2 py-0.5 rounded-full border border-white/15">عرض خاص للطلاب 🔥</span>
+                <a id="aff-link" href="#" target="_blank" rel="noopener noreferrer" class="block relative rounded-xl overflow-hidden h-16 sm:h-20 bg-slate-900/70">
                     <img id="aff-img" src="" alt="عرض" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]">
-                    <div id="aff-title-bar" class="hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent px-4 py-2 text-right">
-                        <p id="aff-title" class="text-xs sm:text-sm font-black text-white truncate"></p>
+                    <div id="aff-title-bar" class="hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent px-3 py-1 text-right">
+                        <p id="aff-title" class="text-[11px] sm:text-xs font-black text-white truncate"></p>
                     </div>
                 </a>
-                <div id="aff-dots" class="flex items-center justify-center gap-1.5 py-1.5"></div>
+                <div id="aff-dots" class="flex items-center justify-center gap-1.5 py-1"></div>
             </div>
         </div>
 
         <!-- شبكة الـ 5 مواد الاحترافية -->
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-3.5">
 
             <!-- 1. مبادئ القانون -->
-            <div onclick="openSubjectModal('مبادئ القانون', '⚖️', 'law.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
+            <div onclick="openSubjectModal('مبادئ القانون', '⚖️', 'law.html')" class="liquid-card cursor-pointer rounded-2xl p-3 sm:p-4 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-11 h-11 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">⚖️</div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
+                    <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">⚖️</div>
+                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
-                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">مبادئ القانون</h2>
-                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">مبادئ القانون</h2>
+                    <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div class="flex gap-1">
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">MCQ</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">T/F</span>
                     </div>
-                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span class="text-[11px] text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
             <!-- 2. التفكير الابتكاري -->
-            <div onclick="openSubjectModal('التفكير الابتكاري', '💡', 'thinking.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
+            <div onclick="openSubjectModal('التفكير الابتكاري', '💡', 'thinking.html')" class="liquid-card cursor-pointer rounded-2xl p-3 sm:p-4 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-11 h-11 rounded-2xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">💡</div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
+                    <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">💡</div>
+                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
-                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">التفكير الابتكاري</h2>
-                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">التفكير الابتكاري</h2>
+                    <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div class="flex gap-1">
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">MCQ</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">T/F</span>
                     </div>
-                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span class="text-[11px] text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
             <!-- 3. اللغة الإنجليزية -->
-            <div onclick="openSubjectModal('اللغة الإنجليزية', '🔤', 'english.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
+            <div onclick="openSubjectModal('اللغة الإنجليزية', '🔤', 'english.html')" class="liquid-card cursor-pointer rounded-2xl p-3 sm:p-4 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-11 h-11 rounded-2xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">🔤</div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
+                    <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">🔤</div>
+                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
-                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">اللغة الإنجليزية</h2>
-                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">اللغة الإنجليزية</h2>
+                    <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div class="flex gap-1">
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">MCQ</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">T/F</span>
                     </div>
-                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span class="text-[11px] text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
             <!-- 4. مبادئ الاقتصاد -->
-            <div onclick="openSubjectModal('مبادئ الاقتصاد', '📉', 'economy.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
+            <div onclick="openSubjectModal('مبادئ الاقتصاد', '📉', 'economy.html')" class="liquid-card cursor-pointer rounded-2xl p-3 sm:p-4 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">📉</div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
+                    <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">📉</div>
+                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
-                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">مبادئ الاقتصاد</h2>
-                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">مبادئ الاقتصاد</h2>
+                    <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div class="flex gap-1">
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">MCQ</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">T/F</span>
                     </div>
-                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span class="text-[11px] text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
             <!-- 5. المادة الخامسة -->
-            <div onclick="openSubjectModal('المادة الخامسة (مبادئ الإدارة)', '📋', 'subject5.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right col-span-2 sm:col-span-2 group">
+            <div onclick="openSubjectModal('المادة الخامسة (مبادئ الإدارة)', '📋', 'subject5.html')" class="liquid-card cursor-pointer rounded-2xl p-3 sm:p-4 flex flex-col justify-between text-right col-span-2 sm:col-span-2 group">
                 <div>
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">📋</div>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
+                    <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
+                        <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">📋</div>
+                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
-                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">المادة الخامسة (مبادئ الإدارة)</h2>
-                    <p class="text-[11px] text-slate-400 mt-1">شامل بنك أسئلة الاختيار من متعدد والصح والخطأ والتدريب الذكي</p>
+                    <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">المادة الخامسة (مبادئ الإدارة)</h2>
+                    <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل بنك أسئلة الاختيار من متعدد والصح والخطأ والتدريب الذكي</p>
                 </div>
-                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                <div class="mt-2.5 pt-2 border-t border-white/10 flex items-center justify-between">
                     <div class="flex gap-1">
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
-                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">MCQ</span>
+                        <span class="text-[8px] sm:text-[9px] font-bold bg-white/5 px-1.5 py-0.5 rounded text-slate-300">T/F</span>
                     </div>
-                    <span class="text-xs text-cyan-300 font-black">ابدأ الاختبار الآن ←</span>
+                    <span class="text-[11px] text-cyan-300 font-black">ابدأ الاختبار الآن ←</span>
                 </div>
             </div>
 
@@ -243,29 +244,47 @@
         </div>
     </div>
 
-    <!-- نافذة إدارة بانرات الأفلييت (تظهر للأدمن فقط) -->
+    <!-- نافذة إدارة بانر الأفلييت للأدمن -->
     <div id="banner-admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-3">
         <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[90dvh] flex flex-col justify-between overflow-hidden border border-amber-400/40">
             <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 shrink-0">
                 <div>
-                    <h2 class="text-sm sm:text-base font-black text-amber-300">📢 إدارة بانرات الأفلييت</h2>
-                    <p class="text-[10px] text-slate-400">تظهر في الصفحة الرئيسية وصفحة اختيار الامتحان</p>
+                    <h2 class="text-sm sm:text-base font-black text-amber-300">📢 إدارة بانرات الأفلييت المتعددة</h2>
+                    <p class="text-[10px] text-slate-400">أضف صورة بصورة مع رابطها وستتنقل تلقائياً للطلاب</p>
                 </div>
                 <button onclick="closeBannerModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold">إغلاق ✕</button>
             </div>
 
-            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2 text-right">
-                <div>
-                    <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الصورة (Image URL)</label>
-                    <input type="url" id="ad-img-url" placeholder="https://example.com/image.jpg" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-white outline-none" dir="ltr">
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-cyan-300 mb-1">1️⃣ اختر صورة من جهازك مباشرة:</label>
+                        <label class="cursor-pointer bg-cyan-500/15 hover:bg-cyan-500/25 border border-dashed border-cyan-400/50 rounded-xl px-3 py-2 flex items-center justify-center gap-2 text-xs font-bold text-cyan-200 transition">
+                            <span>📁 استعراض الصور من جهازك</span>
+                            <input type="file" id="ad-img-file" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                        </label>
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">أو ضع رابط صورة مباشر (اختياري):</label>
+                        <input type="url" id="ad-img-url" placeholder="https://example.com/image.jpg" class="liquid-input w-full rounded-xl px-2.5 py-2 text-xs text-white outline-none" dir="ltr">
+                    </div>
                 </div>
+
+                <div id="upload-preview-box" class="hidden items-center justify-between bg-white/5 border border-emerald-400/30 rounded-xl p-2">
+                    <div class="flex items-center gap-2">
+                        <img id="upload-preview-img" src="" class="w-14 h-9 rounded-lg object-cover border border-white/10">
+                        <span class="text-[11px] font-bold text-emerald-300">✅ تم تجهيز الصورة للرفع</span>
+                    </div>
+                    <button type="button" onclick="clearSelectedImage()" class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-1 rounded-lg font-bold">إلغاء</button>
+                </div>
+
                 <div>
-                    <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الأفلييت (Affiliate Link)</label>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">2️⃣ رابط الأفلييت (Affiliate Link):</label>
                     <input type="url" id="ad-target-url" placeholder="https://..." class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-cyan-300 outline-none" dir="ltr">
                 </div>
                 <div class="flex gap-2">
                     <input type="text" id="ad-title-input" placeholder="عنوان قصير (اختياري)" class="liquid-input flex-1 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
-                    <button onclick="addAffiliateAd()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">+ إضافة</button>
+                    <button id="save-ad-btn" onclick="addAffiliateAd()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">+ حفظ الصورة والرابط</button>
                 </div>
             </div>
 
@@ -389,16 +408,54 @@
                 : '';
         };
 
+        let uploadedImageDataUrl = "";
+        window.handleImageUpload = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const maxW = 900;
+                    const scale = img.width > maxW ? maxW / img.width : 1;
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    uploadedImageDataUrl = canvas.toDataURL("image/jpeg", 0.78);
+                    document.getElementById("upload-preview-img").src = uploadedImageDataUrl;
+                    document.getElementById("upload-preview-box").classList.remove("hidden");
+                    document.getElementById("upload-preview-box").classList.add("flex");
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.clearSelectedImage = function() {
+            uploadedImageDataUrl = "";
+            document.getElementById("ad-img-file").value = "";
+            document.getElementById("upload-preview-box").classList.add("hidden");
+            document.getElementById("upload-preview-box").classList.remove("flex");
+        };
+
         window.addAffiliateAd = async function() {
             if (!db) return;
-            const imgUrl = document.getElementById("ad-img-url").value.trim();
+            const urlInput = document.getElementById("ad-img-url").value.trim();
+            const finalImgUrl = uploadedImageDataUrl || urlInput;
             const targetUrl = document.getElementById("ad-target-url").value.trim();
             const title = document.getElementById("ad-title-input").value.trim();
-            if (!imgUrl || !targetUrl) return;
-            await setDoc(doc(db, 'affiliate_banners', "AD-" + Date.now()), { imgUrl, targetUrl, title });
+            if (!finalImgUrl || !targetUrl) return;
+
+            const btn = document.getElementById("save-ad-btn");
+            btn.innerText = "جاري الحفظ...";
+            await setDoc(doc(db, 'affiliate_banners', "AD-" + Date.now()), { imgUrl: finalImgUrl, targetUrl, title });
+            btn.innerText = "+ حفظ الصورة والرابط";
             document.getElementById("ad-img-url").value = "";
             document.getElementById("ad-target-url").value = "";
             document.getElementById("ad-title-input").value = "";
+            clearSelectedImage();
         };
 
         window.deleteAffiliateAd = async function(id) {

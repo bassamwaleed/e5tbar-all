@@ -12,8 +12,9 @@
             font-family: 'Cairo', sans-serif;
             background-color: #040711;
             color: #f8fafc;
-            min-height: 100dvh;
-            overflow-x: hidden;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
             position: relative;
         }
 
@@ -194,42 +195,42 @@
             <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الحصول%20على%20كود%20تفعيل%20في%20بوابة%20البصمجية" target="_blank"
                class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3.5 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
                 <span>💬</span>
-                <span>طلب كود اشتراك</span>
-            </a>
+            <span>طلب كود اشتراك</span>
+        </a>
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي المتسنتر -->
-    <main class="flex-1 w-full max-w-5xl mx-auto flex flex-col items-center justify-center relative z-10 py-4">
+    <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة على الموبايل واللاب -->
+    <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1 overflow-hidden gap-2 sm:gap-3">
         
-        <!-- 1. كارت تسجيل الدخول الرئيسي (في البداية ومسنتر) -->
-        <div class="w-full max-w-md liquid-glass rounded-[28px] p-5 sm:p-7 relative overflow-hidden">
+        <!-- 1. كارت تسجيل الدخول الرئيسي (ملموم ومتسنتر) -->
+        <div class="w-full max-w-md liquid-glass rounded-[26px] p-4 sm:p-6 relative overflow-hidden shrink-0">
             <!-- لمعة ديكورية أعلى الكارت -->
             <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="text-center mb-5 relative">
-                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[11px] font-bold mb-2.5">
-                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+            <div class="text-center mb-3 sm:mb-4 relative">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[10px] font-bold mb-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                     <span>الفرقة الأولى • الثانية • الثالثة • الرابعة</span>
                 </div>
-                <h1 class="text-2xl sm:text-3xl font-black text-gradient">تسجيل دخول الطالب</h1>
-                <p class="text-xs text-slate-400 mt-1">أدخل بياناتك وكود التفعيل للانتقال الفوري إلى قسم فرقتك</p>
+                <h1 class="text-xl sm:text-2xl font-black text-gradient">تسجيل دخول الطالب</h1>
+                <p class="text-[11px] text-slate-400 mt-0.5">أدخل بياناتك وكود التفعيل للانتقال الفوري إلى قسم فرقتك</p>
             </div>
 
-            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-3 rounded-xl mb-4 font-bold text-center"></div>
+            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-[11px] p-2 rounded-xl mb-2.5 font-bold text-center"></div>
 
-            <form onsubmit="handleLogin(event)" class="space-y-3.5 text-right relative">
+            <form onsubmit="handleLogin(event)" class="space-y-2.5 text-right relative">
                 <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1.5">اسم الطالب الثلاثي</label>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم الطالب الثلاثي</label>
                     <input type="text" id="student-name" required placeholder="مثال: أحمد محمد علي" 
-                        class="liquid-input w-full rounded-xl px-4 py-2.5 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+                        class="liquid-input w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
                 </div>
 
-                <div class="grid grid-cols-2 gap-3">
+                <div class="grid grid-cols-2 gap-2.5">
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1.5">الفرقة الدراسية</label>
-                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3 py-2.5 text-xs sm:text-sm text-white outline-none cursor-pointer">
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">الفرقة الدراسية</label>
+                        <select id="student-year" required class="liquid-input w-full rounded-xl px-2.5 py-2 text-xs sm:text-sm text-white outline-none cursor-pointer">
                             <option value="year1/index.html" selected class="bg-slate-900">الفرقة الأولى</option>
                             <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية</option>
                             <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة</option>
@@ -238,73 +239,73 @@
                     </div>
 
                     <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1.5">كود التفعيل</label>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">كود التفعيل</label>
                         <input type="password" id="activation-code" required placeholder="أدخل الكود..." 
-                            class="liquid-input w-full rounded-xl px-3 py-2.5 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
+                            class="liquid-input w-full rounded-xl px-3 py-2 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
                     </div>
                 </div>
 
-                <button type="submit" id="login-btn" class="glow-btn w-full text-white font-black py-3.5 rounded-xl text-xs sm:text-sm mt-2 flex items-center justify-center gap-2">
+                <button type="submit" id="login-btn" class="glow-btn w-full text-white font-black py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2">
                     <span>دخول إلى قسم الفرقة</span>
                     <span>←</span>
                 </button>
             </form>
 
             <!-- شريط المميزات المدمج أسفل الفورم داخل الكارت -->
-            <div class="mt-5 pt-4 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-2 px-1">
-                    <div class="text-sm">⚡</div>
-                    <div class="text-[10px] font-extrabold text-slate-300 mt-0.5">تصحيح فوري</div>
+            <div class="mt-3.5 pt-3 border-t border-white/10 grid grid-cols-3 gap-1.5 text-center">
+                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">⚡</div>
+                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">تصحيح فوري</div>
                 </div>
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-2 px-1">
-                    <div class="text-sm">🎛️</div>
-                    <div class="text-[10px] font-extrabold text-slate-300 mt-0.5">تحكم بالأسئلة</div>
+                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">🎛️</div>
+                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">تحكم بالأسئلة</div>
                 </div>
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-2 px-1">
-                    <div class="text-sm">📊</div>
-                    <div class="text-[10px] font-extrabold text-slate-300 mt-0.5">مراجعة الأخطاء</div>
+                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">📊</div>
+                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">مراجعة الأخطاء</div>
                 </div>
             </div>
         </div>
 
         <!-- بانر إعلانات الأفلييت المبسط (مخفي تماماً إذا لم تضف إعلانات) -->
-        <div id="affiliate-banner-wrapper" class="hidden w-full max-w-md mt-3.5 relative z-20">
-            <div class="liquid-card rounded-2xl p-1.5 border border-cyan-400/25 relative overflow-hidden group">
-                <span class="absolute top-2.5 left-2.5 z-10 bg-black/65 backdrop-blur-md text-[9px] font-extrabold text-cyan-300 px-2 py-0.5 rounded-full border border-white/10">ترشيح مميز ✨</span>
-                <a id="aff-link" href="#" target="_blank" rel="noopener noreferrer" class="block relative rounded-xl overflow-hidden aspect-[16/5] bg-slate-900/60">
+        <div id="affiliate-banner-wrapper" class="hidden w-full max-w-md relative z-20 shrink-0">
+            <div class="liquid-card rounded-2xl p-1 border border-cyan-400/25 relative overflow-hidden group">
+                <span class="absolute top-2 left-2 z-10 bg-black/65 backdrop-blur-md text-[8px] font-extrabold text-cyan-300 px-2 py-0.5 rounded-full border border-white/10">ترشيح مميز ✨</span>
+                <a id="aff-link" href="#" target="_blank" rel="noopener noreferrer" class="block relative rounded-xl overflow-hidden h-14 sm:h-16 bg-slate-900/60">
                     <img id="aff-img" src="" alt="إعلان" class="w-full h-full object-cover transition-all duration-500 group-hover:scale-[1.02]">
-                    <div id="aff-title-bar" class="hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 py-1.5 text-right">
-                        <p id="aff-title" class="text-[11px] font-black text-white truncate"></p>
+                    <div id="aff-title-bar" class="hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/40 to-transparent px-3 py-1 text-right">
+                        <p id="aff-title" class="text-[10px] font-black text-white truncate"></p>
                     </div>
                 </a>
                 <!-- نقاط التنقل بين الصور -->
-                <div id="aff-dots" class="flex items-center justify-center gap-1.5 py-1"></div>
+                <div id="aff-dots" class="flex items-center justify-center gap-1 py-0.5"></div>
             </div>
         </div>
 
-        <!-- 2. كروت المميزات الزجاجية أسفل تسجيل الدخول (تظهر بشكل أنيق ومرتب) -->
-        <div class="w-full max-w-4xl grid grid-cols-1 sm:grid-cols-3 gap-3 mt-3.5">
-            <div class="liquid-card rounded-2xl p-3.5 flex items-center gap-3 text-right">
-                <div class="w-10 h-10 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-lg shrink-0">🎯</div>
+        <!-- 2. شريط المميزات الثلاثي المدمج (يظهر بالكامل على شاشة الموبايل واللاب بدون تمرير) -->
+        <div class="w-full max-w-md sm:max-w-3xl grid grid-cols-3 gap-2 shrink-0">
+            <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
+                <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">🎯</div>
                 <div>
-                    <h3 class="text-xs sm:text-sm font-black text-white">بنوك أسئلة شاملة</h3>
-                    <p class="text-[11px] text-slate-400">أسئلة اختيار من متعدد وصح وخطأ لجميع المواد</p>
+                    <h3 class="text-[10px] sm:text-xs font-black text-white">بنوك شاملة</h3>
+                    <p class="text-[9px] text-slate-400 hidden sm:block">اختيارات وصح وخطأ</p>
                 </div>
             </div>
 
-            <div class="liquid-card rounded-2xl p-3.5 flex items-center gap-3 text-right">
-                <div class="w-10 h-10 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-lg shrink-0">⏱️</div>
+            <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
+                <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">⏱️</div>
                 <div>
-                    <h3 class="text-xs sm:text-sm font-black text-white">محاكاة للامتحان</h3>
-                    <p class="text-[11px] text-slate-400">مؤقت ذكي وترتيب عشوائي وتحديد نطاق الأسئلة</p>
+                    <h3 class="text-[10px] sm:text-xs font-black text-white">محاكاة ذكية</h3>
+                    <p class="text-[9px] text-slate-400 hidden sm:block">مؤقت وتحديد النطاق</p>
                 </div>
             </div>
 
-            <div class="liquid-card rounded-2xl p-3.5 flex items-center gap-3 text-right">
-                <div class="w-10 h-10 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-lg shrink-0">🔒</div>
+            <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
+                <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">🔒</div>
                 <div>
-                    <h3 class="text-xs sm:text-sm font-black text-white">حساب خاص لكل طالب</h3>
-                    <p class="text-[11px] text-slate-400">كود تفعيل مخصص يضمن لك تجربة سريعة وآمنة</p>
+                    <h3 class="text-[10px] sm:text-xs font-black text-white">كود خاص</h3>
+                    <p class="text-[9px] text-slate-400 hidden sm:block">حماية لجهاز الطالب</p>
                 </div>
             </div>
         </div>
@@ -362,19 +363,38 @@
 
             <!-- قسم 2: إدارة بانرات الأفلييت -->
             <div id="admin-ads-section" class="hidden flex-1 flex-col overflow-hidden">
-                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2 text-right">
-                    <div>
-                        <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الصورة المباشر (Image URL)</label>
-                        <input type="url" id="ad-img-url" placeholder="https://example.com/banner.jpg" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-white outline-none" dir="ltr">
+                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[11px] font-bold text-cyan-300 mb-1">1️⃣ اختر صورة من جهازك مباشرة:</label>
+                            <label class="cursor-pointer bg-cyan-500/15 hover:bg-cyan-500/25 border border-dashed border-cyan-400/50 rounded-xl px-3 py-2 flex items-center justify-center gap-2 text-xs font-bold text-cyan-200 transition">
+                                <span>📁 استعراض الصور من جهازك</span>
+                                <input type="file" id="ad-img-file" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                            </label>
+                        </div>
+                        <div>
+                            <label class="block text-[11px] font-bold text-slate-300 mb-1">أو ضع رابط صورة مباشر (اختياري):</label>
+                            <input type="url" id="ad-img-url" placeholder="https://example.com/banner.jpg" class="liquid-input w-full rounded-xl px-2.5 py-2 text-xs text-white outline-none" dir="ltr">
+                        </div>
                     </div>
+
+                    <!-- معاينة سريعة للصورة المختارة -->
+                    <div id="upload-preview-box" class="hidden items-center justify-between bg-white/5 border border-emerald-400/30 rounded-xl p-2">
+                        <div class="flex items-center gap-2">
+                            <img id="upload-preview-img" src="" class="w-14 h-9 rounded-lg object-cover border border-white/10">
+                            <span class="text-[11px] font-bold text-emerald-300">✅ تم تجهيز الصورة للرفع</span>
+                        </div>
+                        <button type="button" onclick="clearSelectedImage()" class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-1 rounded-lg font-bold">إلغاء</button>
+                    </div>
+
                     <div>
-                        <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الأفلييت عند الضغط (Affiliate Link)</label>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">2️⃣ رابط الأفلييت أو المنتج (الذي يفتح عند الضغط على الصورة):</label>
                         <input type="url" id="ad-target-url" placeholder="https://amazon.eg/..." class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-cyan-300 outline-none" dir="ltr">
                     </div>
                     <div class="flex gap-2">
                         <input type="text" id="ad-title-input" placeholder="عنوان قصير فوق الصورة (اختياري)" class="liquid-input flex-1 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
-                        <button onclick="addAffiliateAd()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">
-                            + إضافة البانر
+                        <button id="save-ad-btn" onclick="addAffiliateAd()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">
+                            + حفظ الصورة والرابط
                         </button>
                     </div>
                 </div>
@@ -516,20 +536,58 @@
                 : "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-xs font-black transition";
         };
 
+        // ضغط وتحويل الصورة المرفوعة من الجهاز لتناسب Firebase بسرعة فائقة
+        let uploadedImageDataUrl = "";
+        window.handleImageUpload = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement("canvas");
+                    const maxW = 900;
+                    const scale = img.width > maxW ? maxW / img.width : 1;
+                    canvas.width = img.width * scale;
+                    canvas.height = img.height * scale;
+                    const ctx = canvas.getContext("2d");
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                    uploadedImageDataUrl = canvas.toDataURL("image/jpeg", 0.78);
+                    document.getElementById("upload-preview-img").src = uploadedImageDataUrl;
+                    document.getElementById("upload-preview-box").classList.remove("hidden");
+                    document.getElementById("upload-preview-box").classList.add("flex");
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        };
+
+        window.clearSelectedImage = function() {
+            uploadedImageDataUrl = "";
+            document.getElementById("ad-img-file").value = "";
+            document.getElementById("upload-preview-box").classList.add("hidden");
+            document.getElementById("upload-preview-box").classList.remove("flex");
+        };
+
         window.addAffiliateAd = async function() {
             if (!db) return;
-            const imgUrl = document.getElementById("ad-img-url").value.trim();
+            const urlInput = document.getElementById("ad-img-url").value.trim();
+            const finalImgUrl = uploadedImageDataUrl || urlInput;
             const targetUrl = document.getElementById("ad-target-url").value.trim();
             const title = document.getElementById("ad-title-input").value.trim();
-            if (!imgUrl || !targetUrl) return;
+            if (!finalImgUrl || !targetUrl) return;
 
+            const btn = document.getElementById("save-ad-btn");
+            btn.innerText = "جاري الحفظ...";
             const adId = "AD-" + Date.now();
             await setDoc(doc(db, 'affiliate_banners', adId), {
-                imgUrl, targetUrl, title, createdAt: new Date().toLocaleDateString("ar-EG")
+                imgUrl: finalImgUrl, targetUrl, title, createdAt: new Date().toLocaleDateString("ar-EG")
             });
+            btn.innerText = "+ حفظ الصورة والرابط";
             document.getElementById("ad-img-url").value = "";
             document.getElementById("ad-target-url").value = "";
             document.getElementById("ad-title-input").value = "";
+            clearSelectedImage();
         };
 
         window.deleteAffiliateAd = async function(id) {
