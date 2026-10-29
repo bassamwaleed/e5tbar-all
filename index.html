@@ -1,140 +1,224 @@
-<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>بوابة البصمجية | تسجيل الدخول</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
-    <style>
-        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body {
-            font-family: 'Cairo', sans-serif;
-            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #050814 78%);
-            color: #f8fafc;
-            height: 100dvh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+<!-- ... existing code ... -->
+    <!-- ربط قاعدة البيانات السحابية (Firebase Firestore) -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // إعدادات قاعدة البيانات الخاصة بك (basmagia-db)
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
+            authDomain: "basmagia-db.firebaseapp.com",
+            projectId: "basmagia-db",
+            storageBucket: "basmagia-db.firebasestorage.app",
+            messagingSenderId: "856738838094",
+            appId: "1:856738838094:web:9d2b84baf32567522cf51f",
+            measurementId: "G-VT62WZW8TJ"
+        };
+
+        let db = null;
+        let cloudCodesCache = {};
+        let rulesError = false;
+
+        // إنشاء بصمة فريدة لجهاز الطالب لمنع مشاركة الكود مع طالب آخر
+        function getDeviceFingerprint() {
+            let fp = "DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height + "-" + navigator.language;
+            return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
         }
-        .liquid-glass {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 100%);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+
+        async function initCloudDatabase() {
+            try {
+                const app = initializeApp(firebaseConfig);
+                db = getFirestore(app);
+
+                // الاستماع المباشر للأكواد في قاعدة البيانات
+                const codesRef = collection(db, 'student_codes');
+                onSnapshot(codesRef, (snapshot) => {
+                    rulesError = false;
+                    cloudCodesCache = {};
+                    snapshot.forEach(d => { cloudCodesCache[d.id] = d.data(); });
+                    renderAdminCodesList();
+                }, (err) => {
+                    console.warn("Firestore Rules Notice:", err);
+                    rulesError = true;
+                    renderAdminCodesList();
+                });
+            } catch (e) {
+                console.warn("Firebase init notice:", e);
+            }
         }
-        .liquid-input {
-            background: rgba(8, 13, 26, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.16);
-        }
-        .liquid-input:focus {
-            border-color: #38bdf8;
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
-        }
-        .glow-btn {
-            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
-        }
-    </style>
-</head>
-<body class="p-3 sm:p-5">
+        initCloudDatabase();
 
-    <!-- الهيدر -->
-    <nav class="w-full max-w-4xl mx-auto shrink-0">
-        <div class="liquid-glass rounded-2xl px-4 py-2.5 flex items-center justify-between">
-            <div class="flex items-center gap-2.5">
-                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-base">⚡</div>
-                <div>
-                    <span class="font-black text-sm sm:text-base text-white">بوابة البصمجية</span>
-                    <span class="text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full mr-1">PRO</span>
-                </div>
-            </div>
-            <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الحصول%20على%20كود%20تفعيل" target="_blank"
-               class="text-xs font-extrabold bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3 py-1.5 rounded-xl transition">
-                💬 طلب كود اشتراك
-            </a>
-        </div>
-    </nav>
+        // أكواد الماستر الخاصة بك كأدمن
+        const masterCodes = ["20206", "VIP-2026"];
 
-    <!-- كارت تسجيل الدخول المتسنتر في نص الشاشة -->
-    <main class="flex-1 w-full max-w-md mx-auto flex flex-col items-center justify-center">
-        <div class="w-full liquid-glass rounded-3xl p-5 sm:p-6">
-            <div class="text-center mb-4">
-                <span class="text-[11px] font-bold text-cyan-300 bg-cyan-500/10 border border-cyan-400/30 px-3 py-1 rounded-full">
-                    الفرقة الأولى • الثانية • الثالثة • الرابعة
-                </span>
-                <h1 class="text-xl sm:text-2xl font-black text-white mt-2">تسجيل دخول الطالب</h1>
-                <p class="text-xs text-slate-400 mt-1">أدخل بياناتك وكود التفعيل للانتقال إلى قسم فرقتك</p>
-            </div>
-
-            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-2.5 rounded-xl mb-3 font-bold text-center"></div>
-
-            <form onsubmit="handleLogin(event)" class="space-y-3 text-right">
-                <div>
-                    <label class="block text-xs font-bold text-slate-300 mb-1">اسم الطالب</label>
-                    <input type="text" id="student-name" required placeholder="اكتب اسمك الثلاثي..." 
-                        class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white outline-none">
-                </div>
-
-                <div class="grid grid-cols-2 gap-2.5">
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">الفرقة الدراسية</label>
-                        <select id="student-year" required class="liquid-input w-full rounded-xl px-2.5 py-2.5 text-xs sm:text-sm text-white outline-none cursor-pointer">
-                            <option value="year1/index.html" selected class="bg-slate-900">الفرقة الأولى</option>
-                            <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية</option>
-                            <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة</option>
-                            <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة</option>
-                        </select>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-bold text-slate-300 mb-1">كود التفعيل</label>
-                        <input type="password" id="activation-code" required placeholder="أدخل الكود..." 
-                            class="liquid-input w-full rounded-xl px-3 py-2.5 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase">
-                    </div>
-                </div>
-
-                <button type="submit" class="glow-btn w-full text-white font-black py-3 rounded-xl text-xs sm:text-sm mt-2">
-                    دخول إلى قسم الفرقة ←
-                </button>
-            </form>
-        </div>
-    </main>
-
-    <!-- الفوتر -->
-    <footer class="w-full max-w-4xl mx-auto shrink-0">
-        <div class="liquid-glass rounded-2xl px-4 py-2 flex items-center justify-between text-xs">
-            <span class="font-bold text-white">تصميم وتطوير: بسام وليد ⚡</span>
-            <span class="text-slate-400">صلِّ على النبي ❤️</span>
-        </div>
-    </footer>
-
-    <script>
-        const validCodes = ["VIP-2026", "STD-1001", "STD-2002", "STD-3003", "STD-4004", "20206"];
-
-        function handleLogin(e) {
+        window.handleLogin = async function(e) {
             e.preventDefault();
             const name = document.getElementById("student-name").value.trim();
             const targetFolderUrl = document.getElementById("student-year").value;
             const code = document.getElementById("activation-code").value.trim().toUpperCase();
             const errBox = document.getElementById("auth-error");
+            const btn = document.getElementById("login-btn");
 
-            if (!validCodes.includes(code)) {
-                errBox.innerText = "⚠️ كود التفعيل غير صحيح! تواصل معنا للحصول على الكود.";
+            errBox.classList.add("hidden");
+            btn.innerText = "⏳ جاري التحقق من الكود...";
+            btn.disabled = true;
+
+            const deviceId = getDeviceFingerprint();
+
+            try {
+                // 1. لو الكود هو كود الإدمن السري يفتح فوراً بدون قيود
+                if (masterCodes.includes(code)) {
+                    sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl, role: "admin" }));
+                    window.location.href = targetFolderUrl;
+                    return;
+                }
+
+                // 2. التحقق من قاعدة البيانات السحابية
+                if (db) {
+                    const codeDocRef = doc(db, 'student_codes', code);
+                    const codeSnap = await getDoc(codeDocRef);
+
+                    if (!codeSnap.exists()) {
+                        throw new Error("⚠️ كود التفعيل غير موجود أو غير صحيح!");
+                    }
+
+                    const data = codeSnap.data();
+
+                    // التحقق من الفرقة المسموحة للكود
+                    if (data.allowedYear && data.allowedYear !== "all" && data.allowedYear !== targetFolderUrl) {
+                        throw new Error("⚠️ هذا الكود مخصص لفرقة دراسية أخرى غير التي اخترتها!");
+                    }
+
+                    // التحقق من قفل الجهاز (لمنع مشاركة الكود بين الطلاب)
+                    if (data.lockedDevice && data.lockedDevice !== deviceId) {
+                        throw new Error("🔒 عفواً! هذا الكود تم تفعيله مسبقاً على جهاز طالب آخر ولا يمكن مشاركته.");
+                    }
+
+                    // ربط الكود بجهاز الطالب واسمه عند أول دخول
+                    await updateDoc(codeDocRef, {
+                        lockedDevice: deviceId,
+                        studentName: name,
+                        lastLogin: new Date().toLocaleString("ar-EG")
+                    });
+
+                    sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl }));
+                    window.location.href = targetFolderUrl;
+                    return;
+                } else {
+                    throw new Error("⚠️ تعذر الاتصال بقاعدة البيانات حالياً.");
+                }
+            } catch (err) {
+                errBox.innerText = err.message;
                 errBox.classList.remove("hidden");
+                btn.innerText = "دخول إلى قسم الفرقة ←";
+                btn.disabled = false;
+            }
+        };
+
+        // ==========================================
+        // دوال لوحة تحكم الإدمن (توليد وحذف وفك قفل الأكواد)
+        // ==========================================
+        let clicks = 0;
+        window.triggerAdmin = function() {
+            clicks++;
+            if (clicks >= 5) {
+                clicks = 0;
+                const pass = document.getElementById("activation-code").value.trim();
+                if (pass === "20206") {
+                    document.getElementById("admin-modal").classList.remove("hidden");
+                    document.getElementById("admin-modal").classList.add("flex");
+                    renderAdminCodesList();
+                } else {
+                    const errBox = document.getElementById("auth-error");
+                    errBox.innerText = "💡 لفتح لوحة الإدمن: اكتب كود الإدمن (20206) في خانة كود التفعيل ثم اضغط هنا 5 مرات.";
+                    errBox.classList.remove("hidden");
+                }
+            }
+        };
+
+        window.closeAdminModal = function() {
+            document.getElementById("admin-modal").classList.add("hidden");
+            document.getElementById("admin-modal").classList.remove("flex");
+        };
+
+        window.generateCloudCode = async function() {
+            if (!db) return;
+            const note = document.getElementById("new-code-note").value.trim() || "طالب مشترك";
+            const allowedYear = document.getElementById("new-code-year").value;
+            let customCode = document.getElementById("custom-code-input").value.trim().toUpperCase();
+
+            if (!customCode) {
+                customCode = "BSM-" + Math.floor(1000 + Math.random() * 9000);
+            }
+
+            try {
+                const codeDocRef = doc(db, 'student_codes', customCode);
+                await setDoc(codeDocRef, {
+                    code: customCode,
+                    note: note,
+                    allowedYear: allowedYear,
+                    lockedDevice: null,
+                    studentName: "",
+                    createdAt: new Date().toLocaleDateString("ar-EG")
+                });
+
+                document.getElementById("new-code-note").value = "";
+                document.getElementById("custom-code-input").value = "";
+            } catch (e) {
+                rulesError = true;
+                renderAdminCodesList();
+            }
+        };
+
+        window.unlockDevice = async function(code) {
+            if (!db) return;
+            const codeDocRef = doc(db, 'student_codes', code);
+            await updateDoc(codeDocRef, { lockedDevice: null, studentName: "" });
+        };
+
+        window.deleteCloudCode = async function(code) {
+            if (!db) return;
+            const codeDocRef = doc(db, 'student_codes', code);
+            await deleteDoc(codeDocRef);
+        };
+
+        function renderAdminCodesList() {
+            const container = document.getElementById("codes-list");
+            if (rulesError) {
+                container.innerHTML = `<div class="bg-rose-500/20 border border-rose-400/40 rounded-xl p-3 text-xs text-rose-200 leading-relaxed">
+                    ⚠️ <b>تنبيه هام:</b> قاعدة البيانات مقفولة (Locked Mode)!<br>
+                    افتح موقع Firebase ثم <b>Firestore Database</b> ثم اضغط على تبويب <b>Rules</b> بالأعلى، وغيّر كلمة <code>if false;</code> إلى <code>if true;</code> ثم اضغط <b>Publish</b>.
+                </div>`;
                 return;
             }
 
-            sessionStorage.setItem("basmagia_user", JSON.stringify({
-                name: name,
-                code: code,
-                folderUrl: targetFolderUrl
-            }));
+            const keys = Object.keys(cloudCodesCache);
+            if (keys.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-slate-400 py-6">لا توجد أكواد بعد، اضغط "+ إنشاء وحفظ الكود" بالأعلى!</div>`;
+                return;
+            }
 
-            window.location.href = targetFolderUrl;
+            container.innerHTML = keys.map(k => {
+                const item = cloudCodesCache[k];
+                const isLocked = !!item.lockedDevice;
+                return `
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-2.5 flex items-center justify-between gap-2">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <span class="font-mono font-black text-xs sm:text-sm text-cyan-300 select-all">${item.code}</span>
+                                <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isLocked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
+                                    ${isLocked ? '🔒 مفعل (' + (item.studentName || item.note) + ')' : '🟢 متاح للتفعيل'}
+                                </span>
+                            </div>
+                            <div class="text-[10px] text-slate-400 mt-0.5">المشتري: ${item.note}</div>
+                        </div>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            ${isLocked ? `<button onclick="unlockDevice('${item.code}')" class="bg-amber-500/20 text-amber-300 px-2 py-1 rounded-lg text-[10px] font-bold" title="فك قفل الجهاز">🔓 فك الجهاز</button>` : ''}
+                            <button onclick="deleteCloudCode('${item.code}')" class="bg-rose-500/20 text-rose-300 px-2 py-1 rounded-lg text-[10px] font-bold">حذف</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
     </script>
 </body>
