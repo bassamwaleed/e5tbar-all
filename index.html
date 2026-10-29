@@ -1,11 +1,169 @@
-<!-- ... existing code ... -->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بوابة البصمجية | تسجيل الدخول</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #050814 78%);
+            color: #f8fafc;
+            height: 100dvh;
+            width: 100vw;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 100%);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.25);
+        }
+        .liquid-input {
+            background: rgba(8, 13, 26, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+        }
+        .liquid-input:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
+        }
+        .glow-btn {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+        }
+    </style>
+</head>
+<body class="p-3 sm:p-5">
+
+    <!-- الهيدر -->
+    <nav class="w-full max-w-4xl mx-auto shrink-0">
+        <div class="liquid-glass rounded-2xl px-4 py-2.5 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-base">⚡</div>
+                <div>
+                    <span class="font-black text-sm sm:text-base text-white">بوابة البصمجية</span>
+                    <span class="text-[10px] font-extrabold bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full mr-1">PRO</span>
+                </div>
+            </div>
+            <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الحصول%20على%20كود%20تفعيل" target="_blank"
+               class="text-xs font-extrabold bg-emerald-500 hover:bg-emerald-400 text-slate-950 px-3 py-1.5 rounded-xl transition">
+                💬 طلب كود اشتراك
+            </a>
+        </div>
+    </nav>
+
+    <!-- كارت تسجيل الدخول المتسنتر في نص الشاشة -->
+    <main class="flex-1 w-full max-w-md mx-auto flex flex-col items-center justify-center">
+        <div class="w-full liquid-glass rounded-3xl p-5 sm:p-6">
+            <div class="text-center mb-4">
+                <span class="text-[11px] font-bold text-cyan-300 bg-cyan-500/10 border border-cyan-400/30 px-3 py-1 rounded-full">
+                    الفرقة الأولى • الثانية • الثالثة • الرابعة
+                </span>
+                <h1 class="text-xl sm:text-2xl font-black text-white mt-2">تسجيل دخول الطالب</h1>
+                <p class="text-xs text-slate-400 mt-1">أدخل بياناتك وكود التفعيل للانتقال إلى قسم فرقتك</p>
+            </div>
+
+            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-2.5 rounded-xl mb-3 font-bold text-center"></div>
+
+            <form onsubmit="handleLogin(event)" class="space-y-3 text-right">
+                <div>
+                    <label class="block text-xs font-bold text-slate-300 mb-1">اسم الطالب</label>
+                    <input type="text" id="student-name" required placeholder="اكتب اسمك الثلاثي..." 
+                        class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white outline-none">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">الفرقة الدراسية</label>
+                        <select id="student-year" required class="liquid-input w-full rounded-xl px-2.5 py-2.5 text-xs sm:text-sm text-white outline-none cursor-pointer">
+                            <option value="year1/index.html" selected class="bg-slate-900">الفرقة الأولى</option>
+                            <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية</option>
+                            <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة</option>
+                            <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-300 mb-1">كود التفعيل</label>
+                        <input type="password" id="activation-code" required placeholder="أدخل الكود..." 
+                            class="liquid-input w-full rounded-xl px-3 py-2.5 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase">
+                    </div>
+                </div>
+
+                <button type="submit" id="login-btn" class="glow-btn w-full text-white font-black py-3 rounded-xl text-xs sm:text-sm mt-2 transition">
+                    دخول إلى قسم الفرقة ←
+                </button>
+            </form>
+        </div>
+    </main>
+
+    <!-- نافذة لوحة تحكم الإدمن السحابية (تظهر بالضغط 5 مرات على اسمك) -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-3">
+        <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[90dvh] flex flex-col justify-between overflow-hidden border border-cyan-400/40">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 shrink-0">
+                <div>
+                    <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن السحابية</h2>
+                    <p class="text-[10px] text-slate-400">توليد أكواد الطلاب وقفل الأجهزة (Device Lock)</p>
+                </div>
+                <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold">إغلاق ✕</button>
+            </div>
+
+            <!-- نموذج توليد كود جديد في قاعدة البيانات -->
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
+                <div class="grid grid-cols-2 gap-2">
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم المشتري (اختياري)</label>
+                        <input type="text" id="new-code-note" placeholder="مثلاً: أحمد محمد" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-[11px] font-bold text-slate-300 mb-1">الفرقة المسموحة</label>
+                        <select id="new-code-year" class="liquid-input w-full rounded-lg px-2 py-1.5 text-xs text-white outline-none">
+                            <option value="all" class="bg-slate-900">كل الفرق</option>
+                            <option value="year1/index.html" class="bg-slate-900">الفرقة الأولى فقط</option>
+                            <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية فقط</option>
+                            <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة فقط</option>
+                            <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة فقط</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="custom-code-input" placeholder="اكتب كود أو اتركه عشوائي" class="liquid-input flex-1 rounded-lg px-2.5 py-1.5 text-xs font-mono text-cyan-300 uppercase outline-none">
+                    <button onclick="generateCloudCode()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">
+                        + إنشاء وحفظ الكود
+                    </button>
+                </div>
+            </div>
+
+            <!-- قائمة الأكواد المسجلة في قاعدة البيانات -->
+            <div class="flex-1 overflow-y-auto space-y-2 pr-1 text-right" id="codes-list">
+                <div class="text-center text-xs text-slate-400 py-6">جاري تحميل الأكواد من قاعدة البيانات...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- الفوتر -->
+    <footer class="w-full max-w-4xl mx-auto shrink-0">
+        <div class="liquid-glass rounded-2xl px-4 py-2 flex items-center justify-between text-xs">
+            <span onclick="triggerAdmin()" class="font-bold text-white cursor-pointer select-none">تصميم وتطوير: بسام وليد ⚡</span>
+            <span class="text-slate-400">صلِّ على النبي ❤️</span>
+        </div>
+    </footer>
+
     <!-- ربط قاعدة البيانات السحابية (Firebase Firestore) -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // إعدادات قاعدة البيانات الخاصة بك (basmagia-db)
-        const firebaseConfig = {
+        // 1. إعدادات قاعدة البيانات تم التحديث بنجاح
+        const manualFirebaseConfig = {
             apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
             authDomain: "basmagia-db.firebaseapp.com",
             projectId: "basmagia-db",
@@ -15,9 +173,12 @@
             measurementId: "G-VT62WZW8TJ"
         };
 
-        let db = null;
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'basmagia-edu-v1';
+        const firebaseConfig = typeof __firebase_config !== 'undefined' ? JSON.parse(__firebase_config) : manualFirebaseConfig;
+        const isCloudConfigured = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("PUT_YOUR");
+
+        let db = null, auth = null, currentUser = null;
         let cloudCodesCache = {};
-        let rulesError = false;
 
         // إنشاء بصمة فريدة لجهاز الطالب لمنع مشاركة الكود مع طالب آخر
         function getDeviceFingerprint() {
@@ -26,29 +187,32 @@
         }
 
         async function initCloudDatabase() {
+            if (!isCloudConfigured) return;
             try {
                 const app = initializeApp(firebaseConfig);
+                auth = getAuth(app);
                 db = getFirestore(app);
+                if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                    await signInWithCustomToken(auth, __initial_auth_token);
+                } else {
+                    await signInAnonymously(auth);
+                }
+                currentUser = auth.currentUser;
 
                 // الاستماع المباشر للأكواد في قاعدة البيانات
-                const codesRef = collection(db, 'student_codes');
+                const codesRef = collection(db, 'artifacts', appId, 'public', 'data', 'student_codes');
                 onSnapshot(codesRef, (snapshot) => {
-                    rulesError = false;
                     cloudCodesCache = {};
                     snapshot.forEach(d => { cloudCodesCache[d.id] = d.data(); });
                     renderAdminCodesList();
-                }, (err) => {
-                    console.warn("Firestore Rules Notice:", err);
-                    rulesError = true;
-                    renderAdminCodesList();
-                });
+                }, (err) => console.warn("Cloud listener info:", err));
             } catch (e) {
                 console.warn("Firebase init notice:", e);
             }
         }
         initCloudDatabase();
 
-        // أكواد الماستر الخاصة بك كأدمن
+        // أكواد احتياطية + كود الماستر الخاص بك كأدمن
         const masterCodes = ["20206", "VIP-2026"];
 
         window.handleLogin = async function(e) {
@@ -74,8 +238,8 @@
                 }
 
                 // 2. التحقق من قاعدة البيانات السحابية
-                if (db) {
-                    const codeDocRef = doc(db, 'student_codes', code);
+                if (db && currentUser) {
+                    const codeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_codes', code);
                     const codeSnap = await getDoc(codeDocRef);
 
                     if (!codeSnap.exists()) {
@@ -105,7 +269,7 @@
                     window.location.href = targetFolderUrl;
                     return;
                 } else {
-                    throw new Error("⚠️ تعذر الاتصال بقاعدة البيانات حالياً.");
+                    throw new Error("⚠️ كود التفعيل غير صحيح! تواصل معنا للحصول على كودك.");
                 }
             } catch (err) {
                 errBox.innerText = err.message;
@@ -142,7 +306,7 @@
         };
 
         window.generateCloudCode = async function() {
-            if (!db) return;
+            if (!db || !currentUser) return;
             const note = document.getElementById("new-code-note").value.trim() || "طالب مشترك";
             const allowedYear = document.getElementById("new-code-year").value;
             let customCode = document.getElementById("custom-code-input").value.trim().toUpperCase();
@@ -151,48 +315,41 @@
                 customCode = "BSM-" + Math.floor(1000 + Math.random() * 9000);
             }
 
-            try {
-                const codeDocRef = doc(db, 'student_codes', customCode);
-                await setDoc(codeDocRef, {
-                    code: customCode,
-                    note: note,
-                    allowedYear: allowedYear,
-                    lockedDevice: null,
-                    studentName: "",
-                    createdAt: new Date().toLocaleDateString("ar-EG")
-                });
+            const codeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_codes', customCode);
+            await setDoc(codeDocRef, {
+                code: customCode,
+                note: note,
+                allowedYear: allowedYear,
+                lockedDevice: null,
+                studentName: "",
+                createdAt: new Date().toLocaleDateString("ar-EG")
+            });
 
-                document.getElementById("new-code-note").value = "";
-                document.getElementById("custom-code-input").value = "";
-            } catch (e) {
-                rulesError = true;
-                renderAdminCodesList();
-            }
+            document.getElementById("new-code-note").value = "";
+            document.getElementById("custom-code-input").value = "";
         };
 
         window.unlockDevice = async function(code) {
-            if (!db) return;
-            const codeDocRef = doc(db, 'student_codes', code);
+            if (!db || !currentUser) return;
+            const codeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_codes', code);
             await updateDoc(codeDocRef, { lockedDevice: null, studentName: "" });
         };
 
         window.deleteCloudCode = async function(code) {
-            if (!db) return;
-            const codeDocRef = doc(db, 'student_codes', code);
+            if (!db || !currentUser) return;
+            const codeDocRef = doc(db, 'artifacts', appId, 'public', 'data', 'student_codes', code);
             await deleteDoc(codeDocRef);
         };
 
         function renderAdminCodesList() {
             const container = document.getElementById("codes-list");
-            if (rulesError) {
-                container.innerHTML = `<div class="bg-rose-500/20 border border-rose-400/40 rounded-xl p-3 text-xs text-rose-200 leading-relaxed">
-                    ⚠️ <b>تنبيه هام:</b> قاعدة البيانات مقفولة (Locked Mode)!<br>
-                    افتح موقع Firebase ثم <b>Firestore Database</b> ثم اضغط على تبويب <b>Rules</b> بالأعلى، وغيّر كلمة <code>if false;</code> إلى <code>if true;</code> ثم اضغط <b>Publish</b>.
+            const keys = Object.keys(cloudCodesCache);
+            if (!isCloudConfigured) {
+                container.innerHTML = `<div class="bg-amber-500/15 border border-amber-400/30 rounded-xl p-3 text-xs text-amber-200 leading-relaxed">
+                    ⚡ لربط الموقع بقاعدة بياناتك على Vercel، ضع مفاتيح <b>Firebase Config</b> المجانية الخاصة بك في ملف <code>index.html</code> كما هو مشروح في ملف الدليل.
                 </div>`;
                 return;
             }
-
-            const keys = Object.keys(cloudCodesCache);
             if (keys.length === 0) {
                 container.innerHTML = `<div class="text-center text-xs text-slate-400 py-6">لا توجد أكواد بعد، اضغط "+ إنشاء وحفظ الكود" بالأعلى!</div>`;
                 return;
