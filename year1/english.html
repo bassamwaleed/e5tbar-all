@@ -8,30 +8,62 @@
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-        body { font-family: 'Cairo', sans-serif; background: radial-gradient(circle at 50% 0%, #0f172a 0%, #050814 78%); color: #f8fafc; height: 100dvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .liquid-glass { background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.025) 100%); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.14); }
-        .liquid-input { background: rgba(10,15,30,0.8); border: 1px solid rgba(255,255,255,0.16); }
-        .setup-box { background: rgba(15,23,42,0.7); border: 1px solid rgba(255,255,255,0.12); transition: 0.2s; }
-        .setup-box.active { background: rgba(6,182,212,0.22); border-color: rgba(56,189,248,0.7); }
-        .option-btn { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.13); transition: 0.2s; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #040711;
+            color: #f8fafc;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .ambient-canvas {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #040711 78%);
+        }
+        .orb-1 { position: absolute; width: 320px; height: 320px; border-radius: 50%; filter: blur(85px); opacity: 0.45; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -10%; }
+        .orb-2 { position: absolute; width: 350px; height: 350px; border-radius: 50%; filter: blur(85px); opacity: 0.45; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; }
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.025) 100%);
+            backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+        }
+        .liquid-input { background: rgba(10,15,30,0.85); border: 1px solid rgba(255,255,255,0.16); }
+        .setup-box { background: rgba(15,23,42,0.75); border: 1px solid rgba(255,255,255,0.12); transition: 0.2s; }
+        .setup-box.active { background: rgba(6,182,212,0.22); border-color: rgba(56,189,248,0.75); box-shadow: 0 0 15px rgba(6,182,212,0.2); }
+        .option-btn { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.13); transition: all 0.2s ease; }
+        .option-btn:hover:not(:disabled) { background: rgba(255,255,255,0.09); border-color: rgba(56,189,248,0.5); transform: translateX(-3px); }
         .option-btn.correct { background: rgba(16,185,129,0.25) !important; border-color: #10b981 !important; color: #6ee7b7 !important; }
         .option-btn.wrong { background: rgba(244,63,94,0.25) !important; border-color: #f43f5e !important; color: #fda4af !important; }
-        .glow-btn { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); }
+        .glow-btn { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); }
     </style>
 </head>
 <body class="p-3">
-    <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-2xl max-h-full flex flex-col justify-between overflow-hidden">
-        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-white/10 shrink-0">
-            <a href="index.html" class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-extrabold">→ مواد الفرقة الأولى</a>
+    <div class="ambient-canvas"><div class="orb-1"></div><div class="orb-2"></div></div>
+
+    <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-2xl max-h-[96dvh] flex flex-col justify-between overflow-hidden relative z-10">
+        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-white/10 shrink-0">
+            <a href="index.html" class="bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-extrabold transition">→ مواد الفرقة</a>
             <h1 class="text-xs sm:text-base font-black text-cyan-300 truncate">🔤 مادة اللغة الإنجليزية</h1>
-            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-2.5 py-1.5 rounded-xl text-xs font-black">⚙️ الإعدادات</button>
+            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-3 py-1.5 rounded-xl text-xs font-black hover:bg-cyan-500/30 transition">⚙️ الإعدادات</button>
         </div>
 
-        <div id="setup-screen" class="space-y-3 text-right">
-            <div class="bg-slate-900/85 border border-cyan-400/35 rounded-2xl p-4 space-y-3">
-                <div class="flex items-center justify-between border-b border-white/10 pb-2">
-                    <h2 class="text-sm font-black text-white">⚙️ إعدادات الاختبار قبل البدء</h2>
-                    <span class="text-xs font-black text-cyan-300">المتاح: <span id="avail-count">0</span> سؤال</span>
+        <div id="setup-screen" class="space-y-3 text-right overflow-y-auto">
+            <div class="bg-slate-900/90 border border-cyan-400/35 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+                    <div>
+                        <h2 class="text-sm font-black text-white">⚙️ إعدادات وتخصيص الاختبار</h2>
+                        <p class="text-[10px] text-slate-400">اضبط خياراتك المفضلة قبل الانطلاق</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black bg-cyan-500/15 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">المتاح: <span id="avail-count">0</span> سؤال</span>
+                        <button id="resume-quiz-btn" onclick="resumeQuiz()" class="hidden bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 px-2.5 py-1 rounded-lg text-xs font-black hover:bg-emerald-500/30 transition">
+                            ✕ عودة للامتحان
+                        </button>
+                    </div>
                 </div>
 
                 <div class="grid grid-cols-2 gap-2">
@@ -73,21 +105,34 @@
                     </div>
                 </div>
 
-                <button type="button" onclick="startQuizNow()" class="glow-btn w-full py-3 rounded-xl font-black text-xs sm:text-sm text-white">🚀 تأكيد الإعدادات وبدء الاختبار الآن</button>
+                <div class="flex gap-2">
+                    <button type="button" onclick="startQuizNow()" class="glow-btn flex-1 py-3 rounded-xl font-black text-xs sm:text-sm text-white transition hover:scale-[1.01]">🚀 تطبيق الإعدادات وبدء الاختبار</button>
+                    <button type="button" id="resume-bottom-btn" onclick="resumeQuiz()" class="hidden bg-white/10 hover:bg-white/15 text-white font-bold px-4 py-3 rounded-xl text-xs">استكمال الامتحان الحالي</button>
+                </div>
             </div>
         </div>
 
-        <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden">
+        <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden flex-1">
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-1.5 mb-2 flex items-center justify-between gap-1.5 text-[11px] font-bold shrink-0">
+                <div class="flex items-center gap-1">
+                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
+                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-2.5 py-1 rounded-lg border border-white/10">🎯 تغيير النطاق</button>
+                </div>
+                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
+            </div>
+
+            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-2.5 shrink-0">
+                <div id="progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+
             <div class="grid grid-cols-3 gap-2 mb-2.5 text-center text-xs font-black shrink-0">
                 <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-1.5 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
                 <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-1.5 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
-                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">
-                    <span id="timer-disp" class="hidden text-amber-300 ml-1">15:00</span>
-                    س <span id="q-curr">1</span>/<span id="q-total">0</span>
-                </div>
+                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
             </div>
-            <div id="quiz-container" class="overflow-y-auto py-1">
-                <div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl"></div>
+
+            <div id="quiz-container" class="overflow-y-auto py-1 flex-1 flex flex-col justify-between">
+                <div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-4 bg-white/[0.04] border border-white/10 rounded-2xl leading-relaxed shadow-inner"></div>
                 <div id="options-container" class="space-y-2"></div>
             </div>
         </div>
@@ -114,8 +159,8 @@
             ]
         };
 
-        let currentMode = 'mcq', rawQuestions = [], activeQuestions = [], curr = 0, correct = 0, wrong = 0;
-        let isShuffle = false, showNum = true, isTimer = false, timerInt = null, timeLeft = 0;
+        let currentMode = 'mcq', rawQuestions = [], activeQuestions = [], wrongList = [], curr = 0, correct = 0, wrong = 0;
+        let isShuffle = false, showNum = true, isTimer = false, timerInt = null, timeLeft = 0, isQuizRunning = false;
 
         function switchMode(m) {
             currentMode = m;
@@ -126,12 +171,49 @@
             document.getElementById('q-start').value = 1;
             document.getElementById('q-end').value = rawQuestions.length;
         }
-        switchMode('mcq');
+
+        const urlParams = new URLSearchParams(window.location.search);
+        switchMode(urlParams.get('mode') === 'tf' ? 'tf' : 'mcq');
 
         function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('box-shuffle').classList.toggle('active', isShuffle); document.getElementById('txt-shuffle').innerText = isShuffle ? 'عشوائي' : 'عادي'; }
-        function toggleQNum() { showNum = !showNum; document.getElementById('box-qnum').classList.toggle('active', showNum); document.getElementById('txt-qnum').innerText = showNum ? 'ظاهر' : 'مخفي'; }
+        function toggleQNum() {
+            showNum = !showNum;
+            document.getElementById('box-qnum').classList.toggle('active', showNum);
+            document.getElementById('txt-qnum').innerText = showNum ? 'ظاهر' : 'مخفي';
+            document.getElementById('bar-qnum').innerText = showNum ? '🆔 الرقم: ظاهر' : '🆔 الرقم: مخفي';
+        }
+        function quickToggleQNum() {
+            toggleQNum();
+            if (isQuizRunning && curr < activeQuestions.length) {
+                const q = activeQuestions[curr];
+                const qEl = document.getElementById('question-text');
+                if (qEl) qEl.innerText = (showNum ? q.id + '. ' : '') + q.t;
+            }
+        }
         function toggleTimer() { isTimer = !isTimer; document.getElementById('box-timer').classList.toggle('active', isTimer); document.getElementById('txt-timer').innerText = isTimer ? 'مفعل' : 'معطل'; document.getElementById('timer-row').classList.toggle('hidden', !isTimer); document.getElementById('timer-row').classList.toggle('flex', isTimer); }
-        function openSetup() { if (timerInt) clearInterval(timerInt); document.getElementById('setup-screen').classList.remove('hidden'); document.getElementById('quiz-stage').classList.add('hidden'); document.getElementById('reopen-setup').classList.add('hidden'); }
+
+        function openSetup() {
+            document.getElementById('setup-screen').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('flex');
+            document.getElementById('reopen-setup').classList.add('hidden');
+            if (isQuizRunning && curr < activeQuestions.length) {
+                document.getElementById('resume-quiz-btn').classList.remove('hidden');
+                document.getElementById('resume-bottom-btn').classList.remove('hidden');
+            }
+        }
+
+        function resumeQuiz() {
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('flex');
+            document.getElementById('reopen-setup').classList.remove('hidden');
+            if (curr < activeQuestions.length) {
+                const q = activeQuestions[curr];
+                const qEl = document.getElementById('question-text');
+                if (qEl) qEl.innerText = (showNum ? q.id + '. ' : '') + q.t;
+            }
+        }
 
         function startQuizNow() {
             let s = parseInt(document.getElementById('q-start').value) || 1;
@@ -139,7 +221,7 @@
             if (s < 1) s = 1; if (e > rawQuestions.length) e = rawQuestions.length; if (s > e) s = e;
             activeQuestions = rawQuestions.slice(s - 1, e);
             if (isShuffle) activeQuestions.sort(() => Math.random() - 0.5);
-            curr = 0; correct = 0; wrong = 0;
+            curr = 0; correct = 0; wrong = 0; wrongList = []; isQuizRunning = true;
             document.getElementById('correct-count').innerText = 0;
             document.getElementById('wrong-count').innerText = 0;
             document.getElementById('q-total').innerText = activeQuestions.length;
@@ -147,7 +229,7 @@
             document.getElementById('quiz-stage').classList.remove('hidden');
             document.getElementById('quiz-stage').classList.add('flex');
             document.getElementById('reopen-setup').classList.remove('hidden');
-            document.getElementById('quiz-container').innerHTML = '<div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl"></div><div id="options-container" class="space-y-2"></div>';
+            document.getElementById('quiz-container').innerHTML = '<div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-4 bg-white/[0.04] border border-white/10 rounded-2xl leading-relaxed shadow-inner"></div><div id="options-container" class="space-y-2"></div>';
             if (timerInt) clearInterval(timerInt);
             const tDisp = document.getElementById('timer-disp');
             if (isTimer) {
@@ -155,7 +237,7 @@
                 tDisp.classList.remove('hidden');
                 timerInt = setInterval(() => {
                     timeLeft--;
-                    tDisp.innerText = Math.floor(timeLeft/60).toString().padStart(2,'0') + ':' + (timeLeft%60).toString().padStart(2,'0');
+                    tDisp.innerText = '⏳ ' + Math.floor(timeLeft/60).toString().padStart(2,'0') + ':' + (timeLeft%60).toString().padStart(2,'0');
                     if (timeLeft <= 0) { clearInterval(timerInt); finishQuiz(); }
                 }, 1000);
             } else { tDisp.classList.add('hidden'); }
@@ -164,25 +246,60 @@
 
         function finishQuiz() {
             if (timerInt) clearInterval(timerInt);
-            document.getElementById('quiz-container').innerHTML = '<div class="text-center py-5 space-y-3"><h3 class="text-lg font-black">🎉 انتهى الاختبار!</h3><div class="flex gap-2 justify-center"><button onclick="openSetup()" class="glow-btn text-white font-black px-5 py-2.5 rounded-xl text-xs">إعادة الاختبار</button><a href="index.html" class="bg-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-xs">عودة للمواد</a></div></div>';
+            isQuizRunning = false;
+            document.getElementById('progress-fill').style.width = '100%';
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="text-center py-4 space-y-3">
+                    <div class="text-4xl">🏆</div>
+                    <h3 class="text-xl font-black text-white">انتهى الاختبار بنجاح!</h3>
+                    <p class="text-xs text-slate-300">نتيجتك: <b class="text-emerald-400">${correct}</b> صح من <b class="text-cyan-300">${activeQuestions.length}</b></p>
+                    <div class="flex flex-wrap gap-2 justify-center pt-2">
+                        <button onclick="startQuizNow()" class="glow-btn text-white font-black px-5 py-2.5 rounded-xl text-xs">🔄 إعادة نفس الاختبار</button>
+                        ${wrongList.length > 0 ? `<button onclick="showMistakes()" class="bg-rose-500/20 border border-rose-400/40 text-rose-300 font-black px-4 py-2.5 rounded-xl text-xs">📋 مراجعة الأخطاء (${wrongList.length})</button>` : ''}
+                        <button onclick="openSetup()" class="bg-white/10 text-white font-bold px-4 py-2.5 rounded-xl text-xs">⚙️ تغيير الإعدادات</button>
+                    </div>
+                </div>`;
         }
+
+        window.showMistakes = function() {
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="space-y-2 text-right overflow-y-auto max-h-64 pr-1">
+                    ${wrongList.map(w => `
+                        <div class="bg-white/5 border-r-4 border-rose-500 rounded-xl p-3 text-xs space-y-1">
+                            <div class="font-black text-white">س${w.id}: ${w.q}</div>
+                            <div class="text-rose-400">❌ إجابتك: ${w.sel}</div>
+                            <div class="text-emerald-400 font-bold">✅ الصواب: ${w.cor}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="startQuizNow()" class="glow-btn w-full py-2.5 rounded-xl font-black text-xs text-white mt-3">🔄 إعادة الاختبار</button>
+            `;
+        };
 
         function loadQ() {
             if (curr >= activeQuestions.length) return finishQuiz();
             const q = activeQuestions[curr];
             document.getElementById('q-curr').innerText = curr + 1;
+            document.getElementById('progress-fill').style.width = ((curr / activeQuestions.length) * 100) + '%';
             document.getElementById('question-text').innerText = (showNum ? q.id + '. ' : '') + q.t;
             const cont = document.getElementById('options-container');
             cont.innerHTML = '';
+            const letters = ['أ', 'ب', 'ج', 'د'];
             q.o.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn w-full p-3 rounded-xl text-right font-bold text-xs sm:text-sm';
-                btn.innerText = opt;
+                btn.className = 'option-btn w-full p-3.5 rounded-xl text-right font-bold text-xs sm:text-sm flex items-center gap-2';
+                btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-[11px] text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span>${opt}</span>`;
                 btn.onclick = () => {
                     document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-                    if (idx === q.a) { btn.classList.add('correct'); correct++; document.getElementById('correct-count').innerText = correct; }
-                    else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn')[q.a].classList.add('correct'); wrong++; document.getElementById('wrong-count').innerText = wrong; }
-                    setTimeout(() => { curr++; loadQ(); }, 900);
+                    if (idx === q.a) {
+                        btn.classList.add('correct'); correct++; document.getElementById('correct-count').innerText = correct;
+                    } else {
+                        btn.classList.add('wrong');
+                        document.querySelectorAll('.option-btn')[q.a].classList.add('correct');
+                        wrong++; document.getElementById('wrong-count').innerText = wrong;
+                        wrongList.push({ id: q.id, q: q.t, sel: opt, cor: q.o[q.a] });
+                    }
+                    setTimeout(() => { curr++; loadQ(); }, 950);
                 };
                 cont.appendChild(btn);
             });

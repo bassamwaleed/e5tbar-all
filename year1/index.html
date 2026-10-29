@@ -3,173 +3,428 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>الفرقة الأولى | بوابة البصمجية</title>
+    <title>الفرقة الأولى | بوابة البصمجية PRO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         body {
             font-family: 'Cairo', sans-serif;
-            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #050814 78%);
+            background-color: #040711;
             color: #f8fafc;
-            height: 100dvh;
-            width: 100vw;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            min-height: 100dvh;
+            overflow-x: hidden;
+            position: relative;
+        }
+        .ambient-canvas {
+            position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #040711 75%);
+        }
+        .orb {
+            position: absolute; border-radius: 50%; filter: blur(85px); opacity: 0.5;
+            animation: floatOrb 18s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 360px; height: 360px; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -8%; }
+        .orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; animation-delay: -6s; }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-30px, 25px) scale(1.08); }
+        }
+        .bg-grid-mesh {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
         .liquid-glass {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.025) 100%);
-            backdrop-filter: blur(24px);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 100%);
+            backdrop-filter: blur(28px) saturate(180%);
+            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
         }
         .liquid-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            transition: all 0.25s ease;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.13);
+            box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
         }
         .liquid-card:hover {
-            transform: translateY(-2px);
+            transform: translateY(-4px);
             border-color: rgba(56, 189, 248, 0.55);
+            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
+        }
+        .liquid-input {
+            background: rgba(7, 11, 22, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .glow-btn {
+            background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
         }
     </style>
 </head>
-<body class="p-3 sm:p-5">
+<body class="flex flex-col justify-between p-3 sm:p-5">
+
+    <div class="ambient-canvas">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+    <div class="bg-grid-mesh"></div>
 
     <!-- الشريط العلوي -->
-    <nav class="w-full max-w-4xl mx-auto shrink-0">
-        <div class="liquid-glass rounded-2xl px-4 py-2.5 flex items-center justify-between">
-            <div class="flex items-center gap-2">
-                <div class="w-8 h-8 rounded-xl bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center">📚</div>
+    <nav class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
+        <div class="liquid-glass rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/20">📚</div>
                 <div>
-                    <h1 class="font-black text-xs sm:text-base text-white">مواد الفرقة الأولى</h1>
-                    <p id="student-welcome" class="text-[10px] text-cyan-300 font-bold">مرحباً بك</p>
+                    <h1 class="font-black text-xs sm:text-base text-white">بنوك أسئلة الفرقة الأولى</h1>
+                    <p id="student-welcome" class="text-[10px] sm:text-xs text-cyan-300 font-bold">مرحباً بك يا بطل</p>
                 </div>
             </div>
 
             <div class="flex items-center gap-2">
+                <!-- زر إعداد البانر يظهر للأدمن فقط -->
+                <button id="admin-banner-btn" onclick="openBannerModal()" class="hidden bg-amber-500/20 border border-amber-400/40 text-amber-300 px-2.5 py-1.5 rounded-xl text-xs font-black hover:bg-amber-500/30 transition">
+                    📢 إدارة البانر
+                </button>
                 <select onchange="window.location.href=this.value" class="bg-slate-900/90 border border-white/15 rounded-xl px-2.5 py-1.5 text-xs font-bold text-white outline-none cursor-pointer">
                     <option value="../year1/index.html" selected>الفرقة الأولى</option>
                     <option value="../year2/index.html">الفرقة الثانية</option>
                     <option value="../year3/index.html">الفرقة الثالثة</option>
                     <option value="../year4/index.html">الفرقة الرابعة</option>
                 </select>
-                <button onclick="logout()" class="bg-rose-500/20 border border-rose-500/40 text-rose-300 px-3 py-1.5 rounded-xl text-xs font-bold">
+                <button onclick="logout()" class="bg-rose-500/20 border border-rose-500/40 text-rose-300 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-rose-500/30 transition">
                     خروج
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- شبكة الـ 5 مواد داخل فولدر الفرقة الأولى -->
-    <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col justify-center py-2 overflow-hidden">
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 sm:gap-4">
+    <!-- المحتوى الرئيسي: البانر الإعلاني + شبكة المواد الاحترافية -->
+    <main class="flex-1 w-full max-w-5xl mx-auto flex flex-col justify-center py-3 relative z-10 space-y-3.5">
+
+        <!-- بانر الأفلييت الذكي المتنقل (مخفي تماماً إذا لم يضف الأدمن أي إعلانات) -->
+        <div id="affiliate-banner-wrapper" class="hidden w-full max-w-3xl mx-auto">
+            <div class="liquid-card rounded-2xl p-1.5 border border-cyan-400/30 relative overflow-hidden group">
+                <span class="absolute top-3 left-3 z-10 bg-black/70 backdrop-blur-md text-[10px] font-extrabold text-cyan-300 px-2.5 py-0.5 rounded-full border border-white/15">عرض خاص للطلاب 🔥</span>
+                <a id="aff-link" href="#" target="_blank" rel="noopener noreferrer" class="block relative rounded-xl overflow-hidden aspect-[16/4.5] sm:aspect-[16/4] bg-slate-900/70">
+                    <img id="aff-img" src="" alt="عرض" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]">
+                    <div id="aff-title-bar" class="hidden absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/90 via-black/45 to-transparent px-4 py-2 text-right">
+                        <p id="aff-title" class="text-xs sm:text-sm font-black text-white truncate"></p>
+                    </div>
+                </a>
+                <div id="aff-dots" class="flex items-center justify-center gap-1.5 py-1.5"></div>
+            </div>
+        </div>
+
+        <!-- شبكة الـ 5 مواد الاحترافية -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4">
 
             <!-- 1. مبادئ القانون -->
-            <a href="law.html" class="liquid-card rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between text-right">
+            <div onclick="openSubjectModal('مبادئ القانون', '⚖️', 'law.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-2xl">⚖️</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">متاح</span>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">⚖️</div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
                     </div>
-                    <h2 class="font-black text-xs sm:text-base text-white">مبادئ القانون</h2>
-                    <p class="text-[10px] text-slate-400 mt-1 hidden sm:block">بنك أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">مبادئ القانون</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-cyan-300 font-extrabold">
-                    <span>دخول الامتحان</span>
-                    <span>←</span>
+                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                    </div>
+                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
-            </a>
+            </div>
 
             <!-- 2. التفكير الابتكاري -->
-            <a href="thinking.html" class="liquid-card rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between text-right">
+            <div onclick="openSubjectModal('التفكير الابتكاري', '💡', 'thinking.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-2xl">💡</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">متاح</span>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">💡</div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
                     </div>
-                    <h2 class="font-black text-xs sm:text-base text-white">التفكير الابتكاري</h2>
-                    <p class="text-[10px] text-slate-400 mt-1 hidden sm:block">بنك أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">التفكير الابتكاري</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-cyan-300 font-extrabold">
-                    <span>دخول الامتحان</span>
-                    <span>←</span>
+                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                    </div>
+                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
-            </a>
+            </div>
 
             <!-- 3. اللغة الإنجليزية -->
-            <a href="english.html" class="liquid-card rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between text-right">
+            <div onclick="openSubjectModal('اللغة الإنجليزية', '🔤', 'english.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-2xl">🔤</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">متاح</span>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">🔤</div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
                     </div>
-                    <h2 class="font-black text-xs sm:text-base text-white">اللغة الإنجليزية</h2>
-                    <p class="text-[10px] text-slate-400 mt-1 hidden sm:block">بنك أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">اللغة الإنجليزية</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-cyan-300 font-extrabold">
-                    <span>دخول الامتحان</span>
-                    <span>←</span>
+                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                    </div>
+                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
-            </a>
+            </div>
 
             <!-- 4. مبادئ الاقتصاد -->
-            <a href="economy.html" class="liquid-card rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between text-right">
+            <div onclick="openSubjectModal('مبادئ الاقتصاد', '📉', 'economy.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right group">
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-2xl">📉</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">متاح</span>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">📉</div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
                     </div>
-                    <h2 class="font-black text-xs sm:text-base text-white">مبادئ الاقتصاد</h2>
-                    <p class="text-[10px] text-slate-400 mt-1 hidden sm:block">بنك أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">مبادئ الاقتصاد</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">شامل أسئلة الاختيارات والصح والخطأ</p>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-cyan-300 font-extrabold">
-                    <span>دخول الامتحان</span>
-                    <span>←</span>
+                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                    </div>
+                    <span class="text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
-            </a>
+            </div>
 
             <!-- 5. المادة الخامسة -->
-            <a href="subject5.html" class="liquid-card rounded-2xl p-3.5 sm:p-5 flex flex-col justify-between text-right col-span-2 sm:col-span-1">
+            <div onclick="openSubjectModal('المادة الخامسة (مبادئ الإدارة)', '📋', 'subject5.html')" class="liquid-card cursor-pointer rounded-3xl p-4 sm:p-5 flex flex-col justify-between text-right col-span-2 sm:col-span-2 group">
                 <div>
-                    <div class="flex items-center justify-between mb-2">
-                        <span class="text-2xl">📋</span>
-                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-bold">متاح</span>
+                    <div class="flex items-center justify-between mb-3">
+                        <div class="w-11 h-11 rounded-2xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-2xl group-hover:scale-110 transition">📋</div>
+                        <span class="text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2.5 py-0.5 rounded-full font-extrabold">متاح الآن</span>
                     </div>
-                    <h2 class="font-black text-xs sm:text-base text-white">المادة الخامسة (مبادئ الإدارة)</h2>
-                    <p class="text-[10px] text-slate-400 mt-1 hidden sm:block">بنك أسئلة الاختيارات والصح والخطأ</p>
+                    <h2 class="font-black text-sm sm:text-lg text-white group-hover:text-cyan-300 transition">المادة الخامسة (مبادئ الإدارة)</h2>
+                    <p class="text-[11px] text-slate-400 mt-1">شامل بنك أسئلة الاختيار من متعدد والصح والخطأ والتدريب الذكي</p>
                 </div>
-                <div class="mt-3 pt-2 border-t border-white/10 flex items-center justify-between text-[11px] text-cyan-300 font-extrabold">
-                    <span>دخول الامتحان</span>
-                    <span>←</span>
+                <div class="mt-4 pt-2.5 border-t border-white/10 flex items-center justify-between">
+                    <div class="flex gap-1">
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">MCQ</span>
+                        <span class="text-[9px] font-bold bg-white/5 px-2 py-0.5 rounded-md text-slate-300">T/F</span>
+                    </div>
+                    <span class="text-xs text-cyan-300 font-black">ابدأ الاختبار الآن ←</span>
                 </div>
-            </a>
+            </div>
 
         </div>
     </main>
 
+    <!-- نافذة اختيار نوع الامتحان الاحترافية -->
+    <div id="quiz-type-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-sm text-center border border-cyan-400/40 relative">
+            <button onclick="closeSubjectModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
+            <div id="modal-sub-icon" class="w-14 h-14 rounded-2xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-3xl mx-auto mb-3">📚</div>
+            <h3 id="modal-sub-title" class="text-lg font-black text-white mb-1">اسم المادة</h3>
+            <p class="text-xs text-slate-400 mb-5">اختر نظام الأسئلة الذي ترغب في التدرب عليه:</p>
+
+            <div class="space-y-2.5">
+                <a id="modal-mcq-link" href="#" class="glow-btn w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm text-white flex items-center justify-center gap-2 transition hover:scale-[1.02]">
+                    <span>📝</span>
+                    <span>أسئلة الاختيار من متعدد (MCQ)</span>
+                </a>
+                <a id="modal-tf-link" href="#" class="bg-gradient-to-r from-amber-400 to-orange-500 text-slate-950 w-full py-3.5 rounded-2xl font-black text-xs sm:text-sm flex items-center justify-center gap-2 transition hover:scale-[1.02]">
+                    <span>✅</span>
+                    <span>أسئلة الصواب والخطأ (T/F)</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة إدارة بانرات الأفلييت (تظهر للأدمن فقط) -->
+    <div id="banner-admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-3">
+        <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[90dvh] flex flex-col justify-between overflow-hidden border border-amber-400/40">
+            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 shrink-0">
+                <div>
+                    <h2 class="text-sm sm:text-base font-black text-amber-300">📢 إدارة بانرات الأفلييت</h2>
+                    <p class="text-[10px] text-slate-400">تظهر في الصفحة الرئيسية وصفحة اختيار الامتحان</p>
+                </div>
+                <button onclick="closeBannerModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold">إغلاق ✕</button>
+            </div>
+
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2 text-right">
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الصورة (Image URL)</label>
+                    <input type="url" id="ad-img-url" placeholder="https://example.com/image.jpg" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-white outline-none" dir="ltr">
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold text-slate-300 mb-1">رابط الأفلييت (Affiliate Link)</label>
+                    <input type="url" id="ad-target-url" placeholder="https://..." class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-cyan-300 outline-none" dir="ltr">
+                </div>
+                <div class="flex gap-2">
+                    <input type="text" id="ad-title-input" placeholder="عنوان قصير (اختياري)" class="liquid-input flex-1 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
+                    <button onclick="addAffiliateAd()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0">+ إضافة</button>
+                </div>
+            </div>
+
+            <div id="ads-list" class="flex-1 overflow-y-auto space-y-2 pr-1 text-right">
+                <div class="text-center text-xs text-slate-400 py-6">لا توجد بانرات حالياً.</div>
+            </div>
+        </div>
+    </div>
+
     <!-- الفوتر -->
-    <footer class="w-full max-w-4xl mx-auto shrink-0">
-        <div class="liquid-glass rounded-2xl px-4 py-2 flex items-center justify-between text-xs">
+    <footer class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
+        <div class="liquid-glass rounded-2xl px-4 py-2.5 flex items-center justify-between text-xs">
             <span class="font-bold text-white">تصميم وتطوير: بسام وليد ⚡</span>
-            <a href="../index.html" class="text-cyan-300 font-bold">← العودة لصفحة الدخول</a>
+            <a href="../index.html" class="text-cyan-300 font-bold hover:underline">← العودة لصفحة الدخول</a>
         </div>
     </footer>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
         const savedUser = sessionStorage.getItem("basmagia_user");
         if (!savedUser) {
             window.location.href = "../index.html";
         } else {
             const userObj = JSON.parse(savedUser);
             document.getElementById("student-welcome").innerText = "مرحباً، " + userObj.name;
+            if (userObj.role === "admin" || userObj.code === "20206") {
+                document.getElementById("admin-banner-btn").classList.remove("hidden");
+            }
         }
 
-        function logout() {
+        window.logout = function() {
             sessionStorage.removeItem("basmagia_user");
             window.location.href = "../index.html";
+        };
+
+        window.openSubjectModal = function(title, icon, fileUrl) {
+            document.getElementById("modal-sub-title").innerText = title;
+            document.getElementById("modal-sub-icon").innerText = icon;
+            document.getElementById("modal-mcq-link").href = fileUrl + "?mode=mcq";
+            document.getElementById("modal-tf-link").href = fileUrl + "?mode=tf";
+            document.getElementById("quiz-type-modal").classList.remove("hidden");
+            document.getElementById("quiz-type-modal").classList.add("flex");
+        };
+
+        window.closeSubjectModal = function() {
+            document.getElementById("quiz-type-modal").classList.add("hidden");
+            document.getElementById("quiz-type-modal").classList.remove("flex");
+        };
+
+        window.openBannerModal = function() {
+            document.getElementById("banner-admin-modal").classList.remove("hidden");
+            document.getElementById("banner-admin-modal").classList.add("flex");
+        };
+
+        window.closeBannerModal = function() {
+            document.getElementById("banner-admin-modal").classList.add("hidden");
+            document.getElementById("banner-admin-modal").classList.remove("flex");
+        };
+
+        // إعداد Firebase لبانر الأفلييت
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
+            authDomain: "basmagia-db.firebaseapp.com",
+            projectId: "basmagia-db",
+            storageBucket: "basmagia-db.firebasestorage.app",
+            messagingSenderId: "856738838094",
+            appId: "1:856738838094:web:9d2b84baf32567522cf51f"
+        };
+
+        let db = null, affiliateAdsList = [], currentAdIdx = 0, adCarouselTimer = null;
+
+        try {
+            const app = initializeApp(firebaseConfig);
+            db = getFirestore(app);
+            onSnapshot(collection(db, 'affiliate_banners'), (snapshot) => {
+                affiliateAdsList = [];
+                snapshot.forEach(d => affiliateAdsList.push({ id: d.id, ...d.data() }));
+                renderAffiliateCarousel();
+                renderAdminAdsList();
+            });
+        } catch (e) { console.warn(e); }
+
+        function renderAffiliateCarousel() {
+            const wrapper = document.getElementById("affiliate-banner-wrapper");
+            if (!affiliateAdsList || affiliateAdsList.length === 0) {
+                wrapper.classList.add("hidden");
+                if (adCarouselTimer) clearInterval(adCarouselTimer);
+                return;
+            }
+            wrapper.classList.remove("hidden");
+            if (currentAdIdx >= affiliateAdsList.length) currentAdIdx = 0;
+            showAdSlide(currentAdIdx);
+
+            if (adCarouselTimer) clearInterval(adCarouselTimer);
+            if (affiliateAdsList.length > 1) {
+                adCarouselTimer = setInterval(() => {
+                    currentAdIdx = (currentAdIdx + 1) % affiliateAdsList.length;
+                    showAdSlide(currentAdIdx);
+                }, 4000);
+            }
+        }
+
+        window.showAdSlide = function(idx) {
+            if (!affiliateAdsList[idx]) return;
+            currentAdIdx = idx;
+            const ad = affiliateAdsList[idx];
+            document.getElementById("aff-img").src = ad.imgUrl;
+            document.getElementById("aff-link").href = ad.targetUrl || "#";
+            const titleBar = document.getElementById("aff-title-bar");
+            if (ad.title) {
+                document.getElementById("aff-title").innerText = ad.title;
+                titleBar.classList.remove("hidden");
+            } else {
+                titleBar.classList.add("hidden");
+            }
+            const dots = document.getElementById("aff-dots");
+            dots.innerHTML = affiliateAdsList.length > 1
+                ? affiliateAdsList.map((_, i) => `<button onclick="showAdSlide(${i})" class="h-1.5 rounded-full transition-all ${i === idx ? 'w-5 bg-cyan-400' : 'w-1.5 bg-white/25'}"></button>`).join('')
+                : '';
+        };
+
+        window.addAffiliateAd = async function() {
+            if (!db) return;
+            const imgUrl = document.getElementById("ad-img-url").value.trim();
+            const targetUrl = document.getElementById("ad-target-url").value.trim();
+            const title = document.getElementById("ad-title-input").value.trim();
+            if (!imgUrl || !targetUrl) return;
+            await setDoc(doc(db, 'affiliate_banners', "AD-" + Date.now()), { imgUrl, targetUrl, title });
+            document.getElementById("ad-img-url").value = "";
+            document.getElementById("ad-target-url").value = "";
+            document.getElementById("ad-title-input").value = "";
+        };
+
+        window.deleteAffiliateAd = async function(id) {
+            if (!db) return;
+            await deleteDoc(doc(db, 'affiliate_banners', id));
+        };
+
+        function renderAdminAdsList() {
+            const container = document.getElementById("ads-list");
+            if (!container) return;
+            if (affiliateAdsList.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-slate-400 py-6">لا توجد بانرات حالياً (البانر مخفي).</div>`;
+                return;
+            }
+            container.innerHTML = affiliateAdsList.map(ad => `
+                <div class="bg-white/5 border border-white/10 rounded-xl p-2 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2 overflow-hidden">
+                        <img src="${ad.imgUrl}" class="w-12 h-8 rounded object-cover shrink-0">
+                        <div class="overflow-hidden">
+                            <div class="text-xs font-bold text-white truncate">${ad.title || 'بانر إعلاني'}</div>
+                            <div class="text-[10px] text-cyan-300 truncate" dir="ltr">${ad.targetUrl}</div>
+                        </div>
+                    </div>
+                    <button onclick="deleteAffiliateAd('${ad.id}')" class="bg-rose-500/20 text-rose-300 px-2.5 py-1 rounded-lg text-[10px] font-bold shrink-0">حذف</button>
+                </div>
+            `).join('');
         }
     </script>
 </body>
