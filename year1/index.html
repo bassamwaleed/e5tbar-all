@@ -306,10 +306,21 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const savedUser = sessionStorage.getItem("basmagia_user");
+        // إذا دخل الطالب في الوضع المجاني مباشرة بدون جلسة، ننشئ له جلسة مجانية تلقائياً حتى لا يُطرد من الامتحانات
+        let savedUser = sessionStorage.getItem("basmagia_user");
+        const isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
+
         if (!savedUser) {
-            window.location.href = "../index.html";
-        } else {
+            if (isFreeMode) {
+                const defaultGuest = { name: "طالب البصمجية", code: "FREE", role: "student" };
+                sessionStorage.setItem("basmagia_user", JSON.stringify(defaultGuest));
+                savedUser = JSON.stringify(defaultGuest);
+            } else {
+                window.location.href = "../index.html";
+            }
+        }
+
+        if (savedUser) {
             const userObj = JSON.parse(savedUser);
             document.getElementById("student-welcome").innerText = "مرحباً، " + userObj.name;
             if (userObj.role === "admin" || userObj.code === "20206") {
@@ -346,7 +357,6 @@
             document.getElementById("banner-admin-modal").classList.remove("flex");
         };
 
-        // إعداد Firebase لبانر الأفلييت
         const firebaseConfig = {
             apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
             authDomain: "basmagia-db.firebaseapp.com",
