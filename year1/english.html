@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>اللغة الإنجليزية | الفرقة الأولى</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body { font-family: 'Cairo', sans-serif; background: radial-gradient(circle at 50% 0%, #0f172a 0%, #050814 78%); color: #f8fafc; height: 100dvh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .liquid-glass { background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.025) 100%); backdrop-filter: blur(24px); border: 1px solid rgba(255,255,255,0.14); }
+        .liquid-input { background: rgba(10,15,30,0.8); border: 1px solid rgba(255,255,255,0.16); }
+        .setup-box { background: rgba(15,23,42,0.7); border: 1px solid rgba(255,255,255,0.12); transition: 0.2s; }
+        .setup-box.active { background: rgba(6,182,212,0.22); border-color: rgba(56,189,248,0.7); }
+        .option-btn { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.13); transition: 0.2s; }
+        .option-btn.correct { background: rgba(16,185,129,0.25) !important; border-color: #10b981 !important; color: #6ee7b7 !important; }
+        .option-btn.wrong { background: rgba(244,63,94,0.25) !important; border-color: #f43f5e !important; color: #fda4af !important; }
+        .glow-btn { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); }
+    </style>
+</head>
+<body class="p-3">
+    <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-2xl max-h-full flex flex-col justify-between overflow-hidden">
+        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2.5 border-b border-white/10 shrink-0">
+            <a href="index.html" class="bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-extrabold">→ مواد الفرقة الأولى</a>
+            <h1 class="text-xs sm:text-base font-black text-cyan-300 truncate">🔤 مادة اللغة الإنجليزية</h1>
+            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-2.5 py-1.5 rounded-xl text-xs font-black">⚙️ الإعدادات</button>
+        </div>
+
+        <div id="setup-screen" class="space-y-3 text-right">
+            <div class="bg-slate-900/85 border border-cyan-400/35 rounded-2xl p-4 space-y-3">
+                <div class="flex items-center justify-between border-b border-white/10 pb-2">
+                    <h2 class="text-sm font-black text-white">⚙️ إعدادات الاختبار قبل البدء</h2>
+                    <span class="text-xs font-black text-cyan-300">المتاح: <span id="avail-count">0</span> سؤال</span>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2">
+                    <button type="button" id="mode-mcq" onclick="switchMode('mcq')" class="setup-box active p-2.5 rounded-xl font-black text-xs text-center">📝 اختيار من متعدد</button>
+                    <button type="button" id="mode-tf" onclick="switchMode('tf')" class="setup-box p-2.5 rounded-xl font-black text-xs text-center">✅ صح وخطأ</button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <button type="button" id="box-shuffle" onclick="toggleShuffle()" class="setup-box p-2.5 rounded-xl">
+                        <div class="text-base">🔢</div>
+                        <div class="font-black text-[11px]">الترتيب</div>
+                        <div id="txt-shuffle" class="text-[10px] text-cyan-300 font-bold">عادي</div>
+                    </button>
+                    <button type="button" id="box-qnum" onclick="toggleQNum()" class="setup-box active p-2.5 rounded-xl">
+                        <div class="text-base">🆔</div>
+                        <div class="font-black text-[11px]">رقم السؤال</div>
+                        <div id="txt-qnum" class="text-[10px] text-cyan-300 font-bold">ظاهر</div>
+                    </button>
+                    <button type="button" id="box-timer" onclick="toggleTimer()" class="setup-box p-2.5 rounded-xl">
+                        <div class="text-base">⏱️</div>
+                        <div class="font-black text-[11px]">المؤقت</div>
+                        <div id="txt-timer" class="text-[10px] text-cyan-300 font-bold">معطل</div>
+                    </button>
+                </div>
+
+                <div id="timer-row" class="hidden bg-amber-500/10 border border-amber-400/30 rounded-xl p-2.5 items-center justify-between">
+                    <span class="text-xs font-bold text-amber-200">⏳ مدة الاختبار بالدقائق:</span>
+                    <input type="number" id="timer-mins" min="1" value="15" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black text-amber-300">
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5 bg-white/[0.03] border border-white/10 p-2.5 rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold">من السؤال:</span>
+                        <input type="number" id="q-start" min="1" value="1" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-bold">إلى السؤال:</span>
+                        <input type="number" id="q-end" min="1" value="10" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black">
+                    </div>
+                </div>
+
+                <button type="button" onclick="startQuizNow()" class="glow-btn w-full py-3 rounded-xl font-black text-xs sm:text-sm text-white">🚀 تأكيد الإعدادات وبدء الاختبار الآن</button>
+            </div>
+        </div>
+
+        <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden">
+            <div class="grid grid-cols-3 gap-2 mb-2.5 text-center text-xs font-black shrink-0">
+                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-1.5 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
+                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-1.5 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
+                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">
+                    <span id="timer-disp" class="hidden text-amber-300 ml-1">15:00</span>
+                    س <span id="q-curr">1</span>/<span id="q-total">0</span>
+                </div>
+            </div>
+            <div id="quiz-container" class="overflow-y-auto py-1">
+                <div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl"></div>
+                <div id="options-container" class="space-y-2"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (!sessionStorage.getItem("basmagia_user")) window.location.href = "../index.html";
+
+        const banks = {
+            mcq: [
+                { "t": "عند تصميم منتج إلكتروني، فإن الميزة الأكثر تأثيرًا على سرعة انتشاره هي:", "o": ["الشكل المادي", "إمكانية التوزيع الرقمي", "تكلفة الإنتاج", "حجم المخزون"], "a": 1 },
+                { "t": "في التسعير الإلكتروني، انخفاض الأسعار غالبًا يرجع إلى:", "o": ["زيادة الضرائب", "تقليل الوسطاء", "ارتفاع الطلب", "ثبات التكاليف"], "a": 1 },
+                { "t": "أهم عنصر في نجاح E-CRM:", "o": ["المخزون", "السعر", "الموقع فقط", "المعرفة"], "a": 3 },
+                { "t": "أي مما يلي يمثل عنصر Place ؟", "o": ["السعر", "التوزيع", "المنتج", "الإعلان"], "a": 1 },
+                { "t": "أي مما يلي يمثل تسويق G2C ؟", "o": ["شركة لعميل", "حكومة لمستهلك", "عميل لعميل", "شركة لشركة"], "a": 1 },
+                { "t": "أي مما يلي يمثل عنصر Promotion ؟", "o": ["السعر", "التوزيع", "الترويج", "المنتج"], "a": 2 },
+                { "t": "إذا كان معدل الارتداد (Bounce Rate) مرتفعًا جدًا، فهذا يعني:", "o": ["نجاح الموقع", "بقاء المستخدمين لفترة طويلة", "مغادرة المستخدمين بسرعة دون تفاعل", "زيادة المبيعات"], "a": 2 }
+            ],
+            tf: [
+                { "t": "يساهم التسويق الإلكتروني في تقليص المسافة والوسطاء بين البائع والمشتري.", "o": ["صواب", "خطأ"], "a": 0 },
+                { "t": "التسعير الإلكتروني يتميز بالمرونة والقدرة على التحديث اللحظي.", "o": ["صواب", "خطأ"], "a": 0 },
+                { "t": "سرعة استجابة الموقع الإلكتروني وأمان البيانات من أهم محددات نجاح E-CRM.", "o": ["صواب", "خطأ"], "a": 0 },
+                { "t": "معدل الارتداد المرتفع (Bounce Rate) يدل على بقاء المستخدمين لفترة طويلة وتفاعلهم مع الموقع.", "o": ["صواب", "خطأ"], "a": 1 }
+            ]
+        };
+
+        let currentMode = 'mcq', rawQuestions = [], activeQuestions = [], curr = 0, correct = 0, wrong = 0;
+        let isShuffle = false, showNum = true, isTimer = false, timerInt = null, timeLeft = 0;
+
+        function switchMode(m) {
+            currentMode = m;
+            document.getElementById('mode-mcq').classList.toggle('active', m === 'mcq');
+            document.getElementById('mode-tf').classList.toggle('active', m === 'tf');
+            rawQuestions = banks[m].map((q, i) => ({...q, id: i + 1}));
+            document.getElementById('avail-count').innerText = rawQuestions.length;
+            document.getElementById('q-start').value = 1;
+            document.getElementById('q-end').value = rawQuestions.length;
+        }
+        switchMode('mcq');
+
+        function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('box-shuffle').classList.toggle('active', isShuffle); document.getElementById('txt-shuffle').innerText = isShuffle ? 'عشوائي' : 'عادي'; }
+        function toggleQNum() { showNum = !showNum; document.getElementById('box-qnum').classList.toggle('active', showNum); document.getElementById('txt-qnum').innerText = showNum ? 'ظاهر' : 'مخفي'; }
+        function toggleTimer() { isTimer = !isTimer; document.getElementById('box-timer').classList.toggle('active', isTimer); document.getElementById('txt-timer').innerText = isTimer ? 'مفعل' : 'معطل'; document.getElementById('timer-row').classList.toggle('hidden', !isTimer); document.getElementById('timer-row').classList.toggle('flex', isTimer); }
+        function openSetup() { if (timerInt) clearInterval(timerInt); document.getElementById('setup-screen').classList.remove('hidden'); document.getElementById('quiz-stage').classList.add('hidden'); document.getElementById('reopen-setup').classList.add('hidden'); }
+
+        function startQuizNow() {
+            let s = parseInt(document.getElementById('q-start').value) || 1;
+            let e = parseInt(document.getElementById('q-end').value) || rawQuestions.length;
+            if (s < 1) s = 1; if (e > rawQuestions.length) e = rawQuestions.length; if (s > e) s = e;
+            activeQuestions = rawQuestions.slice(s - 1, e);
+            if (isShuffle) activeQuestions.sort(() => Math.random() - 0.5);
+            curr = 0; correct = 0; wrong = 0;
+            document.getElementById('correct-count').innerText = 0;
+            document.getElementById('wrong-count').innerText = 0;
+            document.getElementById('q-total').innerText = activeQuestions.length;
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('flex');
+            document.getElementById('reopen-setup').classList.remove('hidden');
+            document.getElementById('quiz-container').innerHTML = '<div id="question-text" class="text-sm sm:text-lg font-extrabold text-center mb-3 p-3.5 bg-white/[0.03] border border-white/10 rounded-2xl"></div><div id="options-container" class="space-y-2"></div>';
+            if (timerInt) clearInterval(timerInt);
+            const tDisp = document.getElementById('timer-disp');
+            if (isTimer) {
+                timeLeft = (parseInt(document.getElementById('timer-mins').value) || 15) * 60;
+                tDisp.classList.remove('hidden');
+                timerInt = setInterval(() => {
+                    timeLeft--;
+                    tDisp.innerText = Math.floor(timeLeft/60).toString().padStart(2,'0') + ':' + (timeLeft%60).toString().padStart(2,'0');
+                    if (timeLeft <= 0) { clearInterval(timerInt); finishQuiz(); }
+                }, 1000);
+            } else { tDisp.classList.add('hidden'); }
+            loadQ();
+        }
+
+        function finishQuiz() {
+            if (timerInt) clearInterval(timerInt);
+            document.getElementById('quiz-container').innerHTML = '<div class="text-center py-5 space-y-3"><h3 class="text-lg font-black">🎉 انتهى الاختبار!</h3><div class="flex gap-2 justify-center"><button onclick="openSetup()" class="glow-btn text-white font-black px-5 py-2.5 rounded-xl text-xs">إعادة الاختبار</button><a href="index.html" class="bg-white/10 text-white font-bold px-5 py-2.5 rounded-xl text-xs">عودة للمواد</a></div></div>';
+        }
+
+        function loadQ() {
+            if (curr >= activeQuestions.length) return finishQuiz();
+            const q = activeQuestions[curr];
+            document.getElementById('q-curr').innerText = curr + 1;
+            document.getElementById('question-text').innerText = (showNum ? q.id + '. ' : '') + q.t;
+            const cont = document.getElementById('options-container');
+            cont.innerHTML = '';
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn w-full p-3 rounded-xl text-right font-bold text-xs sm:text-sm';
+                btn.innerText = opt;
+                btn.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    if (idx === q.a) { btn.classList.add('correct'); correct++; document.getElementById('correct-count').innerText = correct; }
+                    else { btn.classList.add('wrong'); document.querySelectorAll('.option-btn')[q.a].classList.add('correct'); wrong++; document.getElementById('wrong-count').innerText = wrong; }
+                    setTimeout(() => { curr++; loadQ(); }, 900);
+                };
+                cont.appendChild(btn);
+            });
+        }
+    </script>
+</body>
+</html>
