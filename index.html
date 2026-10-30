@@ -184,32 +184,41 @@
 
     <!-- الهيدر العائم -->
     <header class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
-        <div class="liquid-glass rounded-2xl px-4 py-2.5 sm:px-6 sm:py-3 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/30 border border-white/25">
+        <div class="liquid-glass rounded-2xl px-3.5 py-2.5 sm:px-6 sm:py-3 flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2.5">
+                <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/30 border border-white/25">
                     ⚡
                 </div>
                 <div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-black text-base sm:text-lg text-white tracking-tight">بوابة البصمجية</span>
-                        <span id="header-mode-badge" class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">مجاني 🔓</span>
+                    <div class="flex items-center gap-1.5">
+                        <span class="font-black text-sm sm:text-lg text-white tracking-tight">بوابة البصمجية</span>
+                        <span id="header-mode-badge" class="text-[9px] sm:text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">مجاني 🔓</span>
                     </div>
-                    <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">المنصة التفاعلية الذكية لبنوك الأسئلة والاختبارات</p>
+                    <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">المنصة التفاعلية الذكية لبنوك الأسئلة والملخصات</p>
                 </div>
             </div>
 
-            <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاستفسار%20عن%20منصة%20بوابة%20البصمجية" target="_blank"
-               class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3.5 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
-                <span>💬</span>
-                <span id="header-cta-text">تواصل معنا</span>
-            </a>
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <!-- زر جروب الملخصات على الواتساب -->
+                <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
+                   class="text-[11px] sm:text-xs font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 px-2.5 sm:px-3.5 py-2 rounded-xl transition flex items-center gap-1.5">
+                    <span>📚</span>
+                    <span>جروب الملخصات</span>
+                </a>
+
+                <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاستفسار%20عن%20منصة%20بوابة%20البصمجية" target="_blank"
+                   class="text-[11px] sm:text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3 sm:px-3.5 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1">
+                    <span>💬</span>
+                    <span id="header-cta-text">تواصل معنا</span>
+                </a>
+            </div>
         </div>
     </header>
 
     <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة -->
     <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1 overflow-hidden gap-2 sm:gap-3">
         
-        <!-- 1. الكارت الرئيسي (يتغير تلقائياً بين الوضع المجاني السريع ووضع الكود المدفوع) -->
+        <!-- 1. الكارت الرئيسي -->
         <div class="w-full max-w-md liquid-glass rounded-[26px] p-4 sm:p-6 relative overflow-hidden shrink-0">
             <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
@@ -226,7 +235,6 @@
             <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-[11px] p-2 rounded-xl mb-2.5 font-bold text-center"></div>
 
             <form onsubmit="handleLogin(event)" class="space-y-2.5 text-right relative">
-                <!-- في الوضع المجاني: الاسم اختياري / في الوضع المدفوع: إجباري -->
                 <div>
                     <label id="name-label" class="block text-[11px] font-bold text-slate-300 mb-1">اسم الطالب (اختياري)</label>
                     <input type="text" id="student-name" placeholder="اكتب اسمك ليظهر في الترحيب..." 
@@ -307,40 +315,93 @@
             </div>
 
             <div class="liquid-card rounded-2xl p-2 sm:p-3 flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2.5 text-center sm:text-right">
-                <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">🔒</div>
+                <div class="w-7 h-7 sm:w-9 sm:h-9 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-xs sm:text-base shrink-0">📚</div>
                 <div>
-                    <h3 class="text-[10px] sm:text-xs font-black text-white">تدريب متكامل</h3>
-                    <p class="text-[9px] text-slate-400 hidden sm:block">تقييم فوري لمستواك</p>
+                    <h3 class="text-[10px] sm:text-xs font-black text-white">ملخصات ومراجعات</h3>
+                    <p class="text-[9px] text-slate-400 hidden sm:block">عبر جروب الواتساب</p>
                 </div>
             </div>
         </div>
 
     </main>
 
+    <!-- نافذة دعوة جروب الواتساب الذكية (تظهر تلقائياً للطالب من الزيارة الثانية للموقع!) -->
+    <div id="whatsapp-invite-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-md text-right border border-emerald-400/45 relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-36 h-36 bg-emerald-500/20 rounded-full blur-2xl pointer-events-none"></div>
+            <button onclick="closeWhatsAppModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
+
+            <div class="text-center mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-3xl mx-auto mb-2.5 shadow-lg shadow-emerald-500/20 animate-bounce">
+                    📲
+                </div>
+                <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full">اهلاً بعودتك يا بطل 🌟</span>
+                <h3 class="text-lg sm:text-xl font-black text-white mt-2">انضم لجروب ملخصات ومراجعات الدفعة!</h3>
+                <p class="text-xs text-slate-300 mt-1">عشان متفوتكش أي مراجعة أو أسئلة جديدة قبل الامتحان</p>
+            </div>
+
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3.5 space-y-2 text-xs text-slate-200 mb-4">
+                <div class="font-black text-emerald-300 mb-1">🔥 إيه اللي هينزل على جروب الواتساب؟</div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-black">📌</span>
+                    <span><b>ملخصات مركزة وشاملة لباقي المواد</b> بصيغة PDF جاهزة للطباعة والمذاكرة السريعة.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-black">📌</span>
+                    <span><b>تحديثات بنوك الأسئلة</b> وأهم الأسئلة المتوقعة ليلة الامتحان أول بأول.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-black">📌</span>
+                    <span><b>تنبيهات فورية</b> عند إضافة امتحانات ومواد جديدة على المنصة.</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
+                   class="w-full py-3.5 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 hover:scale-[1.02] transition">
+                    <span>🚀</span>
+                    <span>انضم لجروب الواتساب الآن واستلم الملخصات</span>
+                </a>
+                <button onclick="closeWhatsAppModal()" class="w-full py-2 rounded-xl font-bold text-[11px] bg-white/5 hover:bg-white/10 text-slate-400">
+                    تذكيري لاحقاً، أريد بدء الامتحان الآن
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- نافذة توجيه الطالب للاشتراك عندما يكتب كود خاطئ في الوضع المدفوع -->
     <div id="sub-guide-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
         <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-md text-right border border-amber-400/40 relative">
             <button onclick="closeSubGuideModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
             
-            <div class="text-center mb-4">
-                <div class="w-14 h-14 rounded-2xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-3xl mx-auto mb-2">🔐</div>
+            <div class="text-center mb-3">
+                <div class="w-12 h-12 rounded-2xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-2xl mx-auto mb-1.5">🔐</div>
                 <h3 id="sub-modal-reason" class="text-base sm:text-lg font-black text-amber-300">كود التفعيل غير صحيح أو غير مسجل!</h3>
-                <p class="text-xs text-slate-300 mt-1">للدخول إلى بنوك الأسئلة والامتحانات التفاعلية، تحتاج إلى كود تفعيل خاص بك.</p>
+                <p class="text-[11px] text-slate-300 mt-0.5">اختر باقة الاشتراك المناسبة لك واستلم كودك الشخصي فوراً:</p>
             </div>
 
-            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3.5 space-y-2 text-xs text-slate-200 mb-4">
-                <div class="font-black text-cyan-300 mb-1">💡 كيف تعمل منصة بوابة البصمجية؟</div>
-                <div class="flex items-start gap-2">
-                    <span class="text-emerald-400">✔</span>
-                    <span>كود اشتراك شخصي يفتح لك جميع بنوك الأسئلة (اختياري + صح وخطأ) لفرقتك الدراسية.</span>
+            <div class="grid grid-cols-2 gap-2.5 mb-3">
+                <div class="bg-slate-900/90 border border-white/15 rounded-2xl p-3 text-center">
+                    <span class="text-[10px] font-bold text-slate-400">اشتراك مادة منفردة</span>
+                    <div class="text-base font-black text-white my-1">مادة واحدة</div>
+                    <p class="text-[10px] text-slate-400">يفتح بنك أسئلة الاختيارات والصح والخطأ لمادة محددة</p>
                 </div>
+                <div class="bg-gradient-to-b from-amber-500/20 to-cyan-500/10 border-2 border-amber-400/60 rounded-2xl p-3 text-center relative">
+                    <span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-amber-400 text-slate-950 text-[9px] font-black px-2 py-0.5 rounded-full">الأكثر توفيراً 🌟</span>
+                    <span class="text-[10px] font-bold text-amber-300">الباقة الشاملة للترم</span>
+                    <div class="text-base font-black text-white my-1">جميع مواد الفرقة</div>
+                    <p class="text-[10px] text-slate-300">كود واحد يفتح لك الـ 5 مواد بالكامل طوال الامتحانات</p>
+                </div>
+            </div>
+
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 space-y-1.5 text-[11px] text-slate-200 mb-3.5">
                 <div class="flex items-start gap-2">
                     <span class="text-emerald-400">✔</span>
                     <span>تدريب ذكي مع تصحيح فوري، مؤقت زمني، ومراجعة شاملة لأخطائك بعد كل امتحان.</span>
                 </div>
                 <div class="flex items-start gap-2">
                     <span class="text-amber-400">🔒</span>
-                    <span>الكود يعمل على جهازك الشخصي طوال فترة الامتحانات بدون انقطاع.</span>
+                    <span>الكود يُفعل على جهازك الشخصي فوراً بمجرد استلامه.</span>
                 </div>
             </div>
 
@@ -348,9 +409,9 @@
                 <a id="whatsapp-sub-link" href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاشتراك%20والحصول%20على%20كود%20تفعيل%20في%20بوابة%20البصمجية" target="_blank"
                    class="w-full py-3 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-500 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/25 hover:scale-[1.01] transition">
                     <span>💬</span>
-                    <span>اضغط هنا للتواصل عبر واتساب واستلام كودك فوراً</span>
+                    <span>تواصل عبر واتساب واستلم كودك الآن</span>
                 </a>
-                <button onclick="closeSubGuideModal()" class="w-full py-2.5 rounded-xl font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300">
+                <button onclick="closeSubGuideModal()" class="w-full py-2 rounded-xl font-bold text-xs bg-white/5 hover:bg-white/10 text-slate-300">
                     لدي كود بالفعل، سأحاول كتابته مرة أخرى
                 </button>
             </div>
@@ -370,26 +431,86 @@
         </div>
     </div>
 
-    <!-- نافذة لوحة تحكم الإدمن الشاملة -->
-    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-3">
-        <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-lg max-h-[92dvh] flex flex-col justify-between overflow-hidden border border-cyan-400/40">
-            <div class="flex items-center justify-between border-b border-white/10 pb-3 mb-3 shrink-0">
+    <!-- نافذة لوحة تحكم الإدمن الشاملة (مع قسم إحصائيات وتحليلات الزوار الجديد) -->
+    <div id="admin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-2.5 sm:p-4">
+        <div class="liquid-glass rounded-3xl p-3.5 sm:p-5 w-full max-w-2xl max-h-[93dvh] flex flex-col justify-between overflow-hidden border border-cyan-400/40">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5 shrink-0">
                 <div>
-                    <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن السحابية</h2>
-                    <p class="text-[10px] text-slate-400">التحكم في مجانية الموقع + الأكواد + بانرات الأفلييت</p>
+                    <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن والتحليلات السحابية</h2>
+                    <p class="text-[10px] text-slate-400">تحليلات الزوار والأجهزة + مجانية الموقع + الأكواد + بانرات الأفلييت</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
 
-            <!-- تبويبات لوحة الإدمن الثلاثة -->
-            <div class="grid grid-cols-3 gap-1.5 mb-3 shrink-0">
-                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[11px] font-black transition">⚙️ وضع الموقع</button>
-                <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition">🔑 أكواد الطلاب</button>
-                <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition">📢 بانرات الأفلييت</button>
+            <!-- تبويبات لوحة الإدمن الأربعة -->
+            <div class="grid grid-cols-4 gap-1.5 mb-3 shrink-0">
+                <button id="tab-stats-btn" onclick="switchAdminTab('stats')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📊 الإحصائيات</button>
+                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">⚙️ وضع الموقع</button>
+                <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">🔑 الأكواد</button>
+                <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📢 البانرات</button>
             </div>
 
-            <!-- قسم 0: التحكم في وضع الموقع (مجاني أم مدفوع بالأكواد) -->
-            <div id="admin-mode-section" class="flex-1 flex flex-col justify-between overflow-y-auto space-y-3 text-right pr-1">
+            <!-- قسم 0 (الجديد): تحليلات الزوار ونوع الموبايل/الكمبيوتر والمتصفحات -->
+            <div id="admin-stats-section" class="flex-1 flex flex-col overflow-y-auto space-y-2.5 text-right pr-1">
+                <!-- الأرقام الرئيسية -->
+                <div class="grid grid-cols-4 gap-2 text-center shrink-0">
+                    <div class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-2.5">
+                        <div class="text-[10px] text-slate-400 font-bold">إجمالي الزيارات</div>
+                        <div id="stat-total-visits" class="text-base sm:text-xl font-black text-cyan-300 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-emerald-400/30 rounded-2xl p-2.5">
+                        <div class="text-[10px] text-slate-400 font-bold">زوار فريدون</div>
+                        <div id="stat-unique-devices" class="text-base sm:text-xl font-black text-emerald-300 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-purple-400/30 rounded-2xl p-2.5">
+                        <div class="text-[10px] text-slate-400 font-bold">زيارات اليوم</div>
+                        <div id="stat-today-visits" class="text-base sm:text-xl font-black text-purple-300 mt-0.5">0</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-amber-400/30 rounded-2xl p-2.5">
+                        <div class="text-[10px] text-slate-400 font-bold">نسبة الموبايل</div>
+                        <div id="stat-mobile-pct" class="text-base sm:text-xl font-black text-amber-300 mt-0.5">0%</div>
+                    </div>
+                </div>
+
+                <!-- تحليل الأجهزة والأنظمة + المتصفحات -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5 shrink-0">
+                    <!-- نوع الجهاز ونظام التشغيل -->
+                    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 space-y-2">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-1.5">
+                            <span class="text-xs font-black text-white">📱 الأجهزة وأنظمة التشغيل</span>
+                            <span class="text-[10px] text-cyan-300 font-bold">مباشر</span>
+                        </div>
+                        <div id="stat-devices-bars" class="space-y-1.5 text-[11px]">
+                            <div class="text-slate-400 text-center py-2">جاري تحليل الأجهزة...</div>
+                        </div>
+                    </div>
+
+                    <!-- نوع المتصفح -->
+                    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 space-y-2">
+                        <div class="flex items-center justify-between border-b border-white/10 pb-1.5">
+                            <span class="text-xs font-black text-white">🌐 المتصفحات المستخدمة</span>
+                            <span class="text-[10px] text-purple-300 font-bold">مباشر</span>
+                        </div>
+                        <div id="stat-browsers-bars" class="space-y-1.5 text-[11px]">
+                            <div class="text-slate-400 text-center py-2">جاري تحليل المتصفحات...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- سجل آخر الزيارات الحية بالتفصيل -->
+                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 flex-1 flex flex-col min-h-[160px]">
+                    <div class="flex items-center justify-between border-b border-white/10 pb-1.5 mb-2 shrink-0">
+                        <span class="text-xs font-black text-emerald-300">⚡ سجل آخر زيارات الطلاب (Live Log)</span>
+                        <button onclick="clearVisitsLog()" class="text-[10px] bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-lg font-bold hover:bg-rose-500/30">تصفير السجل</button>
+                    </div>
+                    <div id="stat-recent-logs" class="space-y-1.5 overflow-y-auto max-h-40 pr-1 text-[11px]">
+                        <div class="text-slate-400 text-center py-4">جاري جلب سجل الزيارات...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- قسم 1: التحكم في وضع الموقع (مجاني أم مدفوع بالأكواد) -->
+            <div id="admin-mode-section" class="hidden flex-1 flex-col justify-between overflow-y-auto space-y-3 text-right pr-1">
                 <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-4 space-y-3">
                     <div class="flex items-center justify-between">
                         <span class="text-xs font-black text-white">حالة المنصة الحالية لجميع الطلاب:</span>
@@ -418,36 +539,51 @@
                     </div>
                 </div>
 
-                <div class="bg-cyan-500/10 border border-cyan-400/30 rounded-2xl p-3 text-[11px] text-cyan-200">
-                    💡 <b>نصيحة:</b> يمكنك ترك الموقع على <b>الوضع المجاني</b> الآن حتى يتعود الطلاب عليه، وعند اقتراب الامتحانات اضغط على <b>الوضع المدفوع بالأكواد</b> ليتحول الموقع فوراً!
+                <div class="bg-emerald-500/10 border border-emerald-400/30 rounded-2xl p-3 text-[11px] text-emerald-200 flex items-center justify-between">
+                    <span>📲 معاينة نافذة دعوة جروب الواتساب (التي تظهر للطلاب في الزيارة الثانية):</span>
+                    <button onclick="closeAdminModal(); openWhatsAppModal();" class="bg-emerald-500 text-slate-950 font-black px-3 py-1 rounded-lg text-[10px] shrink-0">معاينة النافذة</button>
                 </div>
             </div>
 
-            <!-- قسم 1: إدارة الأكواد -->
+            <!-- قسم 2: إدارة الأكواد -->
             <div id="admin-codes-section" class="hidden flex-1 flex-col overflow-hidden">
-                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
+                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2 text-right">
                     <div class="grid grid-cols-2 gap-2">
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-300 mb-1">اسم المشتري (اختياري)</label>
+                            <label class="block text-[10px] font-bold text-slate-300 mb-1">اسم المشتري</label>
                             <input type="text" id="new-code-note" placeholder="مثلاً: أحمد محمد" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs text-white outline-none">
                         </div>
                         <div>
-                            <label class="block text-[11px] font-bold text-slate-300 mb-1">الفرقة المسموحة</label>
+                            <label class="block text-[10px] font-bold text-slate-300 mb-1">الفرقة المسموحة</label>
                             <select id="new-code-year" class="liquid-input w-full rounded-lg px-2 py-1.5 text-xs text-white outline-none">
                                 <option value="all" class="bg-slate-900">كل الفرق</option>
-                                <option value="year1/index.html" class="bg-slate-900">الفرقة الأولى فقط</option>
-                                <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية فقط</option>
-                                <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة فقط</option>
-                                <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة فقط</option>
+                                <option value="year1/index.html" class="bg-slate-900">الفرقة الأولى</option>
+                                <option value="year2/index.html" class="bg-slate-900">الفرقة الثانية</option>
+                                <option value="year3/index.html" class="bg-slate-900">الفرقة الثالثة</option>
+                                <option value="year4/index.html" class="bg-slate-900">الفرقة الرابعة</option>
                             </select>
                         </div>
                     </div>
-                    <div class="flex gap-2">
-                        <input type="text" id="custom-code-input" placeholder="اكتب كود أو اتركه عشوائي" class="liquid-input flex-1 rounded-lg px-2.5 py-1.5 text-xs font-mono text-cyan-300 uppercase outline-none">
-                        <button onclick="generateCloudCode()" class="glow-btn text-white font-black px-4 py-1.5 rounded-lg text-xs shrink-0 transition hover:scale-[1.02]">
-                            + إنشاء وحفظ
-                        </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <div>
+                            <label class="block text-[10px] font-bold text-amber-300 mb-1">نوع الباقة (المواد المتاحة)</label>
+                            <select id="new-code-subject" class="liquid-input w-full rounded-lg px-2 py-1.5 text-xs text-white outline-none">
+                                <option value="all" class="bg-slate-900">🌟 باقة شاملة (كل المواد)</option>
+                                <option value="law.html" class="bg-slate-900">⚖️ مبادئ القانون فقط</option>
+                                <option value="thinking.html" class="bg-slate-900">💡 التفكير الابتكاري فقط</option>
+                                <option value="english.html" class="bg-slate-900">🔤 اللغة الإنجليزية فقط</option>
+                                <option value="economy.html" class="bg-slate-900">📉 مبادئ الاقتصاد فقط</option>
+                                <option value="subject5.html" class="bg-slate-900">📋 المادة الخامسة فقط</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-[10px] font-bold text-slate-300 mb-1">الكود (أو اتركه عشوائي)</label>
+                            <input type="text" id="custom-code-input" placeholder="تلقائي عشوائي" class="liquid-input w-full rounded-lg px-2.5 py-1.5 text-xs font-mono text-cyan-300 uppercase outline-none">
+                        </div>
                     </div>
+                    <button onclick="generateCloudCode()" class="glow-btn w-full text-white font-black py-2 rounded-lg text-xs transition hover:scale-[1.01]">
+                        + إنشاء وحفظ الكود في قاعدة البيانات
+                    </button>
                 </div>
 
                 <div class="flex-1 overflow-y-auto space-y-2 pr-1 text-right" id="codes-list">
@@ -455,7 +591,7 @@
                 </div>
             </div>
 
-            <!-- قسم 2: إدارة بانرات الأفلييت -->
+            <!-- قسم 3: إدارة بانرات الأفلييت -->
             <div id="admin-ads-section" class="hidden flex-1 flex-col overflow-hidden">
                 <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-3 shrink-0 space-y-2.5 text-right">
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -507,10 +643,89 @@
         </div>
     </footer>
 
-    <!-- سكربت التشغيل و Firebase -->
+    <!-- سكربت التشغيل و Firebase والتحليلات الذكية -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getFirestore, collection, doc, setDoc, getDoc, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, doc, setDoc, getDoc, getDocs, deleteDoc, updateDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // ==========================================
+        // 1. نظام تحليل الجهاز ونظام التشغيل والمتصفح (User-Agent Parser)
+        // ==========================================
+        function detectVisitorEnv() {
+            const ua = navigator.userAgent || "";
+            let deviceType = "كمبيوتر 💻";
+            if (/tablet|ipad|playbook|silk/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+                deviceType = "تابلت 📟";
+            } else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+                deviceType = "موبايل 📱";
+            }
+
+            let os = "نظام آخر";
+            if (/android/i.test(ua)) os = "Android 🤖";
+            else if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) os = "iPhone / iOS 🍎";
+            else if (/Win/i.test(ua)) os = "Windows 🪟";
+            else if (/Mac/i.test(ua)) os = "MacOS 💻";
+            else if (/Linux/i.test(ua)) os = "Linux 🐧";
+
+            let browser = "متصفح آخر";
+            if (/Edg/i.test(ua)) browser = "Edge";
+            else if (/OPR|Opera/i.test(ua)) browser = "Opera";
+            else if (/SamsungBrowser/i.test(ua)) browser = "Samsung Internet";
+            else if (/Chrome|CriOS/i.test(ua)) browser = "Chrome";
+            else if (/Firefox|FxiOS/i.test(ua)) browser = "Firefox";
+            else if (/Safari/i.test(ua)) browser = "Safari";
+
+            return {
+                deviceType,
+                os,
+                browser,
+                screen: `${window.screen.width}x${window.screen.height}`
+            };
+        }
+
+        function getDeviceFingerprint() {
+            let fp = "DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height + "-" + navigator.language;
+            return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
+        }
+
+        // ==========================================
+        // 2. نظام عداد الزيارات الذكي لإظهار جروب الواتساب من المرة الثانية!
+        // ==========================================
+        function checkSecondVisitWhatsAppPopup() {
+            if (!sessionStorage.getItem("basmagia_visit_counted")) {
+                sessionStorage.setItem("basmagia_visit_counted", "true");
+                let visits = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
+                localStorage.setItem("basmagia_visit_count", visits.toString());
+            }
+
+            const totalVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
+            const alreadyJoined = localStorage.getItem("basmagia_wa_joined") === "true";
+            const shownThisSession = sessionStorage.getItem("basmagia_wa_shown_session") === "true";
+
+            if (totalVisits >= 2 && !alreadyJoined && !shownThisSession) {
+                sessionStorage.setItem("basmagia_wa_shown_session", "true");
+                setTimeout(() => {
+                    openWhatsAppModal();
+                }, 900);
+            }
+        }
+
+        window.openWhatsAppModal = function() {
+            document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
+            document.getElementById("whatsapp-invite-modal").classList.add("flex");
+        };
+
+        window.closeWhatsAppModal = function() {
+            document.getElementById("whatsapp-invite-modal").classList.add("hidden");
+            document.getElementById("whatsapp-invite-modal").classList.remove("flex");
+        };
+
+        window.markWhatsAppJoined = function() {
+            localStorage.setItem("basmagia_wa_joined", "true");
+            closeWhatsAppModal();
+        };
+
+        checkSecondVisitWhatsAppPopup();
 
         // إعدادات قاعدة البيانات الخاصة بك (basmagia-db)
         const firebaseConfig = {
@@ -526,11 +741,11 @@
         let db = null;
         let cloudCodesCache = {};
         let affiliateAdsList = [];
+        let analyticsLogsList = [];
         let currentAdIdx = 0;
         let adCarouselTimer = null;
         let rulesError = false;
 
-        // حالة الموقع الافتراضية: مجاني مفتوح (true) حتى يغيره الأدمن من لوحته
         let isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
 
         function updateUIForMode() {
@@ -546,14 +761,13 @@
             const loginBtn = document.getElementById("login-btn");
             const loginBtnText = document.getElementById("login-btn-text");
 
-            // عناصر لوحة الإدمن
             const adminBadge = document.getElementById("admin-current-mode-badge");
             const btnFree = document.getElementById("btn-set-free");
             const btnPaid = document.getElementById("btn-set-paid");
 
             if (isFreeMode) {
                 headerBadge.innerText = "مجاني 🔓";
-                headerBadge.className = "text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full";
+                headerBadge.className = "text-[9px] sm:text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full";
                 headerCta.innerText = "تواصل معنا";
                 mainTitle.innerText = "اختر فرقتك وابدأ الاختبار فوراً";
                 subTitle.innerText = "المنصة متاحة مجاناً لجميع الطلاب للتدريب والمراجعة الذكية";
@@ -573,7 +787,7 @@
                 }
             } else {
                 headerBadge.innerText = "PRO 🔒";
-                headerBadge.className = "text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full";
+                headerBadge.className = "text-[9px] sm:text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2 py-0.5 rounded-full";
                 headerCta.innerText = "طلب كود اشتراك";
                 mainTitle.innerText = "تسجيل دخول المشتركين";
                 subTitle.innerText = "أدخل اسمك وكود التفعيل الخاص بك للانتقال إلى قسم فرقتك";
@@ -595,9 +809,29 @@
         }
         updateUIForMode();
 
-        function getDeviceFingerprint() {
-            let fp = "DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height + "-" + navigator.language;
-            return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
+        // تسجيل زيارة الطالب في السحابة مرة واحدة لكل جلسة
+        async function logVisitToCloud(pageTitle) {
+            if (!db || sessionStorage.getItem("basmagia_cloud_logged")) return;
+            sessionStorage.setItem("basmagia_cloud_logged", "true");
+            try {
+                const env = detectVisitorEnv();
+                const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+                const visitId = "V-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                await setDoc(doc(db, 'site_visits', visitId), {
+                    timestamp: Date.now(),
+                    dateStr: new Date().toLocaleDateString("ar-EG"),
+                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                    deviceId: getDeviceFingerprint(),
+                    studentName: savedUser.name || "زائر بالصفحة الرئيسية",
+                    deviceType: env.deviceType,
+                    os: env.os,
+                    browser: env.browser,
+                    screen: env.screen,
+                    page: pageTitle || "الصفحة الرئيسية"
+                });
+            } catch (e) {
+                console.warn("Analytics log notice:", e);
+            }
         }
 
         async function initCloudDatabase() {
@@ -605,7 +839,9 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
 
-                // الاستماع لوضع المنصة (مجاني أم مدفوع) لحظياً من Firebase
+                // تسجيل الزيارة الحالية تلقائياً
+                logVisitToCloud("الصفحة الرئيسية");
+
                 onSnapshot(doc(db, 'platform_settings', 'config'), (docSnap) => {
                     if (docSnap.exists() && typeof docSnap.data().isFreeMode === 'boolean') {
                         isFreeMode = docSnap.data().isFreeMode;
@@ -621,12 +857,10 @@
                     snapshot.forEach(d => { cloudCodesCache[d.id] = d.data(); });
                     renderAdminCodesList();
                 }, (err) => {
-                    console.warn("Firestore Rules Notice:", err);
                     rulesError = true;
                     renderAdminCodesList();
                 });
 
-                // الاستماع لبانرات الأفلييت لحظياً
                 const adsRef = collection(db, 'affiliate_banners');
                 onSnapshot(adsRef, (snapshot) => {
                     affiliateAdsList = [];
@@ -634,13 +868,129 @@
                     renderAffiliateCarousel();
                     renderAdminAdsList();
                 });
+
+                // الاستماع المباشر لسجلات الزيارات لعرضها في لوحة الإدمن
+                const visitsRef = collection(db, 'site_visits');
+                onSnapshot(visitsRef, (snapshot) => {
+                    analyticsLogsList = [];
+                    snapshot.forEach(d => { analyticsLogsList.push({ id: d.id, ...d.data() }); });
+                    analyticsLogsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                    renderAnalyticsDashboard();
+                });
             } catch (e) {
                 console.warn("Firebase init notice:", e);
             }
         }
         initCloudDatabase();
 
-        // تغيير وضع الموقع بين المجاني والمدفوع من لوحة الإدمن
+        // ==========================================
+        // 3. دالة رسم لوحة الإحصائيات والتحليلات للأدمن
+        // ==========================================
+        function renderAnalyticsDashboard() {
+            const totalVisits = analyticsLogsList.length;
+            const uniqueDevices = new Set(analyticsLogsList.map(v => v.deviceId)).size;
+            const todayStr = new Date().toLocaleDateString("ar-EG");
+            const todayVisits = analyticsLogsList.filter(v => v.dateStr === todayStr).length;
+
+            let mobileCount = 0;
+            const osCounts = {};
+            const browserCounts = {};
+
+            analyticsLogsList.forEach(v => {
+                if ((v.deviceType || "").includes("موبايل") || (v.deviceType || "").includes("تابلت")) {
+                    mobileCount++;
+                }
+                const osKey = `${v.deviceType || 'جهاز'} • ${v.os || 'غير معروف'}`;
+                osCounts[osKey] = (osCounts[osKey] || 0) + 1;
+
+                const brKey = v.browser || "متصفح آخر";
+                browserCounts[brKey] = (browserCounts[brKey] || 0) + 1;
+            });
+
+            const mobilePct = totalVisits > 0 ? Math.round((mobileCount / totalVisits) * 100) : 0;
+
+            document.getElementById("stat-total-visits").innerText = totalVisits;
+            document.getElementById("stat-unique-devices").innerText = uniqueDevices;
+            document.getElementById("stat-today-visits").innerText = todayVisits;
+            document.getElementById("stat-mobile-pct").innerText = mobilePct + "%";
+
+            // رسم أشرطة الأجهزة وأنظمة التشغيل
+            const devicesContainer = document.getElementById("stat-devices-bars");
+            const osKeys = Object.keys(osCounts).sort((a, b) => osCounts[b] - osCounts[a]);
+            if (osKeys.length === 0) {
+                devicesContainer.innerHTML = `<div class="text-slate-500 text-center py-2">لا توجد زيارات مسجلة بعد</div>`;
+            } else {
+                devicesContainer.innerHTML = osKeys.map(k => {
+                    const count = osCounts[k];
+                    const pct = Math.round((count / totalVisits) * 100);
+                    return `
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold mb-0.5">
+                                <span class="text-slate-200">${k}</span>
+                                <span class="text-cyan-300">${count} زيارة (${pct}%)</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-cyan-400 to-blue-500 rounded-full" style="width:${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // رسم أشرطة المتصفحات
+            const browsersContainer = document.getElementById("stat-browsers-bars");
+            const brKeys = Object.keys(browserCounts).sort((a, b) => browserCounts[b] - browserCounts[a]);
+            if (brKeys.length === 0) {
+                browsersContainer.innerHTML = `<div class="text-slate-500 text-center py-2">لا توجد بيانات متصفحات بعد</div>`;
+            } else {
+                browsersContainer.innerHTML = brKeys.map(k => {
+                    const count = browserCounts[k];
+                    const pct = Math.round((count / totalVisits) * 100);
+                    return `
+                        <div>
+                            <div class="flex justify-between text-[10px] font-bold mb-0.5">
+                                <span class="text-slate-200">${k}</span>
+                                <span class="text-purple-300">${count} (${pct}%)</span>
+                            </div>
+                            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden">
+                                <div class="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full" style="width:${pct}%"></div>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            // رسم سجل آخر 30 زيارة
+            const logsContainer = document.getElementById("stat-recent-logs");
+            const recent = analyticsLogsList.slice(0, 30);
+            if (recent.length === 0) {
+                logsContainer.innerHTML = `<div class="text-slate-500 text-center py-4">لا توجد زيارات مسجلة حتى الآن</div>`;
+            } else {
+                logsContainer.innerHTML = recent.map(v => `
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-2 flex items-center justify-between gap-2">
+                        <div class="overflow-hidden">
+                            <div class="flex items-center gap-1.5 flex-wrap">
+                                <span class="font-black text-white text-[11px]">${v.studentName || 'زائر'}</span>
+                                <span class="text-[9px] bg-cyan-500/20 text-cyan-300 px-1.5 py-0.5 rounded font-bold">${v.deviceType || ''}</span>
+                                <span class="text-[9px] bg-purple-500/20 text-purple-300 px-1.5 py-0.5 rounded font-bold">${v.os || ''} • ${v.browser || ''}</span>
+                            </div>
+                            <div class="text-[9px] text-slate-400 mt-0.5">📍 ${v.page || 'الرئيسية'} • شاشة ${v.screen || ''}</div>
+                        </div>
+                        <div class="text-[9px] text-slate-400 font-mono shrink-0 text-left">
+                            <div>${v.timeStr || ''}</div>
+                            <div>${v.dateStr || ''}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        window.clearVisitsLog = async function() {
+            if (!db || !confirm("هل أنت متأكد من تصفير وحذف سجل الزيارات بالكامل؟")) return;
+            const snap = await getDocs(collection(db, 'site_visits'));
+            snap.forEach(d => deleteDoc(doc(db, 'site_visits', d.id)));
+        };
+
         window.setPlatformMode = async function(freeState) {
             isFreeMode = freeState;
             localStorage.setItem("basmagia_free_mode", freeState ? "true" : "false");
@@ -658,7 +1008,7 @@
         };
 
         // ==========================================
-        // تشغيل بانر الأفلييت المتنقل (إذا وجد)
+        // 4. تشغيل بانر الأفلييت المتنقل
         // ==========================================
         function renderAffiliateCarousel() {
             const wrapper = document.getElementById("affiliate-banner-wrapper");
@@ -706,10 +1056,13 @@
         };
 
         window.switchAdminTab = function(tab) {
+            const isStats = tab === 'stats';
             const isMode = tab === 'mode';
             const isCodes = tab === 'codes';
             const isAds = tab === 'ads';
 
+            document.getElementById("admin-stats-section").classList.toggle("hidden", !isStats);
+            document.getElementById("admin-stats-section").classList.toggle("flex", isStats);
             document.getElementById("admin-mode-section").classList.toggle("hidden", !isMode);
             document.getElementById("admin-mode-section").classList.toggle("flex", isMode);
             document.getElementById("admin-codes-section").classList.toggle("hidden", !isCodes);
@@ -717,9 +1070,10 @@
             document.getElementById("admin-ads-section").classList.toggle("hidden", !isAds);
             document.getElementById("admin-ads-section").classList.toggle("flex", isAds);
 
-            const activeCls = "bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[11px] font-black transition";
-            const idleCls = "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[11px] font-black transition";
+            const activeCls = "bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[10px] sm:text-xs font-black transition";
+            const idleCls = "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition";
 
+            document.getElementById("tab-stats-btn").className = isStats ? activeCls : idleCls;
             document.getElementById("tab-mode-btn").className = isMode ? activeCls : idleCls;
             document.getElementById("tab-codes-btn").className = isCodes ? activeCls : idleCls;
             document.getElementById("tab-ads-btn").className = isAds ? activeCls : idleCls;
@@ -844,7 +1198,6 @@
             clearInterval(tipInterval);
         }
 
-        // نافذة توجيه الطالب للاشتراك عند إدخال كود خاطئ
         window.openSubGuideModal = function(reasonText, studentName, yearText) {
             if (reasonText) document.getElementById("sub-modal-reason").innerText = reasonText;
             const msg = encodeURIComponent(`السلام عليكم يا أ. بسام، أنا الطالب (${studentName || 'جديد'}) في (${yearText}) وأريد الاشتراك والحصول على كود تفعيل في منصة بوابة البصمجية.`);
@@ -870,24 +1223,21 @@
 
             errBox.classList.add("hidden");
 
-            // 1. إذا كان الموقع في الوضع المجاني المفتوح -> يدخل فوراً لاختيار الامتحان!
             if (isFreeMode && !masterCodes.includes(code)) {
                 showLoading();
-                sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code: "FREE", folderUrl: targetFolderUrl, role: "student" }));
+                sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code: "FREE", folderUrl: targetFolderUrl, allowedSubject: "all", role: "student" }));
                 setTimeout(() => {
                     window.location.href = targetFolderUrl;
                 }, 700);
                 return;
             }
 
-            // 2. إذا كان الموقع في الوضع المدفوع بالأكواد
             showLoading();
             const deviceId = getDeviceFingerprint();
 
             try {
-                // دخول الأدمن
                 if (masterCodes.includes(code)) {
-                    sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl, role: "admin" }));
+                    sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl, allowedSubject: "all", role: "admin" }));
                     setTimeout(() => window.location.href = targetFolderUrl, 800);
                     return;
                 }
@@ -920,7 +1270,12 @@
                         lastLogin: new Date().toLocaleString("ar-EG")
                     });
 
-                    sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl }));
+                    sessionStorage.setItem("basmagia_user", JSON.stringify({
+                        name,
+                        code,
+                        folderUrl: targetFolderUrl,
+                        allowedSubject: data.allowedSubject || "all"
+                    }));
                     
                     setTimeout(() => {
                         window.location.href = targetFolderUrl;
@@ -935,9 +1290,6 @@
             }
         };
 
-        // ==========================================
-        // دوال فتح لوحة تحكم الإدمن (في الوضعين المجاني والمدفوع)
-        // ==========================================
         let clicks = 0;
         window.triggerAdmin = function() {
             clicks++;
@@ -960,7 +1312,7 @@
             if (pin === "20206") {
                 document.getElementById("admin-pin-modal").classList.add("hidden");
                 document.getElementById("admin-pin-modal").classList.remove("flex");
-                sessionStorage.setItem("basmagia_user", JSON.stringify({ name: "أ. بسام وليد (إدمن)", code: "20206", role: "admin" }));
+                sessionStorage.setItem("basmagia_user", JSON.stringify({ name: "أ. بسام وليد (إدمن)", code: "20206", allowedSubject: "all", role: "admin" }));
                 openAdminPanelNow();
             } else {
                 alert("❌ الرمز السري غير صحيح!");
@@ -971,6 +1323,7 @@
             document.getElementById("admin-modal").classList.remove("hidden");
             document.getElementById("admin-modal").classList.add("flex");
             updateUIForMode();
+            renderAnalyticsDashboard();
             renderAdminCodesList();
         }
 
@@ -983,6 +1336,7 @@
             if (!db) return;
             const note = document.getElementById("new-code-note").value.trim() || "طالب مشترك";
             const allowedYear = document.getElementById("new-code-year").value;
+            const allowedSubject = document.getElementById("new-code-subject").value;
             let customCode = document.getElementById("custom-code-input").value.trim().toUpperCase();
 
             if (!customCode) customCode = "BSM-" + Math.floor(1000 + Math.random() * 9000);
@@ -990,8 +1344,13 @@
             try {
                 const codeDocRef = doc(db, 'student_codes', customCode);
                 await setDoc(codeDocRef, {
-                    code: customCode, note: note, allowedYear: allowedYear,
-                    lockedDevice: null, studentName: "", createdAt: new Date().toLocaleDateString("ar-EG")
+                    code: customCode,
+                    note: note,
+                    allowedYear: allowedYear,
+                    allowedSubject: allowedSubject,
+                    lockedDevice: null,
+                    studentName: "",
+                    createdAt: new Date().toLocaleDateString("ar-EG")
                 });
 
                 document.getElementById("new-code-note").value = "";
@@ -1014,6 +1373,15 @@
             await deleteDoc(codeDocRef);
         };
 
+        const subjectNamesMap = {
+            "all": "🌟 باقة شاملة (كل المواد)",
+            "law.html": "⚖️ قانون فقط",
+            "thinking.html": "💡 تفكير فقط",
+            "english.html": "🔤 إنجليزي فقط",
+            "economy.html": "📉 اقتصاد فقط",
+            "subject5.html": "📋 مادة 5 فقط"
+        };
+
         function renderAdminCodesList() {
             const container = document.getElementById("codes-list");
             if (rulesError) {
@@ -1032,11 +1400,13 @@
             container.innerHTML = keys.map(k => {
                 const item = cloudCodesCache[k];
                 const isLocked = !!item.lockedDevice;
+                const pkgLabel = subjectNamesMap[item.allowedSubject || "all"] || "🌟 باقة شاملة";
                 return `
                     <div class="bg-white/5 border border-white/10 rounded-xl p-2.5 flex items-center justify-between gap-2">
                         <div>
-                            <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
                                 <span class="font-mono font-black text-xs sm:text-sm text-cyan-300 select-all">${item.code}</span>
+                                <span class="text-[9px] px-2 py-0.5 rounded-full font-bold bg-purple-500/20 text-purple-300 border border-purple-400/30">${pkgLabel}</span>
                                 <span class="text-[10px] px-2 py-0.5 rounded-full font-bold ${isLocked ? 'bg-emerald-500/20 text-emerald-300' : 'bg-amber-500/20 text-amber-300'}">
                                     ${isLocked ? '🔒 مفعل (' + (item.studentName || item.note) + ')' : '🟢 متاح'}
                                 </span>
