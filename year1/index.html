@@ -78,7 +78,7 @@
 
     <!-- الشريط العلوي -->
     <nav class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
-        <div class="liquid-glass rounded-2xl px-4 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between gap-2">
+        <div class="liquid-glass rounded-2xl px-3.5 py-2.5 sm:px-5 sm:py-3 flex items-center justify-between gap-2">
             <div class="flex items-center gap-2.5">
                 <div class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-400 to-purple-600 flex items-center justify-center text-lg shadow-lg shadow-cyan-500/20">📚</div>
                 <div>
@@ -87,18 +87,24 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-2">
-                <!-- زر إعداد البانر يظهر للأدمن فقط -->
+            <div class="flex items-center gap-1.5 sm:gap-2">
+                <!-- زر جروب الملخصات الدائم في لوحة المواد -->
+                <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
+                   class="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/40 text-emerald-300 px-2.5 py-1.5 rounded-xl text-[10px] sm:text-xs font-black transition flex items-center gap-1">
+                    <span>📲</span>
+                    <span>جروب الملخصات</span>
+                </a>
+
                 <button id="admin-banner-btn" onclick="openBannerModal()" class="hidden bg-amber-500/20 border border-amber-400/40 text-amber-300 px-2.5 py-1.5 rounded-xl text-xs font-black hover:bg-amber-500/30 transition">
                     📢 إدارة البانر
                 </button>
-                <select onchange="window.location.href=this.value" class="bg-slate-900/90 border border-white/15 rounded-xl px-2.5 py-1.5 text-xs font-bold text-white outline-none cursor-pointer">
+                <select onchange="window.location.href=this.value" class="bg-slate-900/90 border border-white/15 rounded-xl px-2 py-1.5 text-[11px] sm:text-xs font-bold text-white outline-none cursor-pointer">
                     <option value="../year1/index.html" selected>الفرقة الأولى</option>
                     <option value="../year2/index.html">الفرقة الثانية</option>
                     <option value="../year3/index.html">الفرقة الثالثة</option>
                     <option value="../year4/index.html">الفرقة الرابعة</option>
                 </select>
-                <button onclick="logout()" class="bg-rose-500/20 border border-rose-500/40 text-rose-300 px-3 py-1.5 rounded-xl text-xs font-bold hover:bg-rose-500/30 transition">
+                <button onclick="logout()" class="bg-rose-500/20 border border-rose-500/40 text-rose-300 px-2.5 py-1.5 rounded-xl text-[11px] sm:text-xs font-bold hover:bg-rose-500/30 transition">
                     خروج
                 </button>
             </div>
@@ -108,7 +114,7 @@
     <!-- المحتوى الرئيسي المتسنتر على قد شاشة الموبايل واللاب بدون Scroll -->
     <main class="flex-1 w-full max-w-5xl mx-auto flex flex-col justify-center py-1.5 relative z-10 gap-2.5 overflow-hidden">
 
-        <!-- بانر الأفلييت الذكي المتنقل (مخفي تماماً إذا لم يضف الأدمن أي إعلانات) -->
+        <!-- بانر الأفلييت الذكي المتنقل -->
         <div id="affiliate-banner-wrapper" class="hidden w-full max-w-3xl mx-auto shrink-0">
             <div class="liquid-card rounded-2xl p-1 border border-cyan-400/30 relative overflow-hidden group">
                 <span class="absolute top-2 left-2 z-10 bg-black/70 backdrop-blur-md text-[9px] font-extrabold text-cyan-300 px-2 py-0.5 rounded-full border border-white/15">عرض خاص للطلاب 🔥</span>
@@ -130,7 +136,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-cyan-500/15 border border-cyan-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">⚖️</div>
-                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
+                        <span id="badge-law.html" class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
                     <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">مبادئ القانون</h2>
                     <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
@@ -149,7 +155,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-purple-500/15 border border-purple-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">💡</div>
-                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
+                        <span id="badge-thinking.html" class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
                     <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">التفكير الابتكاري</h2>
                     <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
@@ -168,7 +174,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-blue-500/15 border border-blue-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">🔤</div>
-                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
+                        <span id="badge-english.html" class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
                     <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">اللغة الإنجليزية</h2>
                     <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
@@ -187,7 +193,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-emerald-500/15 border border-emerald-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">📉</div>
-                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
+                        <span id="badge-economy.html" class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
                     <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">مبادئ الاقتصاد</h2>
                     <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل أسئلة الاختيارات والصح والخطأ</p>
@@ -206,7 +212,7 @@
                 <div>
                     <div class="flex items-center justify-between mb-1.5 sm:mb-2.5">
                         <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-amber-500/15 border border-amber-400/30 flex items-center justify-center text-lg sm:text-2xl group-hover:scale-110 transition">📋</div>
-                        <span class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
+                        <span id="badge-subject5.html" class="text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold">متاح</span>
                     </div>
                     <h2 class="font-black text-xs sm:text-base text-white group-hover:text-cyan-300 transition">المادة الخامسة (مبادئ الإدارة)</h2>
                     <p class="text-[10px] text-slate-400 mt-0.5 hidden sm:block">شامل بنك أسئلة الاختيار من متعدد والصح والخطأ والتدريب الذكي</p>
@@ -222,6 +228,44 @@
 
         </div>
     </main>
+
+    <!-- نافذة دعوة جروب الواتساب الذكية -->
+    <div id="whatsapp-invite-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-md text-right border border-emerald-400/45 relative overflow-hidden">
+            <button onclick="closeWhatsAppModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
+
+            <div class="text-center mb-4">
+                <div class="w-16 h-16 rounded-2xl bg-emerald-500/20 border border-emerald-400/40 flex items-center justify-center text-3xl mx-auto mb-2.5 shadow-lg shadow-emerald-500/20 animate-bounce">
+                    📲
+                </div>
+                <span class="text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full">هدية لطلاب المنصة 🌟</span>
+                <h3 class="text-lg sm:text-xl font-black text-white mt-2">جروب ملخصات ومراجعات باقي المواد!</h3>
+                <p class="text-xs text-slate-300 mt-1">انضم الآن لجروب الواتساب الرسمي عشان تستلم الملخصات أول بأول</p>
+            </div>
+
+            <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3.5 space-y-2 text-xs text-slate-200 mb-4">
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-black">📌</span>
+                    <span><b>ملخصات شاملة لباقي المواد</b> ومراجعات ليلة الامتحان بصيغة PDF.</span>
+                </div>
+                <div class="flex items-start gap-2">
+                    <span class="text-emerald-400 font-black">📌</span>
+                    <span><b>إشعارات فورية</b> عند نزول أي أسئلة جديدة أو تعديلات مهمة في بنوك الأسئلة.</span>
+                </div>
+            </div>
+
+            <div class="space-y-2">
+                <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
+                   class="w-full py-3.5 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 hover:scale-[1.02] transition">
+                    <span>🚀</span>
+                    <span>انضم لجروب الواتساب الآن واستلم الملخصات</span>
+                </a>
+                <button onclick="closeWhatsAppModal()" class="w-full py-2 rounded-xl font-bold text-[11px] bg-white/5 hover:bg-white/10 text-slate-400">
+                    لاحقاً، أريد استكمال المذاكرة الآن
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- نافذة اختيار نوع الامتحان الاحترافية -->
     <div id="quiz-type-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
@@ -241,6 +285,21 @@
                     <span>أسئلة الصواب والخطأ (T/F)</span>
                 </a>
             </div>
+        </div>
+    </div>
+
+    <!-- نافذة ترقية الباقة -->
+    <div id="upgrade-pkg-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 sm:p-6 w-full max-w-sm text-center border border-amber-400/40 relative">
+            <button onclick="document.getElementById('upgrade-pkg-modal').classList.add('hidden');document.getElementById('upgrade-pkg-modal').classList.remove('flex');" class="absolute top-4 left-4 bg-white/10 text-white w-8 h-8 rounded-full text-xs font-black">✕</button>
+            <div class="w-14 h-14 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-3xl mx-auto mb-3">🔒</div>
+            <h3 class="text-base font-black text-amber-300 mb-1">هذه المادة غير مضافة في كودك الحالي!</h3>
+            <p class="text-xs text-slate-300 mb-4 leading-relaxed">كودك الحالي مخصص لمادة منفردة فقط. يمكنك ترقية اشتراكك لفتح باقي مواد الفرقة بالكامل.</p>
+            <a href="https://wa.me/201286094595?text=السلام%20عليكم%20يا%20أ.%20بسام،%20أريد%20ترقية%20كودي%20لفتح%20باقي%20مواد%20الفرقة" target="_blank"
+               class="w-full py-3 rounded-xl font-black text-xs bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center gap-2">
+                <span>💬</span>
+                <span>تواصل عبر واتساب لفتح المادة</span>
+            </a>
         </div>
     </div>
 
@@ -306,13 +365,72 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        // إذا دخل الطالب في الوضع المجاني مباشرة بدون جلسة، ننشئ له جلسة مجانية تلقائياً حتى لا يُطرد من الامتحانات
+        function detectVisitorEnv() {
+            const ua = navigator.userAgent || "";
+            let deviceType = "كمبيوتر 💻";
+            if (/tablet|ipad|playbook|silk/i.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) {
+                deviceType = "تابلت 📟";
+            } else if (/Mobile|Android|iP(hone|od)|IEMobile|BlackBerry|Kindle|Silk-Accelerated|(hpw|web)OS|Opera M(obi|ini)/i.test(ua)) {
+                deviceType = "موبايل 📱";
+            }
+
+            let os = "نظام آخر";
+            if (/android/i.test(ua)) os = "Android 🤖";
+            else if (/iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)) os = "iPhone / iOS 🍎";
+            else if (/Win/i.test(ua)) os = "Windows 🪟";
+            else if (/Mac/i.test(ua)) os = "MacOS 💻";
+            else if (/Linux/i.test(ua)) os = "Linux 🐧";
+
+            let browser = "متصفح آخر";
+            if (/Edg/i.test(ua)) browser = "Edge";
+            else if (/OPR|Opera/i.test(ua)) browser = "Opera";
+            else if (/SamsungBrowser/i.test(ua)) browser = "Samsung Internet";
+            else if (/Chrome|CriOS/i.test(ua)) browser = "Chrome";
+            else if (/Firefox|FxiOS/i.test(ua)) browser = "Firefox";
+            else if (/Safari/i.test(ua)) browser = "Safari";
+
+            return { deviceType, os, browser, screen: `${window.screen.width}x${window.screen.height}` };
+        }
+
+        function getDeviceFingerprint() {
+            let fp = "DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height + "-" + navigator.language;
+            return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
+        }
+
+        if (!sessionStorage.getItem("basmagia_visit_counted")) {
+            sessionStorage.setItem("basmagia_visit_counted", "true");
+            let visits = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
+            localStorage.setItem("basmagia_visit_count", visits.toString());
+        }
+
+        const totalVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
+        const alreadyJoined = localStorage.getItem("basmagia_wa_joined") === "true";
+        const shownThisSession = sessionStorage.getItem("basmagia_wa_shown_session") === "true";
+
+        if (totalVisits >= 2 && !alreadyJoined && !shownThisSession) {
+            sessionStorage.setItem("basmagia_wa_shown_session", "true");
+            setTimeout(() => {
+                document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
+                document.getElementById("whatsapp-invite-modal").classList.add("flex");
+            }, 900);
+        }
+
+        window.closeWhatsAppModal = function() {
+            document.getElementById("whatsapp-invite-modal").classList.add("hidden");
+            document.getElementById("whatsapp-invite-modal").classList.remove("flex");
+        };
+
+        window.markWhatsAppJoined = function() {
+            localStorage.setItem("basmagia_wa_joined", "true");
+            closeWhatsAppModal();
+        };
+
         let savedUser = sessionStorage.getItem("basmagia_user");
         const isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
 
         if (!savedUser) {
             if (isFreeMode) {
-                const defaultGuest = { name: "طالب البصمجية", code: "FREE", role: "student" };
+                const defaultGuest = { name: "طالب البصمجية", code: "FREE", allowedSubject: "all", role: "student" };
                 sessionStorage.setItem("basmagia_user", JSON.stringify(defaultGuest));
                 savedUser = JSON.stringify(defaultGuest);
             } else {
@@ -320,12 +438,24 @@
             }
         }
 
+        let currentUserObj = { name: "طالب البصمجية", allowedSubject: "all", role: "student" };
         if (savedUser) {
-            const userObj = JSON.parse(savedUser);
-            document.getElementById("student-welcome").innerText = "مرحباً، " + userObj.name;
-            if (userObj.role === "admin" || userObj.code === "20206") {
+            currentUserObj = JSON.parse(savedUser);
+            document.getElementById("student-welcome").innerText = "مرحباً، " + currentUserObj.name;
+            if (currentUserObj.role === "admin" || currentUserObj.code === "20206") {
                 document.getElementById("admin-banner-btn").classList.remove("hidden");
             }
+        }
+
+        const allSubjectFiles = ["law.html", "thinking.html", "english.html", "economy.html", "subject5.html"];
+        if (!isFreeMode && currentUserObj.allowedSubject && currentUserObj.allowedSubject !== "all" && currentUserObj.role !== "admin") {
+            allSubjectFiles.forEach(file => {
+                const badge = document.getElementById("badge-" + file);
+                if (badge && file !== currentUserObj.allowedSubject) {
+                    badge.innerText = "🔒 مغلق";
+                    badge.className = "text-[9px] sm:text-[10px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-extrabold";
+                }
+            });
         }
 
         window.logout = function() {
@@ -334,6 +464,12 @@
         };
 
         window.openSubjectModal = function(title, icon, fileUrl) {
+            if (!isFreeMode && currentUserObj.allowedSubject && currentUserObj.allowedSubject !== "all" && currentUserObj.allowedSubject !== fileUrl && currentUserObj.role !== "admin") {
+                document.getElementById("upgrade-pkg-modal").classList.remove("hidden");
+                document.getElementById("upgrade-pkg-modal").classList.add("flex");
+                return;
+            }
+
             document.getElementById("modal-sub-title").innerText = title;
             document.getElementById("modal-sub-icon").innerText = icon;
             document.getElementById("modal-mcq-link").href = fileUrl + "?mode=mcq";
@@ -371,6 +507,26 @@
         try {
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
+
+            // تسجيل دخول الطالب لقسم الفرقة الأولى في إحصائيات الإدمن
+            if (!sessionStorage.getItem("basmagia_year1_logged")) {
+                sessionStorage.setItem("basmagia_year1_logged", "true");
+                const env = detectVisitorEnv();
+                const visitId = "V-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                setDoc(doc(db, 'site_visits', visitId), {
+                    timestamp: Date.now(),
+                    dateStr: new Date().toLocaleDateString("ar-EG"),
+                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                    deviceId: getDeviceFingerprint(),
+                    studentName: currentUserObj.name || "طالب بالفرقة الأولى",
+                    deviceType: env.deviceType,
+                    os: env.os,
+                    browser: env.browser,
+                    screen: env.screen,
+                    page: "لوحة الفرقة الأولى"
+                });
+            }
+
             onSnapshot(collection(db, 'affiliate_banners'), (snapshot) => {
                 affiliateAdsList = [];
                 snapshot.forEach(d => affiliateAdsList.push({ id: d.id, ...d.data() }));
