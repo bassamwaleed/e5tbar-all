@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>المادة الخامسة | الفرقة الأولى</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -23,13 +26,15 @@
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background: radial-gradient(circle at 50% 0%, #0f172a 0%, #040711 78%);
         }
-        .orb-1 { position: absolute; width: 320px; height: 320px; border-radius: 50%; filter: blur(85px); opacity: 0.45; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -10%; }
-        .orb-2 { position: absolute; width: 350px; height: 350px; border-radius: 50%; filter: blur(85px); opacity: 0.45; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; }
+        .orb-1 { position: absolute; width: 280px; height: 280px; border-radius: 50%; filter: blur(55px); opacity: 0.4; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -10%; transform: translate3d(0,0,0); }
+        .orb-2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(55px); opacity: 0.4; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; transform: translate3d(0,0,0); }
         .liquid-glass {
-            background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.025) 100%);
-            backdrop-filter: blur(28px) saturate(180%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.62) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255,255,255,0.15);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+            transform: translate3d(0,0,0);
         }
         .liquid-input { background: rgba(10,15,30,0.85); border: 1px solid rgba(255,255,255,0.16); }
         .setup-box { background: rgba(15,23,42,0.75); border: 1px solid rgba(255,255,255,0.12); transition: 0.2s; }
@@ -247,14 +252,27 @@
             isQuizRunning = false;
             document.getElementById('progress-fill').style.width = '100%';
             document.getElementById('quiz-container').innerHTML = `
-                <div class="text-center py-4 space-y-3">
-                    <div class="text-4xl">🏆</div>
-                    <h3 class="text-xl font-black text-white">انتهى الاختبار بنجاح!</h3>
+                <div class="text-center py-2 space-y-2.5">
+                    <div class="text-3xl">🏆</div>
+                    <h3 class="text-lg font-black text-white">انتهى الاختبار بنجاح!</h3>
                     <p class="text-xs text-slate-300">نتيجتك: <b class="text-emerald-400">${correct}</b> صح من <b class="text-cyan-300">${activeQuestions.length}</b></p>
-                    <div class="flex flex-wrap gap-2 justify-center pt-2">
-                        <button onclick="startQuizNow()" class="glow-btn text-white font-black px-5 py-2.5 rounded-xl text-xs">🔄 إعادة نفس الاختبار</button>
-                        ${wrongList.length > 0 ? `<button onclick="showMistakes()" class="bg-rose-500/20 border border-rose-400/40 text-rose-300 font-black px-4 py-2.5 rounded-xl text-xs">📋 مراجعة الأخطاء (${wrongList.length})</button>` : ''}
-                        <button onclick="openSetup()" class="bg-white/10 text-white font-bold px-4 py-2.5 rounded-xl text-xs">⚙️ تغيير الإعدادات</button>
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="startQuizNow()" class="glow-btn text-white font-black px-4 py-2 rounded-xl text-xs">🔄 إعادة الاختبار</button>
+                        ${wrongList.length > 0 ? `<button onclick="showMistakes()" class="bg-rose-500/20 border border-rose-400/40 text-rose-300 font-black px-3.5 py-2 rounded-xl text-xs">📋 مراجعة الأخطاء (${wrongList.length})</button>` : ''}
+                        <button onclick="openSetup()" class="bg-white/10 text-white font-bold px-3.5 py-2 rounded-xl text-xs">⚙️ الإعدادات</button>
+                    </div>
+
+                    <div id="feedback-box" class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-3 text-right space-y-2 mt-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-black text-cyan-300">💬 شاركنا رأيك أو ملاحظاتك في الامتحان:</span>
+                            <div class="flex gap-1 text-sm cursor-pointer" id="star-rating">
+                                <span onclick="setRating(1)">⭐</span><span onclick="setRating(2)">⭐</span><span onclick="setRating(3)">⭐</span><span onclick="setRating(4)">⭐</span><span onclick="setRating(5)">⭐</span>
+                            </div>
+                        </div>
+                        <textarea id="feedback-text" rows="2" placeholder="اكتب رأيك في الأسئلة أو أي اقتراح أو ملاحظة للإدارة..." class="liquid-input w-full rounded-xl p-2 text-xs text-white outline-none resize-none"></textarea>
+                        <button onclick="submitStudentFeedback('المادة الخامسة', ${correct}, ${activeQuestions.length})" id="send-fb-btn" class="w-full py-2 rounded-xl font-black text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">
+                            📩 إرسال الرأي للإدارة
+                        </button>
                     </div>
                 </div>`;
         }
@@ -297,11 +315,74 @@
                         wrong++; document.getElementById('wrong-count').innerText = wrong;
                         wrongList.push({ id: q.id, q: q.t, sel: opt, cor: q.o[q.a] });
                     }
-                    setTimeout(() => { curr++; loadQ(); }, 950);
+                    setTimeout(() => { curr++; loadQ(); }, 650);
                 };
                 cont.appendChild(btn);
             });
         }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
+            authDomain: "basmagia-db.firebaseapp.com",
+            projectId: "basmagia-db",
+            storageBucket: "basmagia-db.firebasestorage.app",
+            messagingSenderId: "856738838094",
+            appId: "1:856738838094:web:9d2b84baf32567522cf51f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+        const fp = btoa(unescape(encodeURIComponent("DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height))).substring(0, 16);
+
+        const pingOnline = () => {
+            setDoc(doc(db, 'online_users', fp), {
+                deviceId: fp,
+                studentName: savedUser.name || "طالب",
+                deviceType: /Mobile|Android|iP(hone|od)/i.test(navigator.userAgent) ? "موبايل 📱" : "كمبيوتر 💻",
+                page: "يمتحن: المادة الخامسة",
+                lastSeen: Date.now()
+            }).catch(() => {});
+        };
+        setTimeout(pingOnline, 1500);
+        setInterval(pingOnline, 45000);
+
+        let selectedStars = 5;
+        window.setRating = function(n) {
+            selectedStars = n;
+            const spans = document.querySelectorAll("#star-rating span");
+            spans.forEach((s, idx) => { s.style.opacity = idx < n ? "1" : "0.25"; });
+        };
+
+        window.submitStudentFeedback = async function(subjectName, cor, tot) {
+            const txtEl = document.getElementById("feedback-text");
+            const msg = txtEl ? txtEl.value.trim() : "";
+            if (!msg) return;
+            const btn = document.getElementById("send-fb-btn");
+            btn.disabled = true;
+            btn.innerText = "جاري الإرسال...";
+            try {
+                await setDoc(doc(db, 'student_feedbacks', "FB-" + Date.now()), {
+                    timestamp: Date.now(),
+                    dateStr: new Date().toLocaleDateString("ar-EG"),
+                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                    studentName: savedUser.name || "طالب بالفرقة الأولى",
+                    subject: subjectName,
+                    score: `${cor}/${tot}`,
+                    rating: selectedStars,
+                    message: msg
+                });
+                document.getElementById("feedback-box").innerHTML = `<div class="text-emerald-300 font-black text-xs text-center py-2">✅ شكراً لك! وصلت ملاحظتك للإدارة بنجاح ❤️</div>`;
+            } catch (e) {
+                btn.disabled = false;
+                btn.innerText = "📩 إرسال الرأي للإدارة";
+            }
+        };
     </script>
 </body>
 </html>

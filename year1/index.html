@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>الفرقة الأولى | بوابة البصمجية PRO</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -22,15 +26,11 @@
             background: radial-gradient(circle at 50% 0%, #0f172a 0%, #040711 75%);
         }
         .orb {
-            position: absolute; border-radius: 50%; filter: blur(85px); opacity: 0.5;
-            animation: floatOrb 18s infinite alternate ease-in-out;
+            position: absolute; border-radius: 50%; filter: blur(55px); opacity: 0.42;
+            will-change: transform; transform: translate3d(0, 0, 0);
         }
-        .orb-1 { width: 360px; height: 360px; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -8%; }
-        .orb-2 { width: 420px; height: 420px; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; animation-delay: -6s; }
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(-30px, 25px) scale(1.08); }
-        }
+        .orb-1 { width: 320px; height: 320px; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -8%; }
+        .orb-2 { width: 360px; height: 360px; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; }
         .bg-grid-mesh {
             position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background-image: linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px),
@@ -38,25 +38,27 @@
             background-size: 40px 40px;
         }
         .liquid-glass {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 100%);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.58) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.7), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+            transform: translate3d(0, 0, 0);
         }
         .liquid-card {
             background: linear-gradient(145deg, rgba(255, 255, 255, 0.075) 0%, rgba(255, 255, 255, 0.02) 100%);
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.13);
-            box-shadow: 0 14px 32px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 12px 28px -10px rgba(0, 0, 0, 0.5), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
+            transition: transform 0.2s ease, border-color 0.2s ease;
             position: relative;
             overflow: hidden;
+            transform: translate3d(0, 0, 0);
         }
         .liquid-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: rgba(56, 189, 248, 0.55);
-            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.3), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
         }
         .liquid-input {
             background: rgba(7, 11, 22, 0.85);
@@ -397,34 +399,6 @@
             return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
         }
 
-        if (!sessionStorage.getItem("basmagia_visit_counted")) {
-            sessionStorage.setItem("basmagia_visit_counted", "true");
-            let visits = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
-            localStorage.setItem("basmagia_visit_count", visits.toString());
-        }
-
-        const totalVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
-        const alreadyJoined = localStorage.getItem("basmagia_wa_joined") === "true";
-        const shownThisSession = sessionStorage.getItem("basmagia_wa_shown_session") === "true";
-
-        if (totalVisits >= 2 && !alreadyJoined && !shownThisSession) {
-            sessionStorage.setItem("basmagia_wa_shown_session", "true");
-            setTimeout(() => {
-                document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
-                document.getElementById("whatsapp-invite-modal").classList.add("flex");
-            }, 900);
-        }
-
-        window.closeWhatsAppModal = function() {
-            document.getElementById("whatsapp-invite-modal").classList.add("hidden");
-            document.getElementById("whatsapp-invite-modal").classList.remove("flex");
-        };
-
-        window.markWhatsAppJoined = function() {
-            localStorage.setItem("basmagia_wa_joined", "true");
-            closeWhatsAppModal();
-        };
-
         let savedUser = sessionStorage.getItem("basmagia_user");
         const isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
 
@@ -463,6 +437,9 @@
             window.location.href = "../index.html";
         };
 
+        let pendingSubjectTarget = null;
+        let subjectSelectClicks = parseInt(localStorage.getItem("basmagia_exam_clicks") || "0");
+
         window.openSubjectModal = function(title, icon, fileUrl) {
             if (!isFreeMode && currentUserObj.allowedSubject && currentUserObj.allowedSubject !== "all" && currentUserObj.allowedSubject !== fileUrl && currentUserObj.role !== "admin") {
                 document.getElementById("upgrade-pkg-modal").classList.remove("hidden");
@@ -470,12 +447,44 @@
                 return;
             }
 
+            // زيادة عداد الضغط على اختيار الامتحان
+            subjectSelectClicks++;
+            localStorage.setItem("basmagia_exam_clicks", subjectSelectClicks.toString());
+
+            // في ثاني مرة يضغط فيها الطالب على اختيار امتحان (أو مضاعفاتها إذا لم ينضم بعد)، يظهر له إعلان جروب الملخصات أولاً!
+            const hasJoinedWA = localStorage.getItem("basmagia_wa_joined") === "true";
+            if (subjectSelectClicks === 2 && !hasJoinedWA) {
+                pendingSubjectTarget = { title, icon, fileUrl };
+                document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
+                document.getElementById("whatsapp-invite-modal").classList.add("flex");
+                return;
+            }
+
+            showQuizTypeModalNow(title, icon, fileUrl);
+        };
+
+        function showQuizTypeModalNow(title, icon, fileUrl) {
             document.getElementById("modal-sub-title").innerText = title;
             document.getElementById("modal-sub-icon").innerText = icon;
             document.getElementById("modal-mcq-link").href = fileUrl + "?mode=mcq";
             document.getElementById("modal-tf-link").href = fileUrl + "?mode=tf";
             document.getElementById("quiz-type-modal").classList.remove("hidden");
             document.getElementById("quiz-type-modal").classList.add("flex");
+        }
+
+        window.closeWhatsAppModal = function() {
+            document.getElementById("whatsapp-invite-modal").classList.add("hidden");
+            document.getElementById("whatsapp-invite-modal").classList.remove("flex");
+            if (pendingSubjectTarget) {
+                const t = pendingSubjectTarget;
+                pendingSubjectTarget = null;
+                showQuizTypeModalNow(t.title, t.icon, t.fileUrl);
+            }
+        };
+
+        window.markWhatsAppJoined = function() {
+            localStorage.setItem("basmagia_wa_joined", "true");
+            closeWhatsAppModal();
         };
 
         window.closeSubjectModal = function() {
@@ -508,31 +517,47 @@
             const app = initializeApp(firebaseConfig);
             db = getFirestore(app);
 
-            // تسجيل دخول الطالب لقسم الفرقة الأولى في إحصائيات الإدمن
-            if (!sessionStorage.getItem("basmagia_year1_logged")) {
-                sessionStorage.setItem("basmagia_year1_logged", "true");
-                const env = detectVisitorEnv();
-                const visitId = "V-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
-                setDoc(doc(db, 'site_visits', visitId), {
-                    timestamp: Date.now(),
-                    dateStr: new Date().toLocaleDateString("ar-EG"),
-                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
-                    deviceId: getDeviceFingerprint(),
-                    studentName: currentUserObj.name || "طالب بالفرقة الأولى",
-                    deviceType: env.deviceType,
-                    os: env.os,
-                    browser: env.browser,
-                    screen: env.screen,
-                    page: "لوحة الفرقة الأولى"
-                });
-            }
-
             onSnapshot(collection(db, 'affiliate_banners'), (snapshot) => {
                 affiliateAdsList = [];
                 snapshot.forEach(d => affiliateAdsList.push({ id: d.id, ...d.data() }));
                 renderAffiliateCarousel();
                 renderAdminAdsList();
             });
+
+            // تأجيل تسجيل التواجد والإحصائيات بالخلفية حتى لا يؤثر على سرعة فتح الصفحة
+            setTimeout(() => {
+                const sendPresence = () => {
+                    const env = detectVisitorEnv();
+                    const devId = getDeviceFingerprint();
+                    setDoc(doc(db, 'online_users', devId), {
+                        deviceId: devId,
+                        studentName: currentUserObj.name || "طالب بالفرقة الأولى",
+                        deviceType: env.deviceType,
+                        page: "تصفح مواد الفرقة الأولى",
+                        lastSeen: Date.now()
+                    }).catch(() => {});
+                };
+                sendPresence();
+                setInterval(sendPresence, 45000);
+
+                if (!sessionStorage.getItem("basmagia_year1_logged")) {
+                    sessionStorage.setItem("basmagia_year1_logged", "true");
+                    const env = detectVisitorEnv();
+                    const visitId = "V-" + Date.now() + "-" + Math.floor(Math.random() * 1000);
+                    setDoc(doc(db, 'site_visits', visitId), {
+                        timestamp: Date.now(),
+                        dateStr: new Date().toLocaleDateString("ar-EG"),
+                        timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                        deviceId: getDeviceFingerprint(),
+                        studentName: currentUserObj.name || "طالب بالفرقة الأولى",
+                        deviceType: env.deviceType,
+                        os: env.os,
+                        browser: env.browser,
+                        screen: env.screen,
+                        page: "لوحة الفرقة الأولى"
+                    }).catch(() => {});
+                }
+            }, 900);
         } catch (e) { console.warn(e); }
 
         function renderAffiliateCarousel() {

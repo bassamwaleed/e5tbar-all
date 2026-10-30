@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>بوابة البصمجية PRO | المنصة التفاعلية الذكية</title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
@@ -18,7 +22,7 @@
             position: relative;
         }
 
-        /* === خلفية الكرات الضوئية السائلة المتحركة (Liquid Mesh Orbs) === */
+        /* === خلفية الكرات الضوئية السائلة السريعة (GPU Accelerated) === */
         .ambient-canvas {
             position: fixed;
             inset: 0;
@@ -31,33 +35,26 @@
         .orb {
             position: absolute;
             border-radius: 50%;
-            filter: blur(85px);
-            opacity: 0.55;
-            animation: floatOrb 18s infinite alternate ease-in-out;
+            filter: blur(55px);
+            opacity: 0.45;
+            will-change: transform;
+            transform: translate3d(0, 0, 0);
         }
         .orb-1 {
-            width: 380px; height: 380px;
+            width: 320px; height: 320px;
             background: radial-gradient(circle, #06b6d4, #3b82f6);
             top: -10%; right: -8%;
         }
         .orb-2 {
-            width: 440px; height: 440px;
+            width: 360px; height: 360px;
             background: radial-gradient(circle, #8b5cf6, #ec4899);
             bottom: -15%; left: -10%;
-            animation-delay: -6s;
         }
         .orb-3 {
-            width: 280px; height: 280px;
+            width: 240px; height: 240px;
             background: radial-gradient(circle, #10b981, #06b6d4);
             top: 42%; left: 38%;
-            opacity: 0.28;
-            animation-delay: -11s;
-        }
-
-        @keyframes floatOrb {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(-35px, 30px) scale(1.1); }
-            100% { transform: translate(30px, -25px) scale(0.94); }
+            opacity: 0.22;
         }
 
         .bg-grid-mesh {
@@ -73,65 +70,63 @@
             -webkit-mask-image: radial-gradient(circle at 50% 35%, black 35%, transparent 85%);
         }
 
-        /* === ستايل الزجاج السائل الفاخر (3D Liquid Glass) === */
+        /* === ستايل الزجاج السائل الخفيف والسريع (Optimized Liquid Glass) === */
         .liquid-glass {
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09) 0%, rgba(255, 255, 255, 0.025) 100%);
-            backdrop-filter: blur(28px) saturate(180%);
-            -webkit-backdrop-filter: blur(28px) saturate(180%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.78) 0%, rgba(15, 23, 42, 0.58) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.15);
             box-shadow: 
-                0 25px 50px -12px rgba(0, 0, 0, 0.75),
-                inset 0 1px 1px 0 rgba(255, 255, 255, 0.3),
-                inset 0 -1px 1px 0 rgba(255, 255, 255, 0.05);
+                0 20px 40px -12px rgba(0, 0, 0, 0.7),
+                inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+            transform: translate3d(0, 0, 0);
         }
 
         .liquid-card {
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.015) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.12);
-            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.2);
-            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 10px 25px -8px rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.18);
+            transition: transform 0.2s ease, border-color 0.2s ease;
             position: relative;
             overflow: hidden;
+            transform: translate3d(0, 0, 0);
         }
 
         .liquid-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-3px);
             border-color: rgba(56, 189, 248, 0.45);
-            box-shadow: 0 20px 40px -12px rgba(6, 182, 212, 0.25), inset 0 1px 1px 0 rgba(255, 255, 255, 0.35);
         }
 
         .liquid-input {
-            background: rgba(7, 11, 22, 0.78);
+            background: rgba(7, 11, 22, 0.82);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.5);
-            transition: all 0.25s ease;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.45);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
         .liquid-input:focus {
             border-color: #38bdf8;
-            background: rgba(12, 19, 36, 0.92);
-            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2), inset 0 2px 6px rgba(0, 0, 0, 0.5);
+            background: rgba(12, 19, 36, 0.94);
+            box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.2);
         }
 
         .glow-btn {
             background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%);
-            box-shadow: 0 10px 28px -6px rgba(59, 130, 246, 0.6), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 22px -6px rgba(59, 130, 246, 0.55);
+            transition: transform 0.2s ease;
         }
         .glow-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 35px -6px rgba(59, 130, 246, 0.8), inset 0 1px 1px rgba(255, 255, 255, 0.5);
         }
 
         .free-btn {
             background: linear-gradient(135deg, #10b981 0%, #06b6d4 100%);
-            box-shadow: 0 10px 28px -6px rgba(16, 185, 129, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.4);
-            transition: all 0.3s ease;
+            box-shadow: 0 8px 22px -6px rgba(16, 185, 129, 0.5);
+            transition: transform 0.2s ease;
         }
         .free-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 16px 35px -6px rgba(16, 185, 129, 0.75);
         }
 
         .text-gradient {
@@ -437,38 +432,57 @@
             <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5 shrink-0">
                 <div>
                     <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن والتحليلات السحابية</h2>
-                    <p class="text-[10px] text-slate-400">تحليلات الزوار والأجهزة + مجانية الموقع + الأكواد + بانرات الأفلييت</p>
+                    <p class="text-[10px] text-slate-400">المتواجدون الآن + تحليلات الزوار + آراء الطلاب + الأكواد + البانرات</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
 
-            <!-- تبويبات لوحة الإدمن الأربعة -->
-            <div class="grid grid-cols-4 gap-1.5 mb-3 shrink-0">
+            <!-- تبويبات لوحة الإدمن الخمسة -->
+            <div class="grid grid-cols-5 gap-1 mb-3 shrink-0">
                 <button id="tab-stats-btn" onclick="switchAdminTab('stats')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📊 الإحصائيات</button>
-                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">⚙️ وضع الموقع</button>
+                <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">💬 آراء الطلاب</button>
+                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">⚙️ الوضع</button>
                 <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">🔑 الأكواد</button>
                 <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📢 البانرات</button>
             </div>
 
-            <!-- قسم 0 (الجديد): تحليلات الزوار ونوع الموبايل/الكمبيوتر والمتصفحات -->
+            <!-- قسم 0: تحليلات الزوار + عداد المتواجدين الآن -->
             <div id="admin-stats-section" class="flex-1 flex flex-col overflow-y-auto space-y-2.5 text-right pr-1">
-                <!-- الأرقام الرئيسية -->
-                <div class="grid grid-cols-4 gap-2 text-center shrink-0">
-                    <div class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-2.5">
-                        <div class="text-[10px] text-slate-400 font-bold">إجمالي الزيارات</div>
+                <!-- الأرقام الرئيسية الـ 5 شاملة المتواجدين الآن -->
+                <div class="grid grid-cols-5 gap-1.5 text-center shrink-0">
+                    <div class="bg-emerald-500/15 border-2 border-emerald-400/50 rounded-2xl p-2 relative overflow-hidden">
+                        <div class="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] text-emerald-300 font-black">
+                            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
+                            <span>فاتحين الآن</span>
+                        </div>
+                        <div id="stat-online-now" class="text-base sm:text-xl font-black text-white mt-0.5">1</div>
+                    </div>
+                    <div class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-2">
+                        <div class="text-[9px] sm:text-[10px] text-slate-400 font-bold">إجمالي الزيارات</div>
                         <div id="stat-total-visits" class="text-base sm:text-xl font-black text-cyan-300 mt-0.5">0</div>
                     </div>
-                    <div class="bg-slate-900/90 border border-emerald-400/30 rounded-2xl p-2.5">
-                        <div class="text-[10px] text-slate-400 font-bold">زوار فريدون</div>
-                        <div id="stat-unique-devices" class="text-base sm:text-xl font-black text-emerald-300 mt-0.5">0</div>
+                    <div class="bg-slate-900/90 border border-blue-400/30 rounded-2xl p-2">
+                        <div class="text-[9px] sm:text-[10px] text-slate-400 font-bold">زوار فريدون</div>
+                        <div id="stat-unique-devices" class="text-base sm:text-xl font-black text-blue-300 mt-0.5">0</div>
                     </div>
-                    <div class="bg-slate-900/90 border border-purple-400/30 rounded-2xl p-2.5">
-                        <div class="text-[10px] text-slate-400 font-bold">زيارات اليوم</div>
+                    <div class="bg-slate-900/90 border border-purple-400/30 rounded-2xl p-2">
+                        <div class="text-[9px] sm:text-[10px] text-slate-400 font-bold">زيارات اليوم</div>
                         <div id="stat-today-visits" class="text-base sm:text-xl font-black text-purple-300 mt-0.5">0</div>
                     </div>
-                    <div class="bg-slate-900/90 border border-amber-400/30 rounded-2xl p-2.5">
-                        <div class="text-[10px] text-slate-400 font-bold">نسبة الموبايل</div>
+                    <div class="bg-slate-900/90 border border-amber-400/30 rounded-2xl p-2">
+                        <div class="text-[9px] sm:text-[10px] text-slate-400 font-bold">نسبة الموبايل</div>
                         <div id="stat-mobile-pct" class="text-base sm:text-xl font-black text-amber-300 mt-0.5">0%</div>
+                    </div>
+                </div>
+
+                <!-- قائمة المتواجدين الآن مباشرة في المنصة -->
+                <div class="bg-emerald-950/30 border border-emerald-500/30 rounded-2xl p-2.5 shrink-0">
+                    <div class="text-[11px] font-black text-emerald-300 mb-1.5 flex items-center justify-between">
+                        <span>🟢 الطلاب المتواجدون داخل المنصة في هذه اللحظة:</span>
+                        <span class="text-[9px] text-slate-400">تحديث تلقائي كل 20 ثانية</span>
+                    </div>
+                    <div id="stat-online-users-list" class="flex flex-wrap gap-1.5 text-[10px]">
+                        <span class="text-slate-400">جاري الفحص...</span>
                     </div>
                 </div>
 
@@ -506,6 +520,20 @@
                     <div id="stat-recent-logs" class="space-y-1.5 overflow-y-auto max-h-40 pr-1 text-[11px]">
                         <div class="text-slate-400 text-center py-4">جاري جلب سجل الزيارات...</div>
                     </div>
+                </div>
+            </div>
+
+            <!-- قسم آراء وملاحظات الطلاب (Feedback) بعد انتهاء الامتحان -->
+            <div id="admin-feedback-section" class="hidden flex-1 flex-col overflow-hidden text-right">
+                <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 mb-2.5 shrink-0 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xs sm:text-sm font-black text-amber-300">💬 تقييمات وملاحظات الطلاب بعد الامتحانات</h3>
+                        <p class="text-[10px] text-slate-400">تظهر هنا كل الرسائل والملاحظات التي يكتبها الطلاب بعد إنهاء الاختبار</p>
+                    </div>
+                    <span id="feedback-total-badge" class="bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2.5 py-1 rounded-xl text-xs font-black">0 رأي</span>
+                </div>
+                <div id="feedback-list" class="flex-1 overflow-y-auto space-y-2 pr-1">
+                    <div class="text-center text-xs text-slate-400 py-8">لا توجد آراء مرسلة من الطلاب حتى الآن.</div>
                 </div>
             </div>
 
@@ -688,26 +716,19 @@
             return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
         }
 
-        // ==========================================
-        // 2. نظام عداد الزيارات الذكي لإظهار جروب الواتساب من المرة الثانية!
-        // ==========================================
-        function checkSecondVisitWhatsAppPopup() {
-            if (!sessionStorage.getItem("basmagia_visit_counted")) {
-                sessionStorage.setItem("basmagia_visit_counted", "true");
-                let visits = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
-                localStorage.setItem("basmagia_visit_count", visits.toString());
-            }
-
-            const totalVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
-            const alreadyJoined = localStorage.getItem("basmagia_wa_joined") === "true";
-            const shownThisSession = sessionStorage.getItem("basmagia_wa_shown_session") === "true";
-
-            if (totalVisits >= 2 && !alreadyJoined && !shownThisSession) {
-                sessionStorage.setItem("basmagia_wa_shown_session", "true");
-                setTimeout(() => {
-                    openWhatsAppModal();
-                }, 900);
-            }
+        // إظهار نافذة الجروب عند فتح الموقع للمرة الثانية
+        if (!sessionStorage.getItem("basmagia_root_visit_counted")) {
+            sessionStorage.setItem("basmagia_root_visit_counted", "true");
+            let vCount = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
+            localStorage.setItem("basmagia_visit_count", vCount.toString());
+        }
+        const rootVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
+        if (rootVisits >= 2 && localStorage.getItem("basmagia_wa_joined") !== "true" && !sessionStorage.getItem("basmagia_wa_root_shown")) {
+            sessionStorage.setItem("basmagia_wa_root_shown", "true");
+            setTimeout(() => {
+                document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
+                document.getElementById("whatsapp-invite-modal").classList.add("flex");
+            }, 900);
         }
 
         window.openWhatsAppModal = function() {
@@ -725,8 +746,6 @@
             closeWhatsAppModal();
         };
 
-        checkSecondVisitWhatsAppPopup();
-
         // إعدادات قاعدة البيانات الخاصة بك (basmagia-db)
         const firebaseConfig = {
             apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
@@ -742,9 +761,12 @@
         let cloudCodesCache = {};
         let affiliateAdsList = [];
         let analyticsLogsList = [];
+        let onlineUsersList = [];
+        let feedbacksList = [];
         let currentAdIdx = 0;
         let adCarouselTimer = null;
         let rulesError = false;
+        let adminStreamsStarted = false;
 
         let isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
 
@@ -809,7 +831,23 @@
         }
         updateUIForMode();
 
-        // تسجيل زيارة الطالب في السحابة مرة واحدة لكل جلسة
+        // تسجيل زيارة الطالب + تحديث نبض التواجد الحي (Online Presence)
+        async function updateOnlinePresence(pageTitle) {
+            if (!db) return;
+            try {
+                const env = detectVisitorEnv();
+                const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+                const devId = getDeviceFingerprint();
+                await setDoc(doc(db, 'online_users', devId), {
+                    deviceId: devId,
+                    studentName: savedUser.name || "طالب في الرئيسية",
+                    deviceType: env.deviceType,
+                    page: pageTitle || "الصفحة الرئيسية",
+                    lastSeen: Date.now()
+                });
+            } catch (e) {}
+        }
+
         async function logVisitToCloud(pageTitle) {
             if (!db || sessionStorage.getItem("basmagia_cloud_logged")) return;
             sessionStorage.setItem("basmagia_cloud_logged", "true");
@@ -839,9 +877,7 @@
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
 
-                // تسجيل الزيارة الحالية تلقائياً
-                logVisitToCloud("الصفحة الرئيسية");
-
+                // 1. تحميل خفيف وسريع جداً للطلاب (الإعدادات والبانر فقط)
                 onSnapshot(doc(db, 'platform_settings', 'config'), (docSnap) => {
                     if (docSnap.exists() && typeof docSnap.data().isFreeMode === 'boolean') {
                         isFreeMode = docSnap.data().isFreeMode;
@@ -850,38 +886,121 @@
                     }
                 });
 
-                const codesRef = collection(db, 'student_codes');
-                onSnapshot(codesRef, (snapshot) => {
-                    rulesError = false;
-                    cloudCodesCache = {};
-                    snapshot.forEach(d => { cloudCodesCache[d.id] = d.data(); });
-                    renderAdminCodesList();
-                }, (err) => {
-                    rulesError = true;
-                    renderAdminCodesList();
-                });
-
                 const adsRef = collection(db, 'affiliate_banners');
                 onSnapshot(adsRef, (snapshot) => {
                     affiliateAdsList = [];
                     snapshot.forEach(d => { affiliateAdsList.push({ id: d.id, ...d.data() }); });
                     renderAffiliateCarousel();
-                    renderAdminAdsList();
+                    if (adminStreamsStarted) renderAdminAdsList();
                 });
 
-                // الاستماع المباشر لسجلات الزيارات لعرضها في لوحة الإدمن
-                const visitsRef = collection(db, 'site_visits');
-                onSnapshot(visitsRef, (snapshot) => {
-                    analyticsLogsList = [];
-                    snapshot.forEach(d => { analyticsLogsList.push({ id: d.id, ...d.data() }); });
-                    analyticsLogsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
-                    renderAnalyticsDashboard();
-                });
+                // 2. تسجيل الزيارة ونبض التواجد في الخلفية بدون تعطيل واجهة المستخدم
+                setTimeout(() => {
+                    logVisitToCloud("الصفحة الرئيسية");
+                    updateOnlinePresence("الصفحة الرئيسية");
+                }, 1200);
+                setInterval(() => updateOnlinePresence("الصفحة الرئيسية"), 45000);
             } catch (e) {
                 console.warn("Firebase init notice:", e);
             }
         }
         initCloudDatabase();
+
+        // تحميل البيانات الثقيلة (السجلات والأكواد والآراء) فقط عند فتح لوحة الإدمن!
+        function startAdminRealtimeStreams() {
+            if (!db || adminStreamsStarted) return;
+            adminStreamsStarted = true;
+
+            onSnapshot(collection(db, 'student_codes'), (snapshot) => {
+                rulesError = false;
+                cloudCodesCache = {};
+                snapshot.forEach(d => { cloudCodesCache[d.id] = d.data(); });
+                renderAdminCodesList();
+            }, () => {
+                rulesError = true;
+                renderAdminCodesList();
+            });
+
+            onSnapshot(collection(db, 'site_visits'), (snapshot) => {
+                analyticsLogsList = [];
+                snapshot.forEach(d => { analyticsLogsList.push({ id: d.id, ...d.data() }); });
+                analyticsLogsList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderAnalyticsDashboard();
+            });
+
+            onSnapshot(collection(db, 'online_users'), (snapshot) => {
+                onlineUsersList = [];
+                snapshot.forEach(d => { onlineUsersList.push({ id: d.id, ...d.data() }); });
+                renderOnlineNowStatus();
+            });
+            setInterval(renderOnlineNowStatus, 20000);
+
+            onSnapshot(collection(db, 'student_feedbacks'), (snapshot) => {
+                feedbacksList = [];
+                snapshot.forEach(d => { feedbacksList.push({ id: d.id, ...d.data() }); });
+                feedbacksList.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+                renderFeedbacksDashboard();
+            });
+        }
+
+        function renderOnlineNowStatus() {
+            const now = Date.now();
+            // يعتبر الطالب متصلاً الآن إذا أرسل نبضاً خلال آخر 75 ثانية
+            const activeNow = onlineUsersList.filter(u => (now - (u.lastSeen || 0)) < 75000);
+            const countEl = document.getElementById("stat-online-now");
+            const listEl = document.getElementById("stat-online-users-list");
+            if (countEl) countEl.innerText = Math.max(1, activeNow.length);
+            if (!listEl) return;
+
+            if (activeNow.length === 0) {
+                listEl.innerHTML = `<span class="bg-emerald-500/20 text-emerald-300 px-2.5 py-1 rounded-lg font-bold">🟢 أنت متصل الآن (لوحة الإدارة)</span>`;
+                return;
+            }
+            listEl.innerHTML = activeNow.map(u => `
+                <div class="bg-white/5 border border-emerald-400/30 rounded-lg px-2.5 py-1 flex items-center gap-1.5">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="font-black text-white">${u.studentName || 'طالب'}</span>
+                    <span class="text-cyan-300">(${u.page || 'يتصفح'})</span>
+                    <span class="text-slate-400">${u.deviceType || ''}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderFeedbacksDashboard() {
+            const badge = document.getElementById("feedback-total-badge");
+            const container = document.getElementById("feedback-list");
+            if (badge) badge.innerText = feedbacksList.length + " رأي";
+            if (!container) return;
+
+            if (feedbacksList.length === 0) {
+                container.innerHTML = `<div class="text-center text-xs text-slate-400 py-8">لا توجد آراء مرسلة من الطلاب حتى الآن.</div>`;
+                return;
+            }
+
+            container.innerHTML = feedbacksList.map(fb => {
+                const stars = "⭐".repeat(fb.rating || 5);
+                return `
+                    <div class="bg-white/5 border border-white/10 rounded-2xl p-3 space-y-1.5">
+                        <div class="flex items-center justify-between gap-2">
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="font-black text-xs text-white">${fb.studentName || 'طالب'}</span>
+                                <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-0.5 rounded-full font-bold">${fb.subject || 'مادة'}</span>
+                                <span class="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">النتيجة: ${fb.score || '-'}</span>
+                                <span class="text-[11px]">${stars}</span>
+                            </div>
+                            <button onclick="deleteFeedback('${fb.id}')" class="bg-rose-500/20 text-rose-300 px-2 py-0.5 rounded-lg text-[10px] font-bold shrink-0">حذف</button>
+                        </div>
+                        <p class="text-xs text-slate-200 bg-slate-900/70 rounded-xl p-2.5 border border-white/5 leading-relaxed">${fb.message || ''}</p>
+                        <div class="text-[9px] text-slate-400 text-left font-mono">${fb.timeStr || ''} • ${fb.dateStr || ''}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.deleteFeedback = async function(id) {
+            if (!db) return;
+            await deleteDoc(doc(db, 'student_feedbacks', id));
+        };
 
         // ==========================================
         // 3. دالة رسم لوحة الإحصائيات والتحليلات للأدمن
@@ -1057,12 +1176,15 @@
 
         window.switchAdminTab = function(tab) {
             const isStats = tab === 'stats';
+            const isFeedback = tab === 'feedback';
             const isMode = tab === 'mode';
             const isCodes = tab === 'codes';
             const isAds = tab === 'ads';
 
             document.getElementById("admin-stats-section").classList.toggle("hidden", !isStats);
             document.getElementById("admin-stats-section").classList.toggle("flex", isStats);
+            document.getElementById("admin-feedback-section").classList.toggle("hidden", !isFeedback);
+            document.getElementById("admin-feedback-section").classList.toggle("flex", isFeedback);
             document.getElementById("admin-mode-section").classList.toggle("hidden", !isMode);
             document.getElementById("admin-mode-section").classList.toggle("flex", isMode);
             document.getElementById("admin-codes-section").classList.toggle("hidden", !isCodes);
@@ -1074,6 +1196,7 @@
             const idleCls = "bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition";
 
             document.getElementById("tab-stats-btn").className = isStats ? activeCls : idleCls;
+            document.getElementById("tab-feedback-btn").className = isFeedback ? activeCls : idleCls;
             document.getElementById("tab-mode-btn").className = isMode ? activeCls : idleCls;
             document.getElementById("tab-codes-btn").className = isCodes ? activeCls : idleCls;
             document.getElementById("tab-ads-btn").className = isAds ? activeCls : idleCls;
@@ -1228,7 +1351,7 @@
                 sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code: "FREE", folderUrl: targetFolderUrl, allowedSubject: "all", role: "student" }));
                 setTimeout(() => {
                     window.location.href = targetFolderUrl;
-                }, 700);
+                }, 220);
                 return;
             }
 
@@ -1238,7 +1361,7 @@
             try {
                 if (masterCodes.includes(code)) {
                     sessionStorage.setItem("basmagia_user", JSON.stringify({ name, code, folderUrl: targetFolderUrl, allowedSubject: "all", role: "admin" }));
-                    setTimeout(() => window.location.href = targetFolderUrl, 800);
+                    setTimeout(() => window.location.href = targetFolderUrl, 220);
                     return;
                 }
 
@@ -1279,7 +1402,7 @@
                     
                     setTimeout(() => {
                         window.location.href = targetFolderUrl;
-                    }, 1000);
+                    }, 350);
                 } else {
                     throw new Error("⚠️ تعذر الاتصال بقاعدة البيانات حالياً.");
                 }
@@ -1320,11 +1443,13 @@
         };
 
         function openAdminPanelNow() {
+            startAdminRealtimeStreams();
             document.getElementById("admin-modal").classList.remove("hidden");
             document.getElementById("admin-modal").classList.add("flex");
             updateUIForMode();
             renderAnalyticsDashboard();
             renderAdminCodesList();
+            renderAdminAdsList();
         }
 
         window.closeAdminModal = function() {
