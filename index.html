@@ -139,7 +139,7 @@
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="flex flex-col justify-between p-2.5 sm:p-4">
+<body class="flex flex-col justify-between p-3 sm:p-5">
 
     <!-- الخلفية المضيئة المتحركة -->
     <div class="ambient-canvas">
@@ -186,30 +186,30 @@
 
     <!-- الهيدر العائم -->
     <header class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
-        <div class="liquid-glass rounded-2xl px-3.5 py-2 sm:px-6 sm:py-2.5 flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2.5">
-                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-base sm:text-lg shadow-lg shadow-cyan-500/30 border border-white/25">
+        <div class="liquid-glass rounded-2xl px-4 py-2.5 sm:px-6 sm:py-3.5 flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-lg sm:text-xl shadow-lg shadow-cyan-500/30 border border-white/25">
                     ⚡
                 </div>
                 <div>
-                    <div class="flex items-center gap-1.5">
-                        <span class="font-black text-xs sm:text-lg text-white tracking-tight">بوابة البصمجية</span>
-                        <span id="header-mode-badge" class="text-[9px] sm:text-[10px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full">مجاني 🔓</span>
+                    <div class="flex items-center gap-2">
+                        <span class="font-black text-sm sm:text-xl text-white tracking-tight">بوابة البصمجية</span>
+                        <span id="header-mode-badge" class="text-[10px] sm:text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full">مجاني 🔓</span>
                     </div>
-                    <p class="text-[10px] sm:text-xs text-slate-400 hidden sm:block">المنصة التفاعلية الذكية لبنوك الأسئلة والملخصات</p>
+                    <p class="text-[11px] sm:text-xs text-slate-400 hidden sm:block mt-0.5">المنصة التفاعلية الذكية لبنوك الأسئلة والملخصات</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-1.5 sm:gap-2">
+            <div class="flex items-center gap-2 sm:gap-2.5">
                 <!-- زر جروب الملخصات على الواتساب -->
                 <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
-                   class="text-[10px] sm:text-xs font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl transition flex items-center gap-1">
+                   class="text-xs sm:text-sm font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 px-3 sm:px-4 py-2 rounded-xl transition flex items-center gap-1.5">
                     <span>📚</span>
                     <span>جروب الملخصات</span>
                 </a>
 
                 <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاستفسار%20عن%20منصة%20بوابة%20البصمجية" target="_blank"
-                   class="text-[10px] sm:text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1">
+                   class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3 sm:px-4 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
                     <span>💬</span>
                     <span id="header-cta-text">تواصل معنا</span>
                 </a>
@@ -218,35 +218,35 @@
     </header>
 
     <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة -->
-    <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1 overflow-hidden gap-1.5 sm:gap-2">
+    <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1.5 overflow-hidden gap-2.5 sm:gap-3.5">
         
         <!-- 1. الكارت الرئيسي لتسجيل الدخول -->
-        <div class="w-full max-w-md liquid-glass rounded-[24px] p-3.5 sm:p-5 relative overflow-hidden shrink-0">
+        <div class="w-full max-w-md liquid-glass rounded-[28px] p-5 sm:p-6 relative overflow-hidden shrink-0">
             <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="text-center mb-2.5 sm:mb-3 relative">
-                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[10px] font-bold mb-1">
+            <div class="text-center mb-3.5 sm:mb-4 relative">
+                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[11px] font-bold mb-1.5">
                     <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                     <span>الفرقة الأولى • الثانية • الثالثة • الرابعة</span>
                 </div>
-                <h1 id="card-main-title" class="text-lg sm:text-2xl font-black text-gradient">اختر فرقتك وابدأ فوراً</h1>
-                <p id="card-sub-title" class="text-[10px] sm:text-[11px] text-slate-400 mt-0.5">المنصة متاحة حالياً مجاناً لجميع الطلاب للتدريب والمراجعة</p>
+                <h1 id="card-main-title" class="text-xl sm:text-2xl font-black text-gradient leading-snug">اختر فرقتك وابدأ فوراً</h1>
+                <p id="card-sub-title" class="text-xs text-slate-300 mt-1">المنصة متاحة حالياً مجاناً لجميع الطلاب للتدريب والمراجعة</p>
             </div>
 
-            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-[11px] p-2 rounded-xl mb-2 font-bold text-center"></div>
+            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-2.5 rounded-xl mb-3 font-bold text-center"></div>
 
-            <form onsubmit="handleLogin(event)" class="space-y-2 text-right relative">
+            <form onsubmit="handleLogin(event)" class="space-y-3 text-right relative">
                 <div>
-                    <label id="name-label" class="block text-[10px] sm:text-[11px] font-bold text-slate-300 mb-0.5">اسم الطالب (اختياري)</label>
-                    <input type="text" id="student-name" placeholder="اكتب اسمك ليظهر في الترحيب ولوحة الشرف..." 
-                        class="liquid-input w-full rounded-xl px-3 py-2 text-xs sm:text-sm text-white placeholder-slate-500 outline-none">
+                    <label id="name-label" class="block text-xs font-bold text-slate-200 mb-1">اسم الطالب <span class="text-rose-400">*</span></label>
+                    <input type="text" id="student-name" required placeholder="اكتب اسمك هنا ليظهر في لوحة دحيحة الدفعة..." 
+                        class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 outline-none">
                 </div>
 
-                <div id="year-code-grid" class="grid grid-cols-1 gap-2">
+                <div id="year-code-grid" class="grid grid-cols-1 gap-2.5">
                     <div>
-                        <label class="block text-[10px] sm:text-[11px] font-bold text-slate-300 mb-0.5">اختر الفرقة الدراسية</label>
-                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3 py-2 text-xs sm:text-sm font-bold text-white outline-none cursor-pointer">
+                        <label class="block text-xs font-bold text-slate-200 mb-1">اختر الفرقة الدراسية</label>
+                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-white outline-none cursor-pointer">
                             <option value="year1/index.html" selected class="bg-slate-900">🎓 الفرقة الأولى</option>
                             <option value="year2/index.html" class="bg-slate-900">🎓 الفرقة الثانية</option>
                             <option value="year3/index.html" class="bg-slate-900">🎓 الفرقة الثالثة</option>
@@ -256,46 +256,46 @@
 
                     <!-- حقل الكود (يختفي تلقائياً في الوضع المجاني ويظهر في الوضع المدفوع) -->
                     <div id="code-field-wrapper" class="hidden">
-                        <label class="block text-[10px] sm:text-[11px] font-bold text-amber-300 mb-0.5">🔑 كود التفعيل</label>
+                        <label class="block text-xs font-bold text-amber-300 mb-1">🔑 كود التفعيل</label>
                         <input type="password" id="activation-code" placeholder="أدخل الكود..." 
-                            class="liquid-input w-full rounded-xl px-3 py-2 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
+                            class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
                     </div>
                 </div>
 
-                <button type="submit" id="login-btn" class="free-btn w-full text-slate-950 font-black py-2.5 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2">
+                <button type="submit" id="login-btn" class="free-btn w-full text-slate-950 font-black py-3 rounded-xl text-sm sm:text-base mt-1.5 flex items-center justify-center gap-2">
                     <span id="login-btn-text">🚀 دخول مجاني لاختيار الامتحان فوراً</span>
                 </button>
 
                 <!-- 🔒 زر التجربة المجانية (بدون كشف عدد الأسئلة أو عدد المحاولات مسبقاً للطالب!) -->
-                <button type="button" id="free-trial-10-btn" onclick="startFreeTrial10Questions()" class="hidden w-full py-2 rounded-xl font-black text-[11px] sm:text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-400/40 transition items-center justify-center gap-1.5">
+                <button type="button" id="free-trial-10-btn" onclick="startFreeTrial10Questions()" class="hidden w-full py-2.5 rounded-xl font-black text-xs sm:text-sm bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-400/40 transition items-center justify-center gap-1.5">
                     <span>🎁</span>
                     <span id="free-trial-btn-label">ليس لديك كود؟ اضغط هنا لتجربة المنصة مجاناً</span>
                 </button>
             </form>
 
             <!-- شريط المميزات المدمج أسفل الفورم -->
-            <div class="mt-2.5 pt-2.5 border-t border-white/10 grid grid-cols-3 gap-1.5 text-center">
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1 px-1">
-                    <div class="text-xs">⚡</div>
-                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">تصحيح فوري</div>
+            <div class="mt-3.5 pt-3 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
+                    <div class="text-sm">⚡</div>
+                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">تصحيح فوري</div>
                 </div>
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1 px-1">
-                    <div class="text-xs">⭐</div>
-                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">حفظ الأسئلة الصعبة</div>
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
+                    <div class="text-sm">⭐</div>
+                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">حفظ الصعب</div>
                 </div>
-                <div class="bg-white/[0.03] border border-white/5 rounded-xl py-1 px-1">
-                    <div class="text-xs">🏆</div>
-                    <div class="text-[9px] sm:text-[10px] font-extrabold text-slate-300">لوحة شرف الأوائل</div>
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
+                    <div class="text-sm">🔥</div>
+                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">لوحة الدحيحة</div>
                 </div>
             </div>
         </div>
 
-        <!-- 🏆 لوحة شرف أوائل الدفعة اليوم (Leaderboard - تظهر تلقائياً عند وجود نتائج اليوم) -->
+        <!-- 🔥 لوحة دحيحة الدفعة اليوم (Leaderboard - تظهر تلقائياً عند وجود نتائج اليوم) -->
         <div id="leaderboard-container" class="hidden w-full max-w-md liquid-card rounded-2xl p-2 sm:p-2.5 border border-amber-400/30 shrink-0">
             <div class="flex items-center justify-between mb-1.5 px-1">
                 <span class="text-[10px] sm:text-xs font-black text-amber-300 flex items-center gap-1">
-                    <span>🏆</span>
-                    <span>لوحة شرف أوائل الدفعة اليوم</span>
+                    <span>🔥</span>
+                    <span>لوحة دحيحة الدفعة اليوم</span>
                 </span>
                 <span class="text-[9px] text-slate-400 font-bold">أعلى الدرجات</span>
             </div>
@@ -609,7 +609,7 @@
                         <button onclick="closeAdminModal(); openWhatsAppModal();" class="bg-emerald-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">معاينة</button>
                     </div>
                     <div class="bg-amber-500/10 border border-amber-400/30 rounded-2xl p-2.5 text-[11px] text-amber-200 flex items-center justify-between">
-                        <span>🏆 لوحة شرف اليوم:</span>
+                        <span>🔥 لوحة دحيحة اليوم:</span>
                         <button onclick="clearLeaderboardLog()" class="bg-rose-500/30 text-rose-200 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">تصفير اللوحة</button>
                     </div>
                 </div>
@@ -755,19 +755,15 @@
             return btoa(unescape(encodeURIComponent(fp))).substring(0, 16);
         }
 
-        // إظهار نافذة الجروب عند فتح الموقع للمرة الثانية
-        if (!sessionStorage.getItem("basmagia_root_visit_counted")) {
-            sessionStorage.setItem("basmagia_root_visit_counted", "true");
-            let vCount = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
-            localStorage.setItem("basmagia_visit_count", vCount.toString());
-        }
-        const rootVisits = parseInt(localStorage.getItem("basmagia_visit_count") || "1");
-        if (rootVisits >= 2 && localStorage.getItem("basmagia_wa_joined") !== "true" && !sessionStorage.getItem("basmagia_wa_root_shown")) {
-            sessionStorage.setItem("basmagia_wa_root_shown", "true");
+        // إظهار نافذة الجروب فوراً عند عمل Refresh من الصفحة الرئيسية أو فتحها للمرة الثانية فما فوق
+        let vCount = parseInt(localStorage.getItem("basmagia_visit_count") || "0") + 1;
+        localStorage.setItem("basmagia_visit_count", vCount.toString());
+
+        if (vCount >= 2 && localStorage.getItem("basmagia_wa_joined") !== "true") {
             setTimeout(() => {
                 document.getElementById("whatsapp-invite-modal").classList.remove("hidden");
                 document.getElementById("whatsapp-invite-modal").classList.add("flex");
-            }, 900);
+            }, 600);
         }
 
         window.openWhatsAppModal = function() {
@@ -833,8 +829,8 @@
                 headerCta.innerText = "تواصل معنا";
                 mainTitle.innerText = "اختر فرقتك وابدأ الاختبار فوراً";
                 subTitle.innerText = "المنصة متاحة مجاناً لجميع الطلاب للتدريب والمراجعة الذكية";
-                nameLabel.innerText = "اسم الطالب (اختياري)";
-                nameInput.required = false;
+                nameLabel.innerHTML = 'اسم الطالب الثلاثي <span class="text-rose-400">*</span>';
+                nameInput.required = true;
                 gridBox.className = "grid grid-cols-1 gap-2";
                 codeWrapper.classList.add("hidden");
                 codeInput.required = false;
@@ -857,7 +853,7 @@
                 headerCta.innerText = "طلب كود اشتراك";
                 mainTitle.innerText = "تسجيل دخول المشتركين";
                 subTitle.innerText = "أدخل اسمك وكود التفعيل للانتقال إلى قسم فرقتك";
-                nameLabel.innerText = "اسم الطالب الثلاثي";
+                nameLabel.innerHTML = 'اسم الطالب الثلاثي <span class="text-rose-400">*</span>';
                 nameInput.required = true;
                 gridBox.className = "grid grid-cols-2 gap-2";
                 codeWrapper.classList.remove("hidden");
@@ -1410,30 +1406,21 @@
             }, 2500);
         }
 
-        function hideLoading() {
-            const overlay = document.getElementById("loading-overlay");
-            overlay.classList.add("hidden");
-            overlay.classList.remove("flex");
-            clearInterval(tipInterval);
-        }
-
-        window.openSubGuideModal = function(reasonText, studentName, yearText) {
-            if (reasonText) document.getElementById("sub-modal-reason").innerText = reasonText;
-            const msg = encodeURIComponent(`السلام عليكم يا أ. بسام، أنا الطالب (${studentName || 'جديد'}) في (${yearText}) وأريد الاشتراك والحصول على كود تفعيل في منصة بوابة البصمجية.`);
-            document.getElementById("whatsapp-sub-link").href = `https://wa.me/201286094595?text=${msg}`;
-            document.getElementById("sub-guide-modal").classList.remove("hidden");
-            document.getElementById("sub-guide-modal").classList.add("flex");
-        };
-
-        window.closeSubGuideModal = function() {
-            document.getElementById("sub-guide-modal").classList.add("hidden");
-            document.getElementById("sub-guide-modal").classList.remove("flex");
-        };
-
-        // 🎁 دخول الطالب لتجربة 10 أسئلة مجاناً بحد أقصى محاولتين على المتصفح
+        // 🎁 دخول الطالب لتجربة 10 أسئلة مجاناً بحد أقصى محاولتين على المتصفح (مع إجبار كتابة الاسم)
         window.startFreeTrial10Questions = function() {
+            const nameInput = document.getElementById("student-name");
+            const rawName = nameInput.value.trim();
+            const errBox = document.getElementById("auth-error");
+
+            if (!rawName) {
+                errBox.innerText = "⚠️ من فضلك اكتب اسمك أولاً قبل بدء التجربة المجانية!";
+                errBox.classList.remove("hidden");
+                nameInput.focus();
+                return;
+            }
+            errBox.classList.add("hidden");
+
             const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
-            const rawName = document.getElementById("student-name").value.trim() || "طالب (نسخة تجريبية)";
             const selectEl = document.getElementById("student-year");
             const targetFolderUrl = selectEl.value;
             const yearLabel = selectEl.options[selectEl.selectedIndex].text;
@@ -1460,13 +1447,22 @@
 
         window.handleLogin = async function(e) {
             e.preventDefault();
-            const rawName = document.getElementById("student-name").value.trim();
-            const name = rawName || "طالب البصمجية";
+            const nameInput = document.getElementById("student-name");
+            const rawName = nameInput.value.trim();
+            const errBox = document.getElementById("auth-error");
+
+            if (!rawName) {
+                errBox.innerText = "⚠️ من فضلك اكتب اسمك أولاً للمتابعة!";
+                errBox.classList.remove("hidden");
+                nameInput.focus();
+                return;
+            }
+
+            const name = rawName;
             const selectEl = document.getElementById("student-year");
             const targetFolderUrl = selectEl.value;
             const yearLabel = selectEl.options[selectEl.selectedIndex].text;
             const code = document.getElementById("activation-code").value.trim().toUpperCase();
-            const errBox = document.getElementById("auth-error");
 
             errBox.classList.add("hidden");
 
