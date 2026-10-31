@@ -290,18 +290,6 @@
             </div>
         </div>
 
-        <!-- 🔥 لوحة دحيحة الدفعة اليوم (Leaderboard - مُصغرة ومتجاوبة بدقة على الموبايل) -->
-        <div id="leaderboard-container" class="hidden w-full max-w-md liquid-card rounded-2xl p-2 sm:p-2.5 border border-amber-400/30 shrink-0">
-            <div class="flex items-center justify-between mb-1 px-1">
-                <span class="text-[10px] sm:text-xs font-black text-amber-300 flex items-center gap-1">
-                    <span>🔥</span>
-                    <span>لوحة دحيحة الدفعة اليوم</span>
-                </span>
-                <span class="text-[9px] text-slate-400 font-bold">أعلى الدرجات</span>
-            </div>
-            <div id="leaderboard-list" class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pb-0.5"></div>
-        </div>
-
         <!-- بانر إعلانات الأفلييت المبسط (مخفي تماماً إذا لم تضف إعلانات) -->
         <div id="affiliate-banner-wrapper" class="hidden w-full max-w-md relative z-20 shrink-0">
             <div class="liquid-card rounded-2xl p-1 border border-cyan-400/25 relative overflow-hidden group">
@@ -460,7 +448,7 @@
             <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5 shrink-0">
                 <div>
                     <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن والتحليلات السحابية</h2>
-                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + لوحة الشرف + الأكواد + البانرات</p>
+                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + الأكواد + البانرات</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
@@ -562,7 +550,7 @@
                 </div>
             </div>
 
-            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل + لوحة الشرف -->
+            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل -->
             <div id="admin-mode-section" class="hidden flex-1 flex-col justify-between overflow-y-auto space-y-2.5 text-right pr-1">
                 <!-- 📢 شريط الإشعارات العاجل (Live Broadcast Bar) -->
                 <div class="bg-slate-900/90 border border-rose-400/35 rounded-2xl p-3.5 space-y-2">
@@ -603,14 +591,10 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
+                <div class="grid grid-cols-1 gap-2">
                     <div class="bg-emerald-500/10 border border-emerald-400/30 rounded-2xl p-2.5 text-[11px] text-emerald-200 flex items-center justify-between">
                         <span>📲 نافذة جروب الواتساب:</span>
                         <button onclick="closeAdminModal(); openWhatsAppModal();" class="bg-emerald-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">معاينة</button>
-                    </div>
-                    <div class="bg-amber-500/10 border border-amber-400/30 rounded-2xl p-2.5 text-[11px] text-amber-200 flex items-center justify-between">
-                        <span>🔥 لوحة دحيحة اليوم:</span>
-                        <button onclick="clearLeaderboardLog()" class="bg-rose-500/30 text-rose-200 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">تصفير اللوحة</button>
                     </div>
                 </div>
             </div>
@@ -945,33 +929,7 @@
                     }
                 });
 
-                // 3. لوحة شرف أوائل اليوم (Leaderboard)
-                onSnapshot(collection(db, 'leaderboard'), (snapshot) => {
-                    let list = [];
-                    snapshot.forEach(d => list.push({ id: d.id, ...d.data() }));
-                    const todayStr = new Date().toLocaleDateString("ar-EG");
-                    list = list.filter(x => x.dateStr === todayStr);
-                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (b.score || 0));
-                    const top5 = list.slice(0, 5);
-
-                    const cont = document.getElementById("leaderboard-container");
-                    const box = document.getElementById("leaderboard-list");
-                    if (top5.length > 0) {
-                        cont.classList.remove("hidden");
-                        const medals = ["🥇", "🥈", "🥉", "🏅", "🏅"];
-                        box.innerHTML = top5.map((item, i) => `
-                            <div class="bg-white/5 border border-white/10 rounded-lg px-2 py-1 min-w-[95px] max-w-[110px] text-center shrink-0">
-                                <div class="text-[11px] font-black text-amber-300 truncate">${medals[i]} ${item.studentName || 'طالب'}</div>
-                                <div class="text-[10px] font-extrabold text-emerald-400 mt-0.5">${item.score}/${item.total} (${item.pct || 100}%)</div>
-                                <div class="text-[8px] text-slate-400 truncate">${item.subject || ''}</div>
-                            </div>
-                        `).join('');
-                    } else {
-                        cont.classList.add("hidden");
-                    }
-                });
-
-                // 4. بانر الأفلييت
+                // 3. بانر الأفلييت
                 onSnapshot(collection(db, 'affiliate_banners'), (snapshot) => {
                     affiliateAdsList = [];
                     snapshot.forEach(d => { affiliateAdsList.push({ id: d.id, ...d.data() }); });
@@ -1002,12 +960,6 @@
                 message: msg,
                 updatedAt: Date.now()
             });
-        };
-
-        window.clearLeaderboardLog = async function() {
-            if (!db || !confirm("هل تريد تصفير لوحة شرف اليوم؟")) return;
-            const snap = await getDocs(collection(db, 'leaderboard'));
-            snap.forEach(d => deleteDoc(doc(db, 'leaderboard', d.id)));
         };
 
         // تحميل البيانات الثقيلة فقط عند فتح لوحة الإدمن
