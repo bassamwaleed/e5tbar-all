@@ -405,6 +405,18 @@
         let pendingSubjectArgs = null;
 
         window.openSubjectModal = function(title, icon, fileUrl) {
+            // إذا كان في وضع التجربة المجانية واستهلك المحاولتين يظهر له فوراً أنه استهلك التجربة ويجب الاشتراك
+            const isTrialUser = !isFreeMode && userObj && (userObj.code === "TRIAL10" || userObj.role === "trial") && userObj.role !== "admin";
+            const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
+            if (isTrialUser && usedTrials >= 2) {
+                const upgModal = document.getElementById("upgrade-pkg-modal");
+                upgModal.querySelector("h3").innerText = "🔒 لقد استهلكت التجربة المجانية بالكامل!";
+                upgModal.querySelector("p").innerText = "لقد قمت بتجربة المنصة مرتين بنجاح. لفتح جميع بنوك الأسئلة والامتحانات بلا حدود، اشترك الآن واستلم كود التفعيل الخاص بك فوراً.";
+                upgModal.classList.remove("hidden");
+                upgModal.classList.add("flex");
+                return;
+            }
+
             const allowedSub = (userObj && userObj.allowedSubject) ? userObj.allowedSubject : "all";
             if (!isFreeMode && allowedSub !== "all" && allowedSub !== fileUrl && userObj.role !== "admin") {
                 document.getElementById("upgrade-pkg-modal").classList.remove("hidden");

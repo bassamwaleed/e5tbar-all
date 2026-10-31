@@ -1406,31 +1406,72 @@
             }, 2500);
         }
 
-        // 🎁 دخول الطالب لتجربة 10 أسئلة مجاناً بحد أقصى محاولتين على المتصفح (مع إجبار كتابة الاسم)
+        function hideLoading() {
+            const overlay = document.getElementById("loading-overlay");
+            if (overlay) {
+                overlay.classList.add("hidden");
+                overlay.classList.remove("flex");
+            }
+            if (tipInterval) clearInterval(tipInterval);
+        }
+
+        window.openSubGuideModal = function(reasonText, studentName, yearText) {
+            const reasonEl = document.getElementById("sub-modal-reason");
+            if (reasonText && reasonEl) reasonEl.innerText = reasonText;
+
+            const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
+            const modalTrialBtn = document.getElementById("modal-trial-btn");
+            if (modalTrialBtn) {
+                if (usedTrials >= 2) {
+                    modalTrialBtn.classList.add("hidden");
+                } else {
+                    modalTrialBtn.classList.remove("hidden");
+                }
+            }
+
+            const msg = encodeURIComponent(`السلام عليكم يا أ. بسام، أنا الطالب (${studentName || 'طالب جديد'}) في (${yearText || 'المنصة'}) وأريد الاشتراك والحصول على كود تفعيل في منصة بوابة البصمجية.`);
+            const waLink = document.getElementById("whatsapp-sub-link");
+            if (waLink) waLink.href = `https://wa.me/201286094595?text=${msg}`;
+
+            const modal = document.getElementById("sub-guide-modal");
+            if (modal) {
+                modal.classList.remove("hidden");
+                modal.classList.add("flex");
+            }
+        };
+
+        window.closeSubGuideModal = function() {
+            const modal = document.getElementById("sub-guide-modal");
+            if (modal) {
+                modal.classList.add("hidden");
+                modal.classList.remove("flex");
+            }
+        };
+
+        // 🎁 دخول الطالب للتجربة المجانية مع فحص فوري إذا استهلك المحاولتين
         window.startFreeTrial10Questions = function() {
             const nameInput = document.getElementById("student-name");
-            const rawName = nameInput.value.trim();
+            const rawName = nameInput ? nameInput.value.trim() : "";
             const errBox = document.getElementById("auth-error");
+            const selectEl = document.getElementById("student-year");
+            const targetFolderUrl = selectEl ? selectEl.value : "year1/index.html";
+            const yearLabel = selectEl ? selectEl.options[selectEl.selectedIndex].text : "الفرقة الدراسية";
+
+            const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
+
+            // لو استهلك المحاولتين بالفعل يظهر له فوراً أنه استهلك التجربة ولازم يشترك!
+            if (usedTrials >= 2) {
+                window.openSubGuideModal("🔒 لقد استهلكت التجربة المجانية بالكامل! يجب الاشتراك للمتابعة", rawName || "طالب", yearLabel);
+                return;
+            }
 
             if (!rawName) {
-                errBox.innerText = "⚠️ من فضلك اكتب اسمك أولاً قبل بدء التجربة المجانية!";
+                errBox.innerText = "⚠️ من فضلك اكتب اسمك الثلاثي في الخانة أولاً ثم اضغط على زر التجربة المجانية!";
                 errBox.classList.remove("hidden");
-                nameInput.focus();
+                if (nameInput) nameInput.focus();
                 return;
             }
             errBox.classList.add("hidden");
-
-            const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
-            const selectEl = document.getElementById("student-year");
-            const targetFolderUrl = selectEl.value;
-            const yearLabel = selectEl.options[selectEl.selectedIndex].text;
-
-            if (usedTrials >= 2) {
-                const modalTrialBtn = document.getElementById("modal-trial-btn");
-                if (modalTrialBtn) modalTrialBtn.classList.add("hidden");
-                openSubGuideModal("🔒 لقد استنفدت المحاولتين المجانيتين (٢/٢) على هذا الجهاز!", rawName, yearLabel);
-                return;
-            }
 
             showLoading();
             sessionStorage.setItem("basmagia_user", JSON.stringify({
@@ -1442,7 +1483,7 @@
             }));
             setTimeout(() => {
                 window.location.href = targetFolderUrl;
-            }, 220);
+            }, 250);
         };
 
         window.handleLogin = async function(e) {
