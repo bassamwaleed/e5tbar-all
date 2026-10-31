@@ -57,91 +57,91 @@
     <div class="ambient-canvas"><div class="orb-1"></div><div class="orb-2"></div></div>
 
     <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-2xl max-h-[95dvh] flex flex-col justify-between overflow-hidden relative z-10 flex-1">
-        <div class="flex items-center justify-between gap-2 pb-2.5 mb-2 border-b border-white/10 shrink-0">
-            <a href="index.html" class="bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-1.5 rounded-xl text-xs font-extrabold transition">→ مواد الفرقة</a>
-            <h1 class="text-xs sm:text-base font-black text-cyan-300 truncate">🔤 مادة اللغة الإنجليزية</h1>
-            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-3 py-1.5 rounded-xl text-xs font-black hover:bg-cyan-500/30 transition">⚙️ الإعدادات</button>
+        <div class="flex items-center justify-between gap-2 pb-3 mb-2.5 border-b border-white/10 shrink-0">
+            <a href="index.html" class="bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition">→ مواد الفرقة</a>
+            <h1 class="text-sm sm:text-lg font-black text-cyan-300 truncate">🔤 مادة اللغة الإنجليزية</h1>
+            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black hover:bg-cyan-500/30 transition">⚙️ الإعدادات</button>
         </div>
 
-        <div id="setup-screen" class="space-y-3 text-right overflow-y-auto">
-            <div class="bg-slate-900/90 border border-cyan-400/35 rounded-2xl p-4 space-y-3">
-                <div class="flex items-center justify-between border-b border-white/10 pb-2.5">
+        <div id="setup-screen" class="space-y-3.5 text-right overflow-y-auto my-auto">
+            <div class="bg-slate-900/90 border border-cyan-400/35 rounded-2xl p-4 sm:p-5 space-y-3.5">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
                     <div>
-                        <h2 class="text-sm font-black text-white">⚙️ إعدادات وتخصيص الاختبار</h2>
-                        <p class="text-[10px] text-slate-400">اضبط خياراتك المفضلة قبل الانطلاق</p>
+                        <h2 class="text-sm sm:text-base font-black text-white">⚙️ إعدادات وتخصيص الاختبار</h2>
+                        <p class="text-[11px] text-slate-400 mt-0.5">اضبط خياراتك المفضلة قبل الانطلاق</p>
                     </div>
                     <div class="flex items-center gap-2">
-                        <span class="text-xs font-black bg-cyan-500/15 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">المتاح: <span id="avail-count">0</span> سؤال</span>
-                        <button id="resume-quiz-btn" onclick="resumeQuiz()" class="hidden bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 px-2.5 py-1 rounded-lg text-xs font-black hover:bg-emerald-500/30 transition">
+                        <span class="text-xs font-black bg-cyan-500/15 text-cyan-300 px-3 py-1.5 rounded-xl border border-cyan-400/30">المتاح: <span id="avail-count">0</span> سؤال</span>
+                        <button id="resume-quiz-btn" onclick="resumeQuiz()" class="hidden bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black hover:bg-emerald-500/30 transition">
                             ✕ عودة للامتحان
                         </button>
                     </div>
                 </div>
 
-                <div class="grid grid-cols-2 gap-2">
-                    <button type="button" id="mode-mcq" onclick="switchMode('mcq')" class="setup-box active p-2.5 rounded-xl font-black text-xs text-center">📝 اختيار من متعدد</button>
-                    <button type="button" id="mode-tf" onclick="switchMode('tf')" class="setup-box p-2.5 rounded-xl font-black text-xs text-center">✅ صح وخطأ</button>
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button type="button" id="mode-mcq" onclick="switchMode('mcq')" class="setup-box active p-3 rounded-xl font-black text-xs sm:text-sm text-center">📝 اختيار من متعدد</button>
+                    <button type="button" id="mode-tf" onclick="switchMode('tf')" class="setup-box p-3 rounded-xl font-black text-xs sm:text-sm text-center">✅ صح وخطأ</button>
                 </div>
 
-                <div class="grid grid-cols-3 gap-2 text-center">
-                    <button type="button" id="box-shuffle" onclick="toggleShuffle()" class="setup-box p-2.5 rounded-xl">
-                        <div class="text-base">🔢</div>
-                        <div class="font-black text-[11px]">الترتيب</div>
-                        <div id="txt-shuffle" class="text-[10px] text-cyan-300 font-bold">عادي</div>
+                <div class="grid grid-cols-3 gap-2.5 text-center">
+                    <button type="button" id="box-shuffle" onclick="toggleShuffle()" class="setup-box p-3 rounded-xl">
+                        <div class="text-lg">🔢</div>
+                        <div class="font-black text-xs mt-0.5">الترتيب</div>
+                        <div id="txt-shuffle" class="text-[11px] text-cyan-300 font-bold mt-0.5">عادي</div>
                     </button>
-                    <button type="button" id="box-qnum" onclick="toggleQNum()" class="setup-box active p-2.5 rounded-xl">
-                        <div class="text-base">🆔</div>
-                        <div class="font-black text-[11px]">رقم السؤال</div>
-                        <div id="txt-qnum" class="text-[10px] text-cyan-300 font-bold">ظاهر</div>
+                    <button type="button" id="box-qnum" onclick="toggleQNum()" class="setup-box active p-3 rounded-xl">
+                        <div class="text-lg">🆔</div>
+                        <div class="font-black text-xs mt-0.5">رقم السؤال</div>
+                        <div id="txt-qnum" class="text-[11px] text-cyan-300 font-bold mt-0.5">ظاهر</div>
                     </button>
-                    <button type="button" id="box-timer" onclick="toggleTimer()" class="setup-box p-2.5 rounded-xl">
-                        <div class="text-base">⏱️</div>
-                        <div class="font-black text-[11px]">المؤقت</div>
-                        <div id="txt-timer" class="text-[10px] text-cyan-300 font-bold">معطل</div>
+                    <button type="button" id="box-timer" onclick="toggleTimer()" class="setup-box p-3 rounded-xl">
+                        <div class="text-lg">⏱️</div>
+                        <div class="font-black text-xs mt-0.5">المؤقت</div>
+                        <div id="txt-timer" class="text-[11px] text-cyan-300 font-bold mt-0.5">معطل</div>
                     </button>
                 </div>
 
-                <div id="timer-row" class="hidden bg-amber-500/10 border border-amber-400/30 rounded-xl p-2.5 items-center justify-between">
-                    <span class="text-xs font-bold text-amber-200">⏳ مدة الاختبار بالدقائق:</span>
-                    <input type="number" id="timer-mins" min="1" value="15" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black text-amber-300">
+                <div id="timer-row" class="hidden bg-amber-500/10 border border-amber-400/30 rounded-xl p-3 items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-amber-200">⏳ مدة الاختبار بالدقائق:</span>
+                    <input type="number" id="timer-mins" min="1" value="15" class="liquid-input w-20 rounded-lg px-2.5 py-1.5 text-center text-xs sm:text-sm font-black text-amber-300">
                 </div>
 
-                <div class="grid grid-cols-2 gap-2.5 bg-white/[0.03] border border-white/10 p-2.5 rounded-xl">
+                <div class="grid grid-cols-2 gap-3 bg-white/[0.03] border border-white/10 p-3 rounded-xl">
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold">من السؤال:</span>
-                        <input type="number" id="q-start" min="1" value="1" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black">
+                        <span class="text-xs sm:text-sm font-bold">من السؤال:</span>
+                        <input type="number" id="q-start" min="1" value="1" class="liquid-input w-16 sm:w-20 rounded-lg px-2 py-1.5 text-center text-xs sm:text-sm font-black">
                     </div>
                     <div class="flex items-center justify-between">
-                        <span class="text-xs font-bold">إلى السؤال:</span>
-                        <input type="number" id="q-end" min="1" value="10" class="liquid-input w-16 rounded-lg px-2 py-1 text-center text-xs font-black">
+                        <span class="text-xs sm:text-sm font-bold">إلى السؤال:</span>
+                        <input type="number" id="q-end" min="1" value="10" class="liquid-input w-16 sm:w-20 rounded-lg px-2 py-1.5 text-center text-xs sm:text-sm font-black">
                     </div>
                 </div>
 
-                <div class="flex gap-2">
-                    <button type="button" onclick="startQuizNow()" class="glow-btn flex-1 py-3 rounded-xl font-black text-xs sm:text-sm text-white transition hover:scale-[1.01]">🚀 تطبيق الإعدادات وبدء الاختبار</button>
-                    <button type="button" id="resume-bottom-btn" onclick="resumeQuiz()" class="hidden bg-white/10 hover:bg-white/15 text-white font-bold px-4 py-3 rounded-xl text-xs">استكمال الامتحان الحالي</button>
+                <div class="flex gap-2.5 pt-1">
+                    <button type="button" onclick="startQuizNow()" class="glow-btn flex-1 py-3.5 rounded-xl font-black text-sm sm:text-base text-white transition hover:scale-[1.01]">🚀 تطبيق الإعدادات وبدء الاختبار</button>
+                    <button type="button" id="resume-bottom-btn" onclick="resumeQuiz()" class="hidden bg-white/10 hover:bg-white/15 text-white font-bold px-4 py-3.5 rounded-xl text-xs sm:text-sm">استكمال الامتحان الحالي</button>
                 </div>
             </div>
         </div>
 
         <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden flex-1">
-            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-1.5 mb-2 flex items-center justify-between gap-1.5 text-[11px] font-bold shrink-0">
-                <div class="flex items-center gap-1 flex-wrap">
-                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
-                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-2.5 py-1 rounded-lg border border-white/10">🎯 النطاق</button>
-                    <button onclick="showBookmarks()" id="top-bookmarks-btn" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30">⭐ المحفوظة (<span id="saved-count-top">0</span>)</button>
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-2 mb-2.5 flex items-center justify-between gap-2 text-xs font-bold shrink-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-3 py-1.5 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
+                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-3 py-1.5 rounded-lg border border-white/10">🎯 النطاق</button>
+                    <button onclick="showBookmarks()" id="top-bookmarks-btn" class="hidden bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-400/30">⭐ المحفوظة (<span id="saved-count-top">0</span>)</button>
                 </div>
-                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
+                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
             </div>
 
-            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-2.5 shrink-0">
+            <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-3 shrink-0">
                 <div id="progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-300" style="width: 0%"></div>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 mb-2.5 text-center text-xs font-black shrink-0">
-                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-1.5 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
-                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-1.5 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
-                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+            <div class="grid grid-cols-3 gap-2.5 mb-3 text-center text-xs sm:text-sm font-black shrink-0">
+                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-2 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
+                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-2 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
+                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-2 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
             </div>
 
             <div id="quiz-container" class="overflow-y-auto py-1 flex-1 flex flex-col justify-between">
@@ -286,64 +286,6 @@
             document.getElementById('avail-count').innerText = rawQuestions.length;
             document.getElementById('q-start').value = 1;
             document.getElementById('q-end').value = rawQuestions.length;
-        }
-            const used = getTrialsUsed();
-            const left = Math.max(0, 2 - used);
-            banner.classList.remove("hidden");
-            if (left > 0) {
-                banner.innerHTML = `🎁 <b>وضع التجربة المجانية:</b> متاح لك حل <b>10 أسئلة</b> في الاختبار (متبقي لك <b>${left}</b> من <b>2</b> محاولة مجانية على جهازك).`;
-                document.getElementById('q-start').value = 1;
-                document.getElementById('q-end').value = Math.min(10, rawQuestions.length);
-            } else {
-                banner.innerHTML = `🔒 <b>لقد استنفدت المحاولتين المجانيتين (2/2)!</b> اشترك الآن للحصول على كود التفعيل وفتح جميع الأسئلة بلا حدود.`;
-            }
-        
-
-        function showTrialExhaustedScreen() {
-            if (timerInt) clearInterval(timerInt);
-            isQuizRunning = false;
-            document.getElementById('setup-screen').classList.add('hidden');
-            document.getElementById('quiz-stage').classList.remove('hidden');
-            document.getElementById('quiz-stage').classList.add('flex');
-            document.getElementById('reopen-setup').classList.add('hidden');
-            const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
-            document.getElementById('quiz-container').innerHTML = `
-                <div class="text-center py-4 px-2 space-y-3 my-auto">
-                    <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-400/50 flex items-center justify-center text-3xl mx-auto shadow-lg shadow-amber-500/20">🔒</div>
-                    <span class="text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-400/30 px-3 py-0.5 rounded-full">انتهت التجربة المجانية (2 / 2 محاولة)</span>
-                    <h3 class="text-base sm:text-xl font-black text-white">لقد استنفدت المحاولتين المجانيتين!</h3>
-                    <p class="text-xs text-slate-300 leading-relaxed max-w-md mx-auto">
-                        يا بطل، لقد قمت بتجربة نظام الاختبار مرتين بنجاح (١٠ أسئلة في كل محاولة).<br>
-                        لفتح <b>بنك الأسئلة الكامل (${rawQuestions.length} سؤال)</b> في مادة اللغة الإنجليزية وجميع المواد بلا حدود، اشترك الآن واستلم كود التفعيل الخاص بجهازك فوراً.
-                    </p>
-                    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 text-right text-[11px] text-slate-200 space-y-1 max-w-md mx-auto">
-                        <div>✨ فتح جميع أسئلة الاختيارات والصح والخطأ بلا حدود</div>
-                        <div>✨ تفعيل فوري للكود على هاتفك أو جهازك الشخصي</div>
-                        <div>✨ متاح اشتراك مادة منفردة أو الباقة الشاملة للفرقة</div>
-                    </div>
-                    <div class="space-y-2 pt-1 max-w-md mx-auto">
-                        <a href="https://wa.me/201286094595?text=${encodeURIComponent('السلام عليكم يا أ. بسام، أنا الطالب (' + (savedUser.name || '') + ') أنهيت المحاولتين المجانيتين وأريد الاشتراك والحصول على كود التفعيل الكامل.')}" target="_blank"
-                           class="glow-btn w-full py-3 rounded-xl font-black text-xs sm:text-sm text-white flex justify-center items-center gap-2 shadow-lg">
-                            <span>💬</span>
-                            <span>تواصل عبر واتساب لاستلام كود التفعيل الآن</span>
-                        </a>
-                        <a href="../index.html" class="block w-full py-2.5 rounded-xl font-bold text-xs bg-white/10 hover:bg-white/15 text-cyan-300 border border-cyan-400/30">
-                            🔑 لدي كود تفعيل بالفعل — اضغط هنا لإدخاله
-                        </a>
-                    </div>
-                </div>
-            `;
-        }
-
-        function switchMode(m) {
-            currentMode = m;
-            document.getElementById('mode-mcq').classList.toggle('active', m === 'mcq');
-            document.getElementById('mode-tf').classList.toggle('active', m === 'tf');
-            rawQuestions = banks[m].map((q, i) => ({...q, id: i + 1}));
-            document.getElementById('avail-count').innerText = rawQuestions.length;
-            document.getElementById('q-start').value = 1;
-            document.getElementById('q-end').value = isTrialRestricted() ? Math.min(10, rawQuestions.length) : rawQuestions.length;
-            updateTrialNoticeUI();
         }
 
         const urlParams = new URLSearchParams(window.location.search);
@@ -534,22 +476,22 @@
             const isBookmarked = bookmarkedList.find(b => b.id === q.id);
 
             document.getElementById('quiz-container').innerHTML = `
-                <div class="flex items-start justify-between gap-2 mb-3 p-3.5 sm:p-4 bg-white/[0.04] border border-white/10 rounded-2xl shadow-inner relative" dir="ltr">
-                    <div id="question-text" class="text-sm sm:text-base font-extrabold text-left leading-relaxed flex-1">${(showNum ? q.id + '. ' : '') + q.t}</div>
-                    <button onclick="toggleBookmark(${q.id})" id="bookmark-btn" title="حفظ السؤال للمراجعة" class="bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl px-2.5 py-1.5 text-sm transition shrink-0 flex items-center gap-1 ${isBookmarked ? 'text-amber-400 opacity-100 border-amber-400/40' : 'text-white opacity-40 hover:opacity-100'}">
+                <div class="flex items-start justify-between gap-3 mb-3.5 p-4 sm:p-5 bg-white/[0.045] border border-white/12 rounded-2xl shadow-inner relative" dir="ltr">
+                    <div id="question-text" class="text-base sm:text-xl font-black text-left leading-relaxed flex-1 text-white">${(showNum ? q.id + '. ' : '') + q.t}</div>
+                    <button onclick="toggleBookmark(${q.id})" id="bookmark-btn" title="حفظ السؤال للمراجعة" class="bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl px-3 py-2 text-sm transition shrink-0 flex items-center gap-1.5 ${isBookmarked ? 'text-amber-400 opacity-100 border-amber-400/40' : 'text-white opacity-45 hover:opacity-100'}">
                         <span>⭐</span>
-                        <span class="text-[10px] font-bold hidden sm:inline">Save</span>
+                        <span class="text-xs font-bold hidden sm:inline">Save</span>
                     </button>
                 </div>
-                <div id="options-container" class="space-y-2" dir="ltr"></div>
+                <div id="options-container" class="space-y-2.5 sm:space-y-3" dir="ltr"></div>
             `;
 
             const cont = document.getElementById('options-container');
             const letters = ['A', 'B', 'C', 'D'];
             q.o.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn w-full p-3.5 rounded-xl text-left font-bold text-xs sm:text-sm flex items-center gap-2';
-                btn.innerHTML = `<span class="w-6 h-6 rounded-lg bg-white/10 flex items-center justify-center text-[11px] text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span>${opt}</span>`;
+                btn.className = 'option-btn w-full p-3.5 sm:p-4 rounded-2xl text-left font-bold text-sm sm:text-base flex items-center gap-3';
+                btn.innerHTML = `<span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white/10 flex items-center justify-center text-xs sm:text-sm font-black text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span class="leading-relaxed">${opt}</span>`;
                 btn.onclick = () => {
                     document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
                     if (idx === q.a) {
