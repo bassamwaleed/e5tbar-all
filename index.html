@@ -290,9 +290,9 @@
             </div>
         </div>
 
-        <!-- 🔥 لوحة دحيحة الدفعة اليوم (Leaderboard - تظهر تلقائياً عند وجود نتائج اليوم) -->
+        <!-- 🔥 لوحة دحيحة الدفعة اليوم (Leaderboard - مُصغرة ومتجاوبة بدقة على الموبايل) -->
         <div id="leaderboard-container" class="hidden w-full max-w-md liquid-card rounded-2xl p-2 sm:p-2.5 border border-amber-400/30 shrink-0">
-            <div class="flex items-center justify-between mb-1.5 px-1">
+            <div class="flex items-center justify-between mb-1 px-1">
                 <span class="text-[10px] sm:text-xs font-black text-amber-300 flex items-center gap-1">
                     <span>🔥</span>
                     <span>لوحة دحيحة الدفعة اليوم</span>
@@ -951,7 +951,7 @@
                     snapshot.forEach(d => list.push({ id: d.id, ...d.data() }));
                     const todayStr = new Date().toLocaleDateString("ar-EG");
                     list = list.filter(x => x.dateStr === todayStr);
-                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (a.score || 0));
+                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (b.score || 0));
                     const top5 = list.slice(0, 5);
 
                     const cont = document.getElementById("leaderboard-container");
@@ -960,10 +960,10 @@
                         cont.classList.remove("hidden");
                         const medals = ["🥇", "🥈", "🥉", "🏅", "🏅"];
                         box.innerHTML = top5.map((item, i) => `
-                            <div class="bg-white/5 border border-white/10 rounded-xl px-2.5 py-1.5 min-w-[115px] text-center shrink-0">
-                                <div class="text-xs font-black text-amber-300">${medals[i]} ${item.studentName || 'طالب'}</div>
+                            <div class="bg-white/5 border border-white/10 rounded-lg px-2 py-1 min-w-[95px] max-w-[110px] text-center shrink-0">
+                                <div class="text-[11px] font-black text-amber-300 truncate">${medals[i]} ${item.studentName || 'طالب'}</div>
                                 <div class="text-[10px] font-extrabold text-emerald-400 mt-0.5">${item.score}/${item.total} (${item.pct || 100}%)</div>
-                                <div class="text-[9px] text-slate-400 truncate">${item.subject || ''}</div>
+                                <div class="text-[8px] text-slate-400 truncate">${item.subject || ''}</div>
                             </div>
                         `).join('');
                     } else {
