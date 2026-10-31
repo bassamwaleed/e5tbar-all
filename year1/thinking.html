@@ -125,26 +125,26 @@
         </div>
 
         <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden flex-1">
-            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-2 mb-2.5 flex items-center justify-between gap-2 text-xs font-bold shrink-0">
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-1.5 mb-1.5 flex items-center justify-between gap-2 text-xs font-bold shrink-0">
                 <div class="flex items-center gap-1.5 flex-wrap">
-                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-3 py-1.5 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
-                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-3 py-1.5 rounded-lg border border-white/10">🎯 النطاق</button>
-                    <button onclick="showBookmarks()" id="top-bookmarks-btn" class="hidden bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-400/30">⭐ المحفوظة (<span id="saved-count-top">0</span>)</button>
+                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
+                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-2.5 py-1 rounded-lg border border-white/10">🎯 النطاق</button>
+                    <button onclick="showBookmarks()" id="top-bookmarks-btn" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30">⭐ المحفوظة (<span id="saved-count-top">0</span>)</button>
                 </div>
-                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-3 py-1.5 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
+                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
             </div>
 
-            <div class="w-full h-2 bg-white/10 rounded-full overflow-hidden mb-3 shrink-0">
+            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-2 shrink-0">
                 <div id="progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-300" style="width: 0%"></div>
             </div>
 
-            <div class="grid grid-cols-3 gap-2.5 mb-3 text-center text-xs sm:text-sm font-black shrink-0">
-                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-2 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
-                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-2 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
-                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-2 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+            <div class="grid grid-cols-3 gap-2 mb-2 text-center text-xs font-black shrink-0">
+                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-1.5 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
+                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-1.5 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
+                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
             </div>
 
-            <div id="quiz-container" class="overflow-y-auto py-1 flex-1 flex flex-col justify-between">
+            <div id="quiz-container" class="overflow-y-auto py-0.5 flex-1 flex flex-col justify-start">
             </div>
         </div>
     </div>
@@ -559,22 +559,22 @@
             const isBookmarked = bookmarkedList.find(b => b.id === q.id);
 
             document.getElementById('quiz-container').innerHTML = `
-                <div class="flex items-start justify-between gap-3 mb-3.5 p-4 sm:p-5 bg-white/[0.045] border border-white/12 rounded-2xl shadow-inner relative">
-                    <div id="question-text" class="text-base sm:text-xl font-black text-right leading-relaxed flex-1 text-white">${(showNum ? q.id + '. ' : '') + q.t}</div>
-                    <button onclick="toggleBookmark(${q.id})" id="bookmark-btn" title="حفظ السؤال للمراجعة" class="bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl px-3 py-2 text-sm transition shrink-0 flex items-center gap-1.5 ${isBookmarked ? 'text-amber-400 opacity-100 border-amber-400/40' : 'text-white opacity-45 hover:opacity-100'}">
+                <div class="flex items-start justify-between gap-2.5 mb-2.5 p-3 sm:p-3.5 bg-white/[0.045] border border-white/12 rounded-2xl shadow-inner relative shrink-0">
+                    <div id="question-text" class="text-sm sm:text-lg font-black text-right leading-relaxed flex-1 text-white">${(showNum ? q.id + '. ' : '') + q.t}</div>
+                    <button onclick="toggleBookmark(${q.id})" id="bookmark-btn" title="حفظ السؤال للمراجعة" class="bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl px-2.5 py-1.5 text-xs transition shrink-0 flex items-center gap-1 ${isBookmarked ? 'text-amber-400 opacity-100 border-amber-400/40' : 'text-white opacity-45 hover:opacity-100'}">
                         <span>⭐</span>
-                        <span class="text-xs font-bold hidden sm:inline">حفظ</span>
+                        <span class="text-[11px] font-bold hidden sm:inline">حفظ</span>
                     </button>
                 </div>
-                <div id="options-container" class="space-y-2.5 sm:space-y-3"></div>
+                <div id="options-container" class="space-y-2 shrink-0"></div>
             `;
 
             const cont = document.getElementById('options-container');
             const letters = ['أ', 'ب', 'ج', 'د'];
             q.o.forEach((opt, idx) => {
                 const btn = document.createElement('button');
-                btn.className = 'option-btn w-full p-3.5 sm:p-4 rounded-2xl text-right font-bold text-sm sm:text-base flex items-center gap-3';
-                btn.innerHTML = `<span class="w-7 h-7 sm:w-8 sm:h-8 rounded-xl bg-white/10 flex items-center justify-center text-xs sm:text-sm font-black text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span class="leading-relaxed">${opt}</span>`;
+                btn.className = 'option-btn w-full p-2.5 sm:p-3 rounded-xl text-right font-bold text-xs sm:text-sm flex items-center gap-2.5';
+                btn.innerHTML = `<span class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/10 flex items-center justify-center text-xs font-black text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span class="leading-snug">${opt}</span>`;
                 btn.onclick = () => {
                     document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
                     if (idx === q.a) {
