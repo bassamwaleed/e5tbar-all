@@ -18,9 +18,10 @@
             color: #f8fafc;
             height: 100dvh;
             width: 100vw;
-            overflow: hidden;
+            overflow-x: hidden;
+            overflow-y: auto;
             position: relative;
-        } 
+        }
 
         /* === خلفية الكرات الضوئية السائلة السريعة (GPU Accelerated) === */
         .ambient-canvas {
@@ -139,7 +140,7 @@
         .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
     </style>
 </head>
-<body class="flex flex-col justify-between p-3 sm:p-5">
+<body class="flex flex-col justify-between p-2.5 sm:p-4 gap-2">
 
     <!-- الخلفية المضيئة المتحركة -->
     <div class="ambient-canvas">
@@ -184,32 +185,32 @@
         </div>
     </div>
 
-    <!-- الهيدر العائم -->
+    <!-- الهيدر العائم (مضبوط بدقة للموبايل واللابتوب) -->
     <header class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
-        <div class="liquid-glass rounded-2xl px-4 py-2.5 sm:px-6 sm:py-3.5 flex items-center justify-between gap-3">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-lg sm:text-xl shadow-lg shadow-cyan-500/30 border border-white/25">
+        <div class="liquid-glass rounded-2xl px-3 py-2 sm:px-5 sm:py-2.5 flex items-center justify-between gap-1.5 sm:gap-3">
+            <div class="flex items-center gap-2 sm:gap-3 min-w-0">
+                <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-gradient-to-tr from-cyan-400 via-blue-500 to-purple-600 flex items-center justify-center text-sm sm:text-lg shadow-lg shadow-cyan-500/30 border border-white/25 shrink-0">
                     ⚡
                 </div>
-                <div>
-                    <div class="flex items-center gap-2">
-                        <span class="font-black text-sm sm:text-xl text-white tracking-tight">بوابة البصمجية</span>
-                        <span id="header-mode-badge" class="text-[10px] sm:text-xs font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2.5 py-0.5 rounded-full">مجاني 🔓</span>
+                <div class="min-w-0">
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                        <span class="font-black text-xs sm:text-lg text-white tracking-tight whitespace-nowrap">بوابة البصمجية</span>
+                        <span id="header-mode-badge" class="text-[9px] sm:text-[11px] font-extrabold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 px-2 py-0.5 rounded-full whitespace-nowrap">مجاني 🔓</span>
                     </div>
-                    <p class="text-[11px] sm:text-xs text-slate-400 hidden sm:block mt-0.5">المنصة التفاعلية الذكية لبنوك الأسئلة والملخصات</p>
+                    <p class="text-[10px] sm:text-xs text-slate-400 hidden md:block">المنصة التفاعلية الذكية لبنوك الأسئلة والملخصات</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-2 sm:gap-2.5">
+            <div class="flex items-center gap-1.5 sm:gap-2 shrink-0">
                 <!-- زر جروب الملخصات على الواتساب -->
                 <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined()"
-                   class="text-xs sm:text-sm font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 px-3 sm:px-4 py-2 rounded-xl transition flex items-center gap-1.5">
+                   class="text-[10px] sm:text-xs font-extrabold bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-400/35 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl transition flex items-center gap-1 whitespace-nowrap">
                     <span>📚</span>
                     <span>جروب الملخصات</span>
                 </a>
 
                 <a href="https://wa.me/201286094595?text=السلام%20عليكم،%20أريد%20الاستفسار%20عن%20منصة%20بوابة%20البصمجية" target="_blank"
-                   class="text-xs sm:text-sm font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-3 sm:px-4 py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1.5">
+                   class="text-[10px] sm:text-xs font-extrabold bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 px-2.5 sm:px-3.5 py-1.5 sm:py-2 rounded-xl shadow-lg shadow-emerald-500/20 transition flex items-center gap-1 whitespace-nowrap">
                     <span>💬</span>
                     <span id="header-cta-text">تواصل معنا</span>
                 </a>
@@ -217,36 +218,36 @@
         </div>
     </header>
 
-    <!-- المحتوى الرئيسي المتسنتر بالكامل داخل شاشة واحدة -->
-    <main class="flex-1 w-full max-w-4xl mx-auto flex flex-col items-center justify-center relative z-10 py-1.5 overflow-hidden gap-2.5 sm:gap-3.5">
+    <!-- المحتوى الرئيسي المتسنتر بالكامل بدون أي تداخل على اللابتوب أو الموبايل -->
+    <main class="w-full max-w-4xl mx-auto my-auto flex flex-col items-center justify-center relative z-10 py-1 gap-2 sm:gap-2.5 shrink-0">
         
         <!-- 1. الكارت الرئيسي لتسجيل الدخول -->
-        <div class="w-full max-w-md liquid-glass rounded-[28px] p-5 sm:p-6 relative overflow-hidden shrink-0">
+        <div class="w-full max-w-md liquid-glass rounded-[24px] p-4 sm:p-5 relative overflow-hidden shrink-0">
             <div class="absolute -top-20 -left-20 w-44 h-44 bg-cyan-400/15 rounded-full blur-3xl pointer-events-none"></div>
             <div class="absolute -bottom-20 -right-20 w-44 h-44 bg-purple-500/15 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div class="text-center mb-3.5 sm:mb-4 relative">
-                <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[11px] font-bold mb-1.5">
+            <div class="text-center mb-2.5 sm:mb-3 relative">
+                <div class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-cyan-500/10 border border-cyan-400/30 text-cyan-300 text-[10px] font-bold mb-1">
                     <span class="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping"></span>
                     <span>الفرقة الأولى • الثانية • الثالثة • الرابعة</span>
                 </div>
-                <h1 id="card-main-title" class="text-xl sm:text-2xl font-black text-gradient leading-snug">اختر فرقتك وابدأ فوراً</h1>
-                <p id="card-sub-title" class="text-xs text-slate-300 mt-1">المنصة متاحة حالياً مجاناً لجميع الطلاب للتدريب والمراجعة</p>
+                <h1 id="card-main-title" class="text-lg sm:text-xl font-black text-gradient leading-snug">اختر فرقتك وابدأ فوراً</h1>
+                <p id="card-sub-title" class="text-[11px] text-slate-300 mt-0.5">المنصة متاحة حالياً مجاناً لجميع الطلاب للتدريب والمراجعة</p>
             </div>
 
-            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-2.5 rounded-xl mb-3 font-bold text-center"></div>
+            <div id="auth-error" class="hidden bg-rose-500/20 border border-rose-500/40 text-rose-200 text-xs p-2 rounded-xl mb-2.5 font-bold text-center"></div>
 
-            <form onsubmit="handleLogin(event)" class="space-y-3 text-right relative">
+            <form onsubmit="handleLogin(event)" class="space-y-2.5 text-right relative">
                 <div>
-                    <label id="name-label" class="block text-xs font-bold text-slate-200 mb-1">اسم الطالب <span class="text-rose-400">*</span></label>
+                    <label id="name-label" class="block text-[11px] sm:text-xs font-bold text-slate-200 mb-1">اسم الطالب الثلاثي <span class="text-rose-400">*</span></label>
                     <input type="text" id="student-name" required placeholder="اكتب اسمك هنا ليظهر في لوحة دحيحة الدفعة..." 
-                        class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-slate-400 outline-none">
+                        class="liquid-input w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm text-white placeholder-slate-400 outline-none">
                 </div>
 
-                <div id="year-code-grid" class="grid grid-cols-1 gap-2.5">
+                <div id="year-code-grid" class="grid grid-cols-1 gap-2">
                     <div>
-                        <label class="block text-xs font-bold text-slate-200 mb-1">اختر الفرقة الدراسية</label>
-                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-bold text-white outline-none cursor-pointer">
+                        <label class="block text-[11px] sm:text-xs font-bold text-slate-200 mb-1">اختر الفرقة الدراسية</label>
+                        <select id="student-year" required class="liquid-input w-full rounded-xl px-3.5 py-2 text-xs sm:text-sm font-bold text-white outline-none cursor-pointer">
                             <option value="year1/index.html" selected class="bg-slate-900">🎓 الفرقة الأولى</option>
                             <option value="year2/index.html" class="bg-slate-900">🎓 الفرقة الثانية</option>
                             <option value="year3/index.html" class="bg-slate-900">🎓 الفرقة الثالثة</option>
@@ -256,38 +257,50 @@
 
                     <!-- حقل الكود (يختفي تلقائياً في الوضع المجاني ويظهر في الوضع المدفوع) -->
                     <div id="code-field-wrapper" class="hidden">
-                        <label class="block text-xs font-bold text-amber-300 mb-1">🔑 كود التفعيل</label>
+                        <label class="block text-[11px] sm:text-xs font-bold text-amber-300 mb-1">🔑 كود التفعيل</label>
                         <input type="password" id="activation-code" placeholder="أدخل الكود..." 
-                            class="liquid-input w-full rounded-xl px-3.5 py-2.5 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
+                            class="liquid-input w-full rounded-xl px-3.5 py-2 text-white font-mono text-center text-xs sm:text-sm outline-none uppercase tracking-wider">
                     </div>
                 </div>
 
-                <button type="submit" id="login-btn" class="free-btn w-full text-slate-950 font-black py-3 rounded-xl text-sm sm:text-base mt-1.5 flex items-center justify-center gap-2">
+                <button type="submit" id="login-btn" class="free-btn w-full text-slate-950 font-black py-2.5 rounded-xl text-xs sm:text-sm mt-1 flex items-center justify-center gap-2">
                     <span id="login-btn-text">🚀 دخول مجاني لاختيار الامتحان فوراً</span>
                 </button>
 
                 <!-- 🔒 زر التجربة المجانية (بدون كشف عدد الأسئلة أو عدد المحاولات مسبقاً للطالب!) -->
-                <button type="button" id="free-trial-10-btn" onclick="startFreeTrial10Questions()" class="hidden w-full py-2.5 rounded-xl font-black text-xs sm:text-sm bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-400/40 transition items-center justify-center gap-1.5">
+                <button type="button" id="free-trial-10-btn" onclick="startFreeTrial10Questions()" class="hidden w-full py-2 rounded-xl font-black text-xs bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-400/40 transition items-center justify-center gap-1.5">
                     <span>🎁</span>
                     <span id="free-trial-btn-label">ليس لديك كود؟ اضغط هنا لتجربة المنصة مجاناً</span>
                 </button>
             </form>
 
             <!-- شريط المميزات المدمج أسفل الفورم -->
-            <div class="mt-3.5 pt-3 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
-                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
-                    <div class="text-sm">⚡</div>
-                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">تصحيح فوري</div>
+            <div class="mt-3 pt-2.5 border-t border-white/10 grid grid-cols-3 gap-2 text-center">
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">⚡</div>
+                    <div class="text-[10px] font-extrabold text-slate-200">تصحيح فوري</div>
                 </div>
-                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
-                    <div class="text-sm">⭐</div>
-                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">حفظ الصعب</div>
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">⭐</div>
+                    <div class="text-[10px] font-extrabold text-slate-200">حفظ الصعب</div>
                 </div>
-                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1.5">
-                    <div class="text-sm">🔥</div>
-                    <div class="text-[10px] sm:text-xs font-extrabold text-slate-200 mt-0.5">لوحة الدحيحة</div>
+                <div class="bg-white/[0.04] border border-white/10 rounded-xl py-1.5 px-1">
+                    <div class="text-xs">🔥</div>
+                    <div class="text-[10px] font-extrabold text-slate-200">لوحة الدحيحة</div>
                 </div>
             </div>
+        </div>
+
+        <!-- 🔥 لوحة دحيحة الدفعة اليوم (Leaderboard - مُصغرة ومتجاوبة بدقة على الموبايل واللابتوب) -->
+        <div id="leaderboard-container" class="hidden w-full max-w-md liquid-card rounded-2xl p-2 sm:p-2.5 border border-amber-400/30 shrink-0">
+            <div class="flex items-center justify-between mb-1 px-1">
+                <span class="text-[10px] sm:text-xs font-black text-amber-300 flex items-center gap-1">
+                    <span>🔥</span>
+                    <span>لوحة دحيحة الدفعة اليوم</span>
+                </span>
+                <span class="text-[9px] text-slate-400 font-bold">أعلى الدرجات</span>
+            </div>
+            <div id="leaderboard-list" class="flex items-center gap-1.5 overflow-x-auto scrollbar-hide pb-0.5"></div>
         </div>
 
         <!-- بانر إعلانات الأفلييت المبسط (مخفي تماماً إذا لم تضف إعلانات) -->
@@ -448,7 +461,7 @@
             <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5 shrink-0">
                 <div>
                     <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن والتحليلات السحابية</h2>
-                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + الأكواد + البانرات</p>
+                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + لوحة الشرف + الأكواد + البانرات</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
@@ -550,7 +563,7 @@
                 </div>
             </div>
 
-            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل -->
+            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل + لوحة الشرف -->
             <div id="admin-mode-section" class="hidden flex-1 flex-col justify-between overflow-y-auto space-y-2.5 text-right pr-1">
                 <!-- 📢 شريط الإشعارات العاجل (Live Broadcast Bar) -->
                 <div class="bg-slate-900/90 border border-rose-400/35 rounded-2xl p-3.5 space-y-2">
@@ -591,10 +604,14 @@
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 gap-2">
+                <div class="grid grid-cols-2 gap-2">
                     <div class="bg-emerald-500/10 border border-emerald-400/30 rounded-2xl p-2.5 text-[11px] text-emerald-200 flex items-center justify-between">
                         <span>📲 نافذة جروب الواتساب:</span>
                         <button onclick="closeAdminModal(); openWhatsAppModal();" class="bg-emerald-500 text-slate-950 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">معاينة</button>
+                    </div>
+                    <div class="bg-amber-500/10 border border-amber-400/30 rounded-2xl p-2.5 text-[11px] text-amber-200 flex items-center justify-between">
+                        <span>🔥 لوحة دحيحة اليوم:</span>
+                        <button onclick="clearLeaderboardLog()" class="bg-rose-500/30 text-rose-200 font-black px-2.5 py-1 rounded-lg text-[10px] shrink-0">تصفير اللوحة</button>
                     </div>
                 </div>
             </div>
@@ -929,7 +946,33 @@
                     }
                 });
 
-                // 3. بانر الأفلييت
+                // 3. لوحة شرف أوائل اليوم (Leaderboard)
+                onSnapshot(collection(db, 'leaderboard'), (snapshot) => {
+                    let list = [];
+                    snapshot.forEach(d => list.push({ id: d.id, ...d.data() }));
+                    const todayStr = new Date().toLocaleDateString("ar-EG");
+                    list = list.filter(x => x.dateStr === todayStr);
+                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (b.score || 0));
+                    const top5 = list.slice(0, 5);
+
+                    const cont = document.getElementById("leaderboard-container");
+                    const box = document.getElementById("leaderboard-list");
+                    if (top5.length > 0) {
+                        cont.classList.remove("hidden");
+                        const medals = ["🥇", "🥈", "🥉", "🏅", "🏅"];
+                        box.innerHTML = top5.map((item, i) => `
+                            <div class="bg-white/5 border border-white/10 rounded-lg px-2 py-1 min-w-[95px] max-w-[110px] text-center shrink-0">
+                                <div class="text-[11px] font-black text-amber-300 truncate">${medals[i]} ${item.studentName || 'طالب'}</div>
+                                <div class="text-[10px] font-extrabold text-emerald-400 mt-0.5">${item.score}/${item.total} (${item.pct || 100}%)</div>
+                                <div class="text-[8px] text-slate-400 truncate">${item.subject || ''}</div>
+                            </div>
+                        `).join('');
+                    } else {
+                        cont.classList.add("hidden");
+                    }
+                });
+
+                // 4. بانر الأفلييت
                 onSnapshot(collection(db, 'affiliate_banners'), (snapshot) => {
                     affiliateAdsList = [];
                     snapshot.forEach(d => { affiliateAdsList.push({ id: d.id, ...d.data() }); });
@@ -960,6 +1003,12 @@
                 message: msg,
                 updatedAt: Date.now()
             });
+        };
+
+        window.clearLeaderboardLog = async function() {
+            if (!db || !confirm("هل تريد تصفير لوحة شرف اليوم؟")) return;
+            const snap = await getDocs(collection(db, 'leaderboard'));
+            snap.forEach(d => deleteDoc(doc(db, 'leaderboard', d.id)));
         };
 
         // تحميل البيانات الثقيلة فقط عند فتح لوحة الإدمن
