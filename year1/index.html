@@ -103,6 +103,11 @@
                     <span class="hidden sm:inline">جروب الملخصات</span>
                 </a>
 
+                <!-- زر التحكم في قفل وفتح المواد للإدمن -->
+                <button id="admin-subjects-btn" onclick="openSubjectsAdminModal()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black hover:bg-cyan-500/30 transition">
+                    📚 المواد
+                </button>
+
                 <button id="admin-banner-btn" onclick="openBannerModal()" class="hidden bg-amber-500/20 border border-amber-400/40 text-amber-300 px-2 py-1.5 sm:px-3 sm:py-2 rounded-lg sm:rounded-xl text-[10px] sm:text-xs font-black hover:bg-amber-500/30 transition">
                     📢 البانر
                 </button>
@@ -166,7 +171,7 @@
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">MCQ</span>
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">T/F</span>
                     </div>
-                    <span class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span id="cta-law.html" class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
@@ -185,7 +190,7 @@
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">MCQ</span>
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">T/F</span>
                     </div>
-                    <span class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span id="cta-thinking.html" class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
@@ -204,7 +209,7 @@
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">MCQ</span>
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">T/F</span>
                     </div>
-                    <span class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span id="cta-english.html" class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
@@ -223,7 +228,7 @@
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">MCQ</span>
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">T/F</span>
                     </div>
-                    <span class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
+                    <span id="cta-economy.html" class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ ←</span>
                 </div>
             </div>
 
@@ -242,12 +247,80 @@
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">MCQ</span>
                         <span class="text-[8px] sm:text-[10px] bg-white/5 px-1.5 py-0.5 rounded text-slate-300 font-bold">T/F</span>
                     </div>
-                    <span class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ الاختبار الآن ←</span>
+                    <span id="cta-subject5.html" class="text-[10px] sm:text-xs text-cyan-300 font-black">ابدأ الاختبار الآن ←</span>
                 </div>
             </div>
 
         </div>
     </main>
+
+    <!-- 🛠️ نافذة المادة قيد التطوير (تظهر للطالب عند الضغط على مادة مغلقة من الأدمن) -->
+    <div id="under-dev-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-2xl sm:rounded-3xl p-5 sm:p-6 w-full max-w-md text-center border border-amber-400/45 relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-36 h-36 bg-amber-500/20 rounded-full blur-2xl pointer-events-none"></div>
+            <button onclick="closeUnderDevModal()" class="absolute top-4 left-4 bg-white/10 hover:bg-rose-500/30 text-white w-7 h-7 sm:w-8 sm:h-8 rounded-full text-xs font-black">✕</button>
+
+            <div id="dev-modal-icon" class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-amber-500/20 border border-amber-400/40 flex items-center justify-center text-2xl sm:text-3xl mx-auto mb-2.5 shadow-lg shadow-amber-500/20 animate-pulse">
+                🛠️
+            </div>
+            <span class="text-[10px] font-extrabold bg-amber-500/20 text-amber-300 border border-amber-400/30 px-2.5 py-0.5 rounded-full">جاري تجهيز بنك الأسئلة ⏳</span>
+            <h3 id="dev-modal-title" class="text-base sm:text-xl font-black text-white mt-2">هذه المادة جاري تطويرها حالياً!</h3>
+            <p class="text-xs text-slate-300 mt-1.5 leading-relaxed">
+                يتم حالياً إعداد ومراجعة أقوى بنك أسئلة شامل لهذه المادة (اختيارات + صح وخطأ) لضمان أعلى دقة قبل فتحها للتدريب.
+            </p>
+
+            <div class="bg-slate-900/90 border border-emerald-400/30 rounded-2xl p-3.5 text-right my-4 space-y-1.5">
+                <div class="text-xs font-black text-emerald-300 flex items-center gap-1.5">
+                    <span>📲</span>
+                    <span>انضم لجروب الدفعة عشان نبلغك فوراً!</span>
+                </div>
+                <p class="text-[11px] text-slate-300 leading-relaxed">
+                    أول ما المادة تجهز وتفتح على المنصة هنبعت تنبيه فوري وملخصات المادة على جروب الواتساب الرسمي للفرقة.
+                </p>
+            </div>
+
+            <div class="space-y-2">
+                <a href="https://chat.whatsapp.com/BY4cJX1PFKS0z4qyN7hR2X?s=cl&p=i&mlu=4&ilr=4&iam=2" target="_blank" onclick="markWhatsAppJoined(); closeUnderDevModal();"
+                   class="w-full py-3 rounded-xl font-black text-xs sm:text-sm bg-gradient-to-r from-emerald-500 to-teal-400 text-slate-950 flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/30 hover:scale-[1.02] transition">
+                    <span>🚀</span>
+                    <span>انضم للجروب الآن ليصلك إشعار التفعيل</span>
+                </a>
+                <button id="admin-bypass-dev-btn" onclick="bypassDevLockForAdmin()" class="hidden w-full py-2 rounded-xl font-black text-[11px] bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-400/40">
+                    👑 دخول وتجربة المادة كإدمن رغم القفل
+                </button>
+                <button onclick="closeUnderDevModal()" class="w-full py-2 rounded-xl font-bold text-[11px] bg-white/5 hover:bg-white/10 text-slate-400">
+                    حسناً، سأختبر مادة أخرى الآن
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 👑 نافذة الإدمن لقفل وفتح مواد الفرقة الأولى مباشرة -->
+    <div id="subjects-admin-modal" class="fixed inset-0 bg-black/85 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-2xl sm:rounded-3xl p-4 sm:p-5 w-full max-w-md border border-cyan-400/40 text-right">
+            <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-3">
+                <div>
+                    <h3 class="text-sm sm:text-base font-black text-cyan-300">📚 التحكم في مواد الفرقة الأولى</h3>
+                    <p class="text-[10px] text-slate-400">أي مادة تقفلها ستظهر للطلاب برسالة (جاري تطويرها + رابط الجروب)</p>
+                </div>
+                <button onclick="closeSubjectsAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold">إغلاق ✕</button>
+            </div>
+            <div id="y1-subjects-toggles-list" class="space-y-2 max-h-[65dvh] overflow-y-auto pr-1"></div>
+        </div>
+    </div>
+
+    <!-- نافذة الرمز السري السريعة للإدمن في صفحة الفرقة الأولى -->
+    <div id="y1-admin-pin-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
+        <div class="liquid-glass rounded-3xl p-5 w-full max-w-xs text-center border border-cyan-400/40">
+            <h3 class="text-sm font-black text-cyan-300 mb-2">👑 تفعيل وضع الإدمن</h3>
+            <p class="text-[11px] text-slate-400 mb-3">أدخل الرمز السري لفتح التحكم في المواد والبانر</p>
+            <input type="password" id="y1-admin-pin-input" placeholder="الرمز السري..." class="liquid-input w-full rounded-xl px-3 py-2 text-center font-mono text-sm text-white outline-none mb-3">
+            <div class="flex gap-2">
+                <button onclick="verifyY1AdminPin()" class="glow-btn flex-1 py-2 rounded-xl text-xs font-black text-white">دخول</button>
+                <button onclick="document.getElementById('y1-admin-pin-modal').classList.add('hidden');document.getElementById('y1-admin-pin-modal').classList.remove('flex');" class="bg-white/10 px-4 py-2 rounded-xl text-xs font-bold text-slate-300">إلغاء</button>
+            </div>
+        </div>
+    </div>
 
     <!-- نافذة اختيار نوع الامتحان الاحترافية -->
     <div id="quiz-type-modal" class="fixed inset-0 bg-black/80 backdrop-blur-md z-50 hidden items-center justify-center p-4">
@@ -350,7 +423,7 @@
     <!-- الفوتر -->
     <footer class="w-full max-w-5xl mx-auto shrink-0 relative z-20">
         <div class="liquid-glass rounded-xl sm:rounded-2xl px-3 py-1.5 sm:px-4 sm:py-2 flex items-center justify-between text-[10px] sm:text-xs">
-            <span class="font-bold text-white">تصميم وتطوير: بسام وليد ⚡</span>
+            <span onclick="triggerY1Admin()" class="font-bold text-white cursor-pointer select-none hover:text-cyan-300 transition">تصميم وتطوير: بسام وليد ⚡</span>
             <a href="../index.html" class="text-cyan-300 font-bold hover:underline">← العودة للصفحة الرئيسية</a>
         </div>
     </footer>
@@ -363,6 +436,19 @@
         let savedUser = sessionStorage.getItem("basmagia_user");
         let userObj = null;
 
+        // قائمة مواد الفرقة الأولى
+        const y1SubjectsMeta = [
+            { file: "law.html", key: "y1_law.html", title: "مبادئ القانون", icon: "⚖️" },
+            { file: "thinking.html", key: "y1_thinking.html", title: "التفكير الابتكاري", icon: "💡" },
+            { file: "english.html", key: "y1_english.html", title: "اللغة الإنجليزية", icon: "🔤" },
+            { file: "economy.html", key: "y1_economy.html", title: "مبادئ الاقتصاد", icon: "📉" },
+            { file: "subject5.html", key: "y1_subject5.html", title: "المادة الخامسة (مبادئ الإدارة)", icon: "📋" }
+        ];
+
+        // حالة المواد المحفوظة سحابياً ومحلياً
+        let subjectsDevStatus = JSON.parse(localStorage.getItem("basmagia_subjects_status") || "{}");
+        let pendingDevBypassArgs = null;
+
         if (!savedUser) {
             if (isFreeMode) {
                 userObj = { name: "طالب البصمجية", code: "FREE", allowedSubject: "all", role: "student" };
@@ -374,28 +460,60 @@
             userObj = JSON.parse(savedUser);
         }
 
+        function checkAdminVisibility() {
+            if (userObj && (userObj.role === "admin" || userObj.code === "20206")) {
+                document.getElementById("admin-banner-btn").classList.remove("hidden");
+                document.getElementById("admin-subjects-btn").classList.remove("hidden");
+            }
+        }
+
         if (userObj) {
             document.getElementById("student-welcome").innerText = "مرحباً، " + userObj.name;
-            if (userObj.role === "admin" || userObj.code === "20206") {
-                document.getElementById("admin-banner-btn").classList.remove("hidden");
-            }
+            checkAdminVisibility();
             if (!isFreeMode && (userObj.code === "TRIAL10" || userObj.role === "trial")) {
                 const tBadge = document.getElementById("trial-header-badge");
                 tBadge.innerText = `🎁 وضع التجربة المجانية`;
                 tBadge.classList.remove("hidden");
             }
-
-            const allowedSub = userObj.allowedSubject || "all";
-            if (!isFreeMode && allowedSub !== "all" && userObj.role !== "admin") {
-                ["law.html", "thinking.html", "english.html", "economy.html", "subject5.html"].forEach(subFile => {
-                    const badgeEl = document.getElementById("badge-" + subFile);
-                    if (badgeEl && subFile !== allowedSub) {
-                        badgeEl.innerText = "🔒 مغلق";
-                        badgeEl.className = "text-[9px] bg-amber-500/20 text-amber-300 border border-amber-500/30 px-2 py-0.5 rounded-full font-extrabold";
-                    }
-                });
-            }
         }
+
+        // تحديث شارات المواد حسب حالة القفل أو التطوير أو الباقة
+        function refreshSubjectBadgesUI() {
+            const allowedSub = (userObj && userObj.allowedSubject) ? userObj.allowedSubject : "all";
+            const isAdmin = userObj && (userObj.role === "admin" || userObj.code === "20206");
+
+            y1SubjectsMeta.forEach(sub => {
+                const badgeEl = document.getElementById("badge-" + sub.file);
+                const ctaEl = document.getElementById("cta-" + sub.file);
+                if (!badgeEl) return;
+
+                const isClosedForDev = subjectsDevStatus[sub.key] === false;
+
+                if (isClosedForDev) {
+                    badgeEl.innerText = "🛠️ جاري التطوير";
+                    badgeEl.className = "text-[9px] sm:text-[10px] bg-amber-500/20 text-amber-300 border border-amber-400/40 px-2 py-0.5 rounded-full font-extrabold";
+                    if (ctaEl) {
+                        ctaEl.innerText = "قريباً ⏳";
+                        ctaEl.className = "text-[10px] sm:text-xs text-amber-300 font-black";
+                    }
+                } else if (!isFreeMode && allowedSub !== "all" && !isAdmin && sub.file !== allowedSub) {
+                    badgeEl.innerText = "🔒 مغلق";
+                    badgeEl.className = "text-[9px] sm:text-[10px] bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded-full font-extrabold";
+                    if (ctaEl) {
+                        ctaEl.innerText = "مغلق 🔒";
+                        ctaEl.className = "text-[10px] sm:text-xs text-rose-300 font-black";
+                    }
+                } else {
+                    badgeEl.innerText = "متاح";
+                    badgeEl.className = "text-[9px] sm:text-[10px] bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 px-2 py-0.5 rounded-full font-extrabold";
+                    if (ctaEl) {
+                        ctaEl.innerText = sub.file === "subject5.html" ? "ابدأ الاختبار الآن ←" : "ابدأ ←";
+                        ctaEl.className = "text-[10px] sm:text-xs text-cyan-300 font-black";
+                    }
+                }
+            });
+        }
+        refreshSubjectBadgesUI();
 
         window.logout = function() {
             sessionStorage.removeItem("basmagia_user");
@@ -405,8 +523,28 @@
         let pendingSubjectArgs = null;
 
         window.openSubjectModal = function(title, icon, fileUrl) {
-            // إذا كان في وضع التجربة المجانية واستهلك المحاولتين يظهر له فوراً أنه استهلك التجربة ويجب الاشتراك
-            const isTrialUser = !isFreeMode && userObj && (userObj.code === "TRIAL10" || userObj.role === "trial") && userObj.role !== "admin";
+            const subKey = "y1_" + fileUrl;
+            const isClosedForDev = subjectsDevStatus[subKey] === false;
+            const isAdmin = userObj && (userObj.role === "admin" || userObj.code === "20206");
+
+            // 1. فحص إذا كانت المادة مقفولة من الإدمن (قيد التطوير)
+            if (isClosedForDev) {
+                document.getElementById("dev-modal-title").innerText = `مادة (${title}) جاري تطويرها حالياً!`;
+                document.getElementById("dev-modal-icon").innerText = icon || "🛠️";
+                const bypassBtn = document.getElementById("admin-bypass-dev-btn");
+                if (isAdmin) {
+                    pendingDevBypassArgs = { title, icon, fileUrl };
+                    bypassBtn.classList.remove("hidden");
+                } else {
+                    bypassBtn.classList.add("hidden");
+                }
+                document.getElementById("under-dev-modal").classList.remove("hidden");
+                document.getElementById("under-dev-modal").classList.add("flex");
+                return;
+            }
+
+            // 2. فحص التجربة المجانية
+            const isTrialUser = !isFreeMode && userObj && (userObj.code === "TRIAL10" || userObj.role === "trial") && !isAdmin;
             const usedTrials = parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
             if (isTrialUser && usedTrials >= 2) {
                 const upgModal = document.getElementById("upgrade-pkg-modal");
@@ -417,8 +555,9 @@
                 return;
             }
 
+            // 3. فحص الباقة المخصصة لمادة واحدة
             const allowedSub = (userObj && userObj.allowedSubject) ? userObj.allowedSubject : "all";
-            if (!isFreeMode && allowedSub !== "all" && allowedSub !== fileUrl && userObj.role !== "admin") {
+            if (!isFreeMode && allowedSub !== "all" && allowedSub !== fileUrl && !isAdmin) {
                 document.getElementById("upgrade-pkg-modal").classList.remove("hidden");
                 document.getElementById("upgrade-pkg-modal").classList.add("flex");
                 return;
@@ -436,6 +575,19 @@
             }
 
             showQuizTypeSelection(title, icon, fileUrl);
+        };
+
+        window.closeUnderDevModal = function() {
+            document.getElementById("under-dev-modal").classList.add("hidden");
+            document.getElementById("under-dev-modal").classList.remove("flex");
+        };
+
+        window.bypassDevLockForAdmin = function() {
+            closeUnderDevModal();
+            if (pendingDevBypassArgs) {
+                showQuizTypeSelection(pendingDevBypassArgs.title, pendingDevBypassArgs.icon, pendingDevBypassArgs.fileUrl);
+                pendingDevBypassArgs = null;
+            }
         };
 
         function showQuizTypeSelection(title, icon, fileUrl) {
@@ -470,6 +622,87 @@
             document.getElementById("quiz-type-modal").classList.remove("flex");
         };
 
+        // نافذة الإدمن للتحكم في قفل وفتح مواد الفرقة الأولى
+        window.openSubjectsAdminModal = function() {
+            renderY1SubjectsAdminToggles();
+            document.getElementById("subjects-admin-modal").classList.remove("hidden");
+            document.getElementById("subjects-admin-modal").classList.add("flex");
+        };
+
+        window.closeSubjectsAdminModal = function() {
+            document.getElementById("subjects-admin-modal").classList.add("hidden");
+            document.getElementById("subjects-admin-modal").classList.remove("flex");
+        };
+
+        function renderY1SubjectsAdminToggles() {
+            const box = document.getElementById("y1-subjects-toggles-list");
+            if (!box) return;
+            box.innerHTML = y1SubjectsMeta.map(sub => {
+                const isOpen = subjectsDevStatus[sub.key] !== false;
+                return `
+                    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 flex items-center justify-between gap-2">
+                        <div class="flex items-center gap-2">
+                            <span class="text-lg">${sub.icon}</span>
+                            <div>
+                                <div class="text-xs font-black text-white">${sub.title}</div>
+                                <div class="text-[10px] font-bold ${isOpen ? 'text-emerald-400' : 'text-amber-300'}">
+                                    ${isOpen ? '🟢 مفتوحة للطلاب' : '🛠️ مغلقة (جاري تطويرها)'}
+                                </div>
+                            </div>
+                        </div>
+                        <button onclick="toggleY1SubjectState('${sub.key}')" class="px-3 py-1.5 rounded-xl text-[11px] font-black transition ${isOpen ? 'bg-rose-500/20 text-rose-300 border border-rose-500/30 hover:bg-rose-500/30' : 'bg-emerald-500 text-slate-950 hover:bg-emerald-400'}">
+                            ${isOpen ? '🔒 قفل المادة' : '🔓 فتح المادة'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        window.toggleY1SubjectState = async function(subKey) {
+            const currentOpen = subjectsDevStatus[subKey] !== false;
+            subjectsDevStatus[subKey] = !currentOpen;
+            localStorage.setItem("basmagia_subjects_status", JSON.stringify(subjectsDevStatus));
+            refreshSubjectBadgesUI();
+            renderY1SubjectsAdminToggles();
+
+            if (db) {
+                try {
+                    await setDoc(doc(db, 'platform_settings', 'subjects_status'), subjectsDevStatus, { merge: true });
+                } catch (e) {}
+            }
+        };
+
+        let y1FooterClicks = 0;
+        window.triggerY1Admin = function() {
+            y1FooterClicks++;
+            if (y1FooterClicks >= 5) {
+                y1FooterClicks = 0;
+                if (userObj && (userObj.role === "admin" || userObj.code === "20206")) {
+                    openSubjectsAdminModal();
+                } else {
+                    document.getElementById("y1-admin-pin-input").value = "";
+                    document.getElementById("y1-admin-pin-modal").classList.remove("hidden");
+                    document.getElementById("y1-admin-pin-modal").classList.add("flex");
+                }
+            }
+        };
+
+        window.verifyY1AdminPin = function() {
+            const pin = document.getElementById("y1-admin-pin-input").value.trim();
+            if (pin === "20206") {
+                document.getElementById("y1-admin-pin-modal").classList.add("hidden");
+                document.getElementById("y1-admin-pin-modal").classList.remove("flex");
+                userObj = { name: "أ. بسام وليد (إدمن)", code: "20206", allowedSubject: "all", role: "admin" };
+                sessionStorage.setItem("basmagia_user", JSON.stringify(userObj));
+                document.getElementById("student-welcome").innerText = "مرحباً، " + userObj.name;
+                checkAdminVisibility();
+                refreshSubjectBadgesUI();
+                openSubjectsAdminModal();
+            } else {
+                alert("❌ الرمز السري غير صحيح!");
+            }
+        };
+
         // إعدادات Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
@@ -486,6 +719,16 @@
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
+
+                // 0. الاستماع لحالة فتح وقفل المواد مباشرة من السحابة
+                onSnapshot(doc(db, 'platform_settings', 'subjects_status'), (docSnap) => {
+                    if (docSnap.exists()) {
+                        subjectsDevStatus = docSnap.data() || {};
+                        localStorage.setItem("basmagia_subjects_status", JSON.stringify(subjectsDevStatus));
+                        refreshSubjectBadgesUI();
+                        renderY1SubjectsAdminToggles();
+                    }
+                });
 
                 // 1. شريط الإشعارات العاجل (Live Broadcast Bar)
                 onSnapshot(doc(db, 'platform_settings', 'broadcast'), (docSnap) => {
@@ -505,7 +748,7 @@
                     snapshot.forEach(d => list.push({ id: d.id, ...d.data() }));
                     const todayStr = new Date().toLocaleDateString("ar-EG");
                     list = list.filter(x => x.dateStr === todayStr);
-                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (a.score || 0));
+                    list.sort((a, b) => (b.pct || 0) - (a.pct || 0) || (b.score || 0) - (b.score || 0));
                     const top5 = list.slice(0, 5);
 
                     const cont = document.getElementById("leaderboard-container");
