@@ -461,7 +461,7 @@
             <div class="flex items-center justify-between border-b border-white/10 pb-2.5 mb-2.5 shrink-0">
                 <div>
                     <h2 class="text-sm sm:text-base font-black text-cyan-300">👑 لوحة تحكم الإدمن والتحليلات السحابية</h2>
-                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + لوحة الشرف + الأكواد + البانرات</p>
+                    <p class="text-[10px] text-slate-400">المتواجدون الآن + الزوار + الإشعارات العاجلة + قفل المواد + لوحة الشرف + الأكواد + البانرات</p>
                 </div>
                 <button onclick="closeAdminModal()" class="bg-rose-500/20 text-rose-300 px-3 py-1 rounded-xl text-xs font-bold hover:bg-rose-500/40 transition">إغلاق ✕</button>
             </div>
@@ -470,7 +470,7 @@
             <div class="grid grid-cols-5 gap-1 mb-3 shrink-0">
                 <button id="tab-stats-btn" onclick="switchAdminTab('stats')" class="bg-cyan-500/25 border border-cyan-400/50 text-cyan-200 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📊 الإحصائيات</button>
                 <button id="tab-feedback-btn" onclick="switchAdminTab('feedback')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">💬 آراء الطلاب</button>
-                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">⚙️ الوضع والإشعار</button>
+                <button id="tab-mode-btn" onclick="switchAdminTab('mode')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">⚙️ الوضع والمواد</button>
                 <button id="tab-codes-btn" onclick="switchAdminTab('codes')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">🔑 الأكواد</button>
                 <button id="tab-ads-btn" onclick="switchAdminTab('ads')" class="bg-white/5 border border-white/10 text-slate-300 py-2 rounded-xl text-[10px] sm:text-xs font-black transition">📢 البانرات</button>
             </div>
@@ -563,7 +563,7 @@
                 </div>
             </div>
 
-            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل + لوحة الشرف -->
+            <!-- قسم 1: التحكم في وضع الموقع + شريط الإشعارات العاجل + قفل المواد + لوحة الشرف -->
             <div id="admin-mode-section" class="hidden flex-1 flex-col justify-between overflow-y-auto space-y-2.5 text-right pr-1">
                 <!-- 📢 شريط الإشعارات العاجل (Live Broadcast Bar) -->
                 <div class="bg-slate-900/90 border border-rose-400/35 rounded-2xl p-3.5 space-y-2">
@@ -576,6 +576,15 @@
                         <button onclick="saveBroadcastMessage(true)" class="bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black px-4 py-2 rounded-xl text-xs flex-1 transition">🚀 نشر وتفعيل الإشعار للجميع</button>
                         <button onclick="saveBroadcastMessage(false)" class="bg-rose-500/20 hover:bg-rose-500/30 text-rose-300 border border-rose-500/30 font-black px-4 py-2 rounded-xl text-xs shrink-0 transition">إيقاف وإخفاء</button>
                     </div>
+                </div>
+
+                <!-- 📚 التحكم في فتح وقفل مواد الفرقة الأولى (وضع التطوير) -->
+                <div class="bg-slate-900/90 border border-cyan-400/35 rounded-2xl p-3.5 space-y-2">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs font-black text-cyan-300">📚 فتح وقفل مواد الفرقة الأولى (وضع التطوير)</span>
+                        <span class="text-[10px] text-slate-400">عند القفل تظهر رسالة جاري التطوير + الجروب</span>
+                    </div>
+                    <div id="main-admin-y1-subjects" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></div>
                 </div>
 
                 <!-- التحكم في وضع المنصة (مجاني / مدفوع) -->
@@ -804,6 +813,45 @@
         let rulesError = false;
         let adminStreamsStarted = false;
 
+        // إدارة حالة قفل وفتح مواد الفرقة الأولى
+        const mainY1Subjects = [
+            { key: "y1_law.html", title: "⚖️ مبادئ القانون" },
+            { key: "y1_thinking.html", title: "💡 التفكير الابتكاري" },
+            { key: "y1_english.html", title: "🔤 اللغة الإنجليزية" },
+            { key: "y1_economy.html", title: "📉 مبادئ الاقتصاد" },
+            { key: "y1_subject5.html", title: "📋 مبادئ الإدارة" }
+        ];
+        let globalSubjectsStatus = JSON.parse(localStorage.getItem("basmagia_subjects_status") || "{}");
+
+        function renderMainAdminY1Subjects() {
+            const container = document.getElementById("main-admin-y1-subjects");
+            if (!container) return;
+            container.innerHTML = mainY1Subjects.map(sub => {
+                const isOpen = globalSubjectsStatus[sub.key] !== false;
+                return `
+                    <div class="bg-white/5 border border-white/10 rounded-xl p-2 flex items-center justify-between gap-2">
+                        <span class="text-[11px] font-black text-white truncate">${sub.title}</span>
+                        <button onclick="toggleMainSubjectStatus('${sub.key}')" class="px-2.5 py-1 rounded-lg text-[10px] font-black shrink-0 transition ${isOpen ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-400/30 hover:bg-emerald-500/30' : 'bg-amber-500/20 text-amber-300 border border-amber-400/30 hover:bg-amber-500/30'}">
+                            ${isOpen ? '🟢 متاح (اضغط لقفلها)' : '🛠️ قيد التطوير (اضغط لفتحها)'}
+                        </button>
+                    </div>
+                `;
+            }).join('');
+        }
+        renderMainAdminY1Subjects();
+
+        window.toggleMainSubjectStatus = async function(subKey) {
+            const isOpen = globalSubjectsStatus[subKey] !== false;
+            globalSubjectsStatus[subKey] = !isOpen;
+            localStorage.setItem("basmagia_subjects_status", JSON.stringify(globalSubjectsStatus));
+            renderMainAdminY1Subjects();
+            if (db) {
+                try {
+                    await setDoc(doc(db, 'platform_settings', 'subjects_status'), globalSubjectsStatus, { merge: true });
+                } catch (e) {}
+            }
+        };
+
         let isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
 
         function updateUIForMode() {
@@ -922,6 +970,15 @@
             try {
                 const app = initializeApp(firebaseConfig);
                 db = getFirestore(app);
+
+                // 0. حالة فتح وقفل المواد (وضع التطوير)
+                onSnapshot(doc(db, 'platform_settings', 'subjects_status'), (docSnap) => {
+                    if (docSnap.exists()) {
+                        globalSubjectsStatus = docSnap.data() || {};
+                        localStorage.setItem("basmagia_subjects_status", JSON.stringify(globalSubjectsStatus));
+                        renderMainAdminY1Subjects();
+                    }
+                });
 
                 // 1. وضع الموقع (مجاني/مدفوع)
                 onSnapshot(doc(db, 'platform_settings', 'config'), (docSnap) => {
@@ -1610,6 +1667,7 @@
             document.getElementById("admin-modal").classList.remove("hidden");
             document.getElementById("admin-modal").classList.add("flex");
             updateUIForMode();
+            renderMainAdminY1Subjects();
             renderAnalyticsDashboard();
             renderAdminCodesList();
             renderAdminAdsList();
