@@ -417,20 +417,22 @@
                         <button onclick="openSetup()" class="bg-white/10 text-white font-bold px-3.5 py-2 rounded-xl text-xs">⚙️ الإعدادات</button>
                     </div>
 
-                    <div id="feedback-box" class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-3 text-right space-y-2 mt-2">
+                  <div id="feedback-box" class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-3 text-right space-y-2 mt-2">
                         <div class="flex items-center justify-between">
-                            <span class="text-xs font-black text-cyan-300">💬 شاركنا رأيك أو ملاحظاتك في الامتحان:</span>
+                            <span class="text-xs font-black text-cyan-300">✨ سيب بصمتك وقول كلمة حلوة أو دعوة من قلبك قبل ما تمشي:</span>
                             <div class="flex gap-1 text-sm cursor-pointer" id="star-rating">
                                 <span onclick="setRating(1)">⭐</span><span onclick="setRating(2)">⭐</span><span onclick="setRating(3)">⭐</span><span onclick="setRating(4)">⭐</span><span onclick="setRating(5)">⭐</span>
                             </div>
+
                         </div>
-                        <textarea id="feedback-text" rows="2" placeholder="اكتب رأيك في الأسئلة أو أي اقتراح أو ملاحظة للإدارة..." class="liquid-input w-full rounded-xl p-2 text-xs text-white outline-none resize-none"></textarea>
-                        <button onclick="submitStudentFeedback('اللغة الإنجليزية', ${correct}, ${answeredCount})" id="send-fb-btn" class="w-full py-2 rounded-xl font-black text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">
-                            📩 إرسال الرأي للإدارة
+                        <textarea id="feedback-text" rows="2" placeholder="اكتب رأيك أو أي سؤال وقف معاك..." class="liquid-input w-full rounded-xl p-2 text-xs text-white outline-none resize-none"></textarea>
+                        <button onclick="submitStudentFeedback('مبادئ القانون', ${correct}, ${answeredCount})" id="send-fb-btn" class="w-full py-2 rounded-xl font-black text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">
+                            📩ابعت الرساله من هنا
                         </button>
                     </div>
                 </div>`;
         }
+
 
         window.showMistakes = function() {
             document.getElementById('quiz-container').innerHTML = `
