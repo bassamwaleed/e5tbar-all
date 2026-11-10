@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بنك الاسئلة مبادئ محاسبة التكاليف   </title>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #040711;
+            color: #f8fafc;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .ambient-canvas {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: radial-gradient(circle at 50% 0%, #0f172a 0%, #040711 78%);
+        }
+        .orb-1 { position: absolute; width: 280px; height: 280px; border-radius: 50%; filter: blur(55px); opacity: 0.4; background: radial-gradient(circle, #06b6d4, #3b82f6); top: -10%; right: -10%; transform: translate3d(0,0,0); }
+        .orb-2 { position: absolute; width: 300px; height: 300px; border-radius: 50%; filter: blur(55px); opacity: 0.4; background: radial-gradient(circle, #8b5cf6, #ec4899); bottom: -15%; left: -10%; transform: translate3d(0,0,0); }
+        .liquid-glass {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.82) 0%, rgba(15, 23, 42, 0.62) 100%);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 45px -12px rgba(0, 0, 0, 0.75), inset 0 1px 1px 0 rgba(255, 255, 255, 0.28);
+            transform: translate3d(0,0,0);
+        }
+        .liquid-input { background: rgba(10,15,30,0.85); border: 1px solid rgba(255,255,255,0.16); }
+        .setup-box { background: rgba(15,23,42,0.75); border: 1px solid rgba(255,255,255,0.12); transition: 0.2s; }
+        .setup-box.active { background: rgba(6,182,212,0.22); border-color: rgba(56,189,248,0.75); box-shadow: 0 0 15px rgba(6,182,212,0.2); }
+        .option-btn { background: rgba(255,255,255,0.045); border: 1px solid rgba(255,255,255,0.13); transition: all 0.2s ease; }
+        .option-btn:hover:not(:disabled) { background: rgba(255,255,255,0.09); border-color: rgba(56,189,248,0.5); transform: translateX(-3px); }
+        .option-btn.correct { background: rgba(16,185,129,0.25) !important; border-color: #10b981 !important; color: #6ee7b7 !important; }
+        .option-btn.wrong { background: rgba(244,63,94,0.25) !important; border-color: #f43f5e !important; color: #fda4af !important; }
+        .glow-btn { background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 50%, #8b5cf6 100%); box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5); }
+    </style>
+</head>
+<body class="p-3 flex flex-col items-center justify-center">
+
+    <!-- 📢 شريط الإشعارات العاجل (Live Broadcast) -->
+    <div id="live-broadcast-bar" class="hidden w-full max-w-2xl mx-auto bg-gradient-to-r from-rose-500/90 via-purple-600/90 to-cyan-500/90 border border-white/25 text-white text-[11px] sm:text-xs font-black py-1.5 px-3.5 text-center z-50 shadow-lg shrink-0 mb-2 rounded-2xl flex items-center justify-between gap-2">
+        <span id="live-broadcast-text" class="truncate mx-auto"></span>
+        <button onclick="document.getElementById('live-broadcast-bar').classList.add('hidden')" class="text-white/80 hover:text-white text-[10px] font-black px-1.5 rounded bg-black/20 shrink-0">✕</button>
+    </div>
+
+    <div class="ambient-canvas"><div class="orb-1"></div><div class="orb-2"></div></div>
+
+    <div class="liquid-glass rounded-3xl p-4 sm:p-6 w-full max-w-2xl max-h-[95dvh] flex flex-col justify-between overflow-hidden relative z-10 flex-1">
+        <div class="flex items-center justify-between gap-2 pb-3 mb-2.5 border-b border-white/10 shrink-0">
+            <a href="index.html" class="bg-white/5 hover:bg-white/10 border border-white/10 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition">→ مواد الفرقة</a>
+            <h1 class="text-sm sm:text-lg font-black text-cyan-300 truncate">🔤 مبادئ محاسبة التكاليف  </h1>
+            <button id="reopen-setup" onclick="openSetup()" class="hidden bg-cyan-500/20 border border-cyan-400/40 text-cyan-200 px-3.5 py-2 rounded-xl text-xs sm:text-sm font-black hover:bg-cyan-500/30 transition">⚙️ الإعدادات</button>
+        </div>
+
+        <div id="setup-screen" class="space-y-3.5 text-right overflow-y-auto my-auto">
+            <div class="bg-slate-900/90 border border-cyan-400/35 rounded-2xl p-4 sm:p-5 space-y-3.5">
+                <div class="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                        <h2 class="text-sm sm:text-base font-black text-white">⚙️ إعدادات وتخصيص الاختبار</h2>
+                        <p class="text-[11px] text-slate-400 mt-0.5">اضبط خياراتك المفضلة قبل الانطلاق</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <span class="text-xs font-black bg-cyan-500/15 text-cyan-300 px-3 py-1.5 rounded-xl border border-cyan-400/30">المتاح: <span id="avail-count">0</span> سؤال</span>
+                        <button id="resume-quiz-btn" onclick="resumeQuiz()" class="hidden bg-emerald-500/20 border border-emerald-400/40 text-emerald-300 px-3 py-1.5 rounded-xl text-xs font-black hover:bg-emerald-500/30 transition">
+                            ✕ عودة للامتحان
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2.5">
+                    <button type="button" id="mode-mcq" onclick="switchMode('mcq')" class="setup-box active p-3 rounded-xl font-black text-xs sm:text-sm text-center">📝 اختيار من متعدد</button>
+                    <button type="button" id="mode-tf" onclick="switchMode('tf')" class="setup-box p-3 rounded-xl font-black text-xs sm:text-sm text-center">✅ صح وخطأ</button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-2.5 text-center">
+                    <button type="button" id="box-shuffle" onclick="toggleShuffle()" class="setup-box p-3 rounded-xl">
+                        <div class="text-lg">🔢</div>
+                        <div class="font-black text-xs mt-0.5">الترتيب</div>
+                        <div id="txt-shuffle" class="text-[11px] text-cyan-300 font-bold mt-0.5">عادي</div>
+                    </button>
+                    <button type="button" id="box-qnum" onclick="toggleQNum()" class="setup-box active p-3 rounded-xl">
+                        <div class="text-lg">🆔</div>
+                        <div class="font-black text-xs mt-0.5">رقم السؤال</div>
+                        <div id="txt-qnum" class="text-[11px] text-cyan-300 font-bold mt-0.5">ظاهر</div>
+                    </button>
+                    <button type="button" id="box-timer" onclick="toggleTimer()" class="setup-box p-3 rounded-xl">
+                        <div class="text-lg">⏱️</div>
+                        <div class="font-black text-xs mt-0.5">المؤقت</div>
+                        <div id="txt-timer" class="text-[11px] text-cyan-300 font-bold mt-0.5">معطل</div>
+                    </button>
+                </div>
+
+                <div id="timer-row" class="hidden bg-amber-500/10 border border-amber-400/30 rounded-xl p-3 items-center justify-between">
+                    <span class="text-xs sm:text-sm font-bold text-amber-200">⏳ مدة الاختبار بالدقائق:</span>
+                    <input type="number" id="timer-mins" min="1" value="15" class="liquid-input w-20 rounded-lg px-2.5 py-1.5 text-center text-xs sm:text-sm font-black text-amber-300">
+                </div>
+
+                <div class="grid grid-cols-2 gap-3 bg-white/[0.03] border border-white/10 p-3 rounded-xl">
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs sm:text-sm font-bold">من السؤال:</span>
+                        <input type="number" id="q-start" min="1" value="1" class="liquid-input w-16 sm:w-20 rounded-lg px-2 py-1.5 text-center text-xs sm:text-sm font-black">
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-xs sm:text-sm font-bold">إلى السؤال:</span>
+                        <input type="number" id="q-end" min="1" value="10" class="liquid-input w-16 sm:w-20 rounded-lg px-2 py-1.5 text-center text-xs sm:text-sm font-black">
+                    </div>
+                </div>
+
+                <div class="flex gap-2.5 pt-1">
+                    <button type="button" onclick="startQuizNow()" class="glow-btn flex-1 py-3.5 rounded-xl font-black text-sm sm:text-base text-white transition hover:scale-[1.01]">🚀 تطبيق الإعدادات وبدء الاختبار</button>
+                    <button type="button" id="resume-bottom-btn" onclick="resumeQuiz()" class="hidden bg-white/10 hover:bg-white/15 text-white font-bold px-4 py-3.5 rounded-xl text-xs sm:text-sm">استكمال الامتحان الحالي</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="quiz-stage" class="hidden flex-col justify-between overflow-hidden flex-1">
+            <div class="bg-white/[0.04] border border-white/10 rounded-xl p-1.5 mb-1.5 flex items-center justify-between gap-2 text-xs font-bold shrink-0">
+                <div class="flex items-center gap-1.5 flex-wrap">
+                    <button onclick="quickToggleQNum()" id="bar-qnum" class="bg-cyan-500/20 text-cyan-300 px-2.5 py-1 rounded-lg border border-cyan-400/30">🆔 الرقم: ظاهر</button>
+                    <button onclick="openSetup()" class="bg-white/5 hover:bg-white/10 text-slate-300 px-2.5 py-1 rounded-lg border border-white/10">🎯 النطاق</button>
+                    <button onclick="showBookmarks()" id="top-bookmarks-btn" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30">⭐ المحفوظة (<span id="saved-count-top">0</span>)</button>
+                </div>
+                <span id="timer-disp" class="hidden bg-amber-500/20 text-amber-300 px-2.5 py-1 rounded-lg border border-amber-400/30 font-mono">⏳ 15:00</span>
+            </div>
+
+            <div class="w-full h-1.5 bg-white/10 rounded-full overflow-hidden mb-2 shrink-0">
+                <div id="progress-fill" class="h-full bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500 transition-all duration-300" style="width: 0%"></div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mb-2 text-center text-xs font-black shrink-0">
+                <div class="bg-emerald-500/10 border border-emerald-500/25 rounded-xl py-1.5 text-emerald-400">✅ صح: <span id="correct-count">0</span></div>
+                <div class="bg-rose-500/10 border border-rose-500/25 rounded-xl py-1.5 text-rose-400">❌ خطأ: <span id="wrong-count">0</span></div>
+                <div class="bg-cyan-500/10 border border-cyan-500/25 rounded-xl py-1.5 text-cyan-300">سؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+            </div>
+
+            <div id="quiz-container" class="overflow-y-auto py-0.5 flex-1 flex flex-col justify-start">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        if (!sessionStorage.getItem("basmagia_user")) window.location.href = "../index.html";
+
+        const banks = {
+    mcq: [
+        { "t": "من أهداف محاسبة التكاليف", "o": ["تقدير تكاليف الأنشطة والمنتجات", "حصر وتسجيل التكاليف التاريخية", "الرقابة على التكاليف وتوفير المعلومات", "جميع الاختيارات"], "a": 3 },
+        { "t": "تستخدم محاسبة التكاليف في اعداد التقارير الشركات بيانات", "o": ["فعلية", "تقديرية", "فعلية وتقديرية", "لا شيء من الاختيارات"], "a": 2 },
+        { "t": "توفر محاسبة التكاليف بيانات", "o": ["اجمالية", "تفصيلية", "تحليلية", "تفصيلية وتحليلية"], "a": 3 },
+        { "t": "توفر المحاسبة المالية تقارير", "o": ["خارجية", "الزامية", "خارجية والزامية", "لا شيء من الاختيارات"], "a": 2 },
+        { "t": "توفر محاسبة التكاليف تقارير", "o": ["داخلية", "اختيارية", "داخلية واختيارية", "لا شيء من الاختيارات"], "a": 2 },
+        { "t": "يستفيد من تقارير محاسبة التكاليف", "o": ["الأطراف الداخلية", "الأطراف الخارجية", "الأطراف الداخلية والخارجية", "لا شيء من الاختيارات"], "a": 0 },
+        { "t": "يستفيد من تقارير المحاسبة المالية", "o": ["الأطراف الداخلية", "الأطراف الخارجية", "الأطراف الداخلية والخارجية", "لا شيء من الاختيارات"], "a": 2 },
+        { "t": "يعد هدف تحديد تكلفة وحدة المنتج، والرقابة عليها، ومساعدة الإدارة في ترشيد القرارات من أهداف", "o": ["المحاسبة المالية", "محاسبة التكاليف", "المحاسبة الإدارية", "لا شيء من الاختيارات"], "a": 1 },
+        { "t": "من مخرجات محاسبة التكاليف", "o": ["قائمة الدخل", "قائمة المركز المالي", "قائمة التدفقات النقدية", "لا شيء من الاختيارات"], "a": 3 },
+        { "t": "الموارد المستخدمة أو المضحى بها في سبيل الحصول على سلعة أو خدمة معبرا عنها في شكل نقدي أو مادي", "o": ["التكلفة", "الأصول", "المصروف", "الخسارة"], "a": 1 },
+        { "t": "هي منافع مخزنة لدى المنظمة في انتظار استنفادها", "o": ["التكلفة", "الأصول", "المصروف", "الخسارة"], "a": 1 },
+        { "t": "هي الجزء المستنفد من التكلفة خلال الفترة ويقابل بالإيراد", "o": ["التكلفة", "الأصول", "المصروف", "الخسارة"], "a": 2 },
+        { "t": "هي قيمة الجزء المستنفد من التكلفة خلال الفترة ولم يحقق أي منفعة أو إيراد", "o": ["التكلفة", "الأصول", "المصروف", "الخسارة"], "a": 3 },
+        { "t": "يمكن تبويب التكاليف وفقاً لنوعها وطبيعتها إلى تكاليف", "o": ["مواد مباشرة", "أجور مباشرة", "تكاليف إضافية", "جميع الاختيارات"], "a": 3 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بوظائف المنشأة إلى تكاليف", "o": ["صناعية", "تسويقية", "إدارية وتمويلية", "جميع الاختيارات"], "a": 3 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بوحدة المنتج إلى تكاليف", "o": ["مباشرة وغير مباشرة", "متغيرة وثابتة", "صناعية وتسويقية", "لا شيء من الاختيارات"], "a": 0 },
+        { "t": "يمكن تبويب التكاليف وفقاً لتوقيت قياسها إلى تكاليف", "o": ["مباشرة وغير مباشرة", "تاريخية ومقدرة", "متغيرة وثابتة", "لا شيء من الاختيارات"], "a": 1 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بمستوى النشاط إلى تكاليف", "o": ["متغيرة", "ثابتة", "مختلطة", "جميع الاختيارات"], "a": 3 },
+        { "t": "التكاليف التي تتغير مع تغير حجم النشاط، ويكون نصيب الوحدة منها ثابت هي التكاليف", "o": ["المباشرة", "المتغيرة", "الثابتة", "لا شيء من الاختيارات"], "a": 1 },
+        { "t": "التكاليف التي تظل ثابتة في جملتها بغض النظر عن التغير في حجم النشاط، ولكن نصيب الوحدة منها يتغير مع تغير مستوى النشاط هي التكاليف", "o": ["الثابتة", "المتغيرة", "المباشرة", "لا شيء من الاختيارات"], "a": 0 },
+        { "t": "التكاليف التي تجمع في خصائصها بين التكاليف المتغيرة والتكاليف الثابتة هي التكاليف", "o": ["المباشرة", "الصناعية", "المختلطة", "لا شيء من الاختيارات"], "a": 2 }
+    ],
+    tf: [
+        { "t": "محاسبة التكاليف هي أحد فروع المحاسبة والتي تهتم بقياس وتسجيل وتحليل التكاليف المتعلقة بأنشطة المنشأة المختلفة بما يوفر المعلومات اللازمة للإدارة بكافة مستوياتها.", "o": ["True", "False"], "a": 0 },
+        { "t": "من أهداف محاسبة التكاليف: تقدير تكاليف الأنشطة والمنتجات خلال الفترة القادمة بالشكل الذي يساعد الإدارة على القيام بوظائفها الاساسية من تخطيط ورقابة.", "o": ["True", "False"], "a": 0 },
+        { "t": "من أهداف محاسبة التكاليف توفير المعلومات عن التكاليف الملائمة التي تساعد الإدارة على اتخاذ القرارات المختلفة.", "o": ["True", "False"], "a": 0 },
+        { "t": "تعتبر محاسبة التكاليف فرعًا من فروع المحاسبة المالية كلاهما نظاماً فرعياً للمعلومات المحاسبية التي لها مدخلات وعمليات ومخرجات.", "o": ["True", "False"], "a": 1 },
+        { "t": "تطبق المحاسبة المالية طريقة القيد المزدوج بينما لا تطبق محاسبة التكاليف طريقة القيد المزدوج في اثبات العمليات في السجلات والدفاتر.", "o": ["True", "False"], "a": 1 },
+        { "t": "تعتمد محاسبة التكاليف على البيانات المالية بينما تعتمد المحاسبة المالية على البيانات المالية والكمية.", "o": ["True", "False"], "a": 1 },
+        { "t": "توفر محاسبة التكاليف بيانات اجمالية بينما توفر المحاسبة المالية بيانات تفصيلية وتحليلية.", "o": ["True", "False"], "a": 1 },
+        { "t": "توفر محاسبة التكاليف تقارير خارجية والزامية بينما توفر المحاسبة المالية تقارير داخلية واختيارية.", "o": ["True", "False"], "a": 1 },
+        { "t": "يستفيد الأطراف الخارجية من تقارير محاسبة التكاليف بينما يستفيد الأطراف الداخلية فقط من تقارير المحاسبة المالية.", "o": ["True", "False"], "a": 1 },
+        { "t": "تعد تقارير المحاسبة المالية وفقا للأسس والقواعد التي تضعها إدارة المنشأة، بينما تعد تقارير محاسبة التكاليف وفقاً لمعايير محاسبية ملزمة ومتفق عليها.", "o": ["True", "False"], "a": 1 },
+        { "t": "يعد الهدف من تقارير المحاسبة المالية تحديد تكلفة وحدة المنتج، والرقابة عليها ومساعدة الإدارة في ترشيد القرارات، بينما يعد الهدف تقارير محاسبة التكاليف تحديد نتيجة الأعمال والمركز المالي للمنشأة.", "o": ["True", "False"], "a": 1 },
+        { "t": "الأصول: هي الموارد المستخدمة أو المضحى بها في سبيل الحصول على سلعة أو خدمة معبرا عنها في شكل نقدي أو مادي، ويترتب عليها حصول المنشأة على منافع ملموسة أو غير ملموسة.", "o": ["True", "False"], "a": 0 },
+        { "t": "التكلفة: هي منافع مخزنة لدى المنظمة في انتظار استنفادها.", "o": ["True", "False"], "a": 1 },
+        { "t": "الخسارة هي قيمة الجزء المستنفد من التكلفة خلال الفترة ويقابل بالإيراد.", "o": ["True", "False"], "a": 1 },
+        { "t": "المصروف هي قيمة الجزء المستنفد من التكلفة خلال الفترة ولم يحقق أي منفعة أو إيراد.", "o": ["True", "False"], "a": 1 },
+        { "t": "يمكن تبويب التكاليف وفقاً لنوعها وطبيعتها إلى تكاليف مواد مباشرة وأجور مباشرة واضافية.", "o": ["True", "False"], "a": 0 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بوظائف المنشأة إلى تكايف صناعية وتسويقية وتمويلية وادارية.", "o": ["True", "False"], "a": 0 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بوحدة المنتج إلى تكاليف مباشرة وغير مباشرة.", "o": ["True", "False"], "a": 0 },
+        { "t": "يمكن تبويب التكاليف وفقاً لتوقيت قياسها إلى تكاليف تاريخية ومقدرة.", "o": ["True", "False"], "a": 0 },
+        { "t": "يمكن تبويب التكاليف وفقاً لعلاقتها بمستوى النشاط إلى تكاليف متغيرة وثابتة ومختلطة.", "o": ["True", "False"], "a": 0 },
+        { "t": "التكاليف المتغيرة هي التي تتغير مع تغير حجم النشاط، ويكون نصيب الوحدة منها ثابت", "o": ["True", "False"], "a": 0 },
+        { "t": "التكاليف الثابتة هي التي تظل ثابتة في جملتها بغض النظر عن التغير في حجم النشاط، ولكن نصيب الوحدة منها يتغير مع تغير مستوى النشاط.", "o": ["True", "False"], "a": 0 },
+        { "t": "التكاليف المختلطة هي التي تجمع في خصائصها بين التكاليف المتغيرة والتكاليف الثابتة.", "o": ["True", "False"], "a": 0 },
+        { "t": "تعتبر طريقة التحميل الكلي هي الأساس الذي يرتكز عليه نظرية التكاليف الكلية.", "o": ["True", "False"], "a": 0 },
+        { "t": "تعتبر طريقة التحميل الجزئي هي الأساس الذي يرتكز عليه كل من نظرية التكاليف المباشرة والمتغيرة والمستغلة.", "o": ["True", "False"], "a": 0 },
+        { "t": "في ظل نظرية التكاليف الكلية يتم تحميل وحدات الإنتاج النهائي بجميع عناصر التكاليف الصناعية المباشرة وغير المباشرة.", "o": ["True", "False"], "a": 0 },
+        { "t": "في ظل نظرية التكاليف الكلية يتم تقييم المخزون السلعي من الإنتاج التام وغير التام على أساس التكلفة الكلية.", "o": ["True", "False"], "a": 0 },
+        { "t": "في ظل نظرية التكاليف المتغيرة يتم تحميل وحدات الإنتاج النهائي بجميع عناصر التكاليف الصناعية المتغيرة فقط.", "o": ["True", "False"], "a": 0 }
+    ]
+};
+
+        let currentMode = 'mcq', rawQuestions = [], activeQuestions = [], wrongList = [], bookmarkedList = [];
+        let curr = 0, correct = 0, wrong = 0, isShuffle = false, showNum = true, isTimer = false, timerInt = null, timeLeft = 0, isQuizRunning = false;
+
+        function isTrialRestricted() {
+            const isFreeMode = localStorage.getItem("basmagia_free_mode") !== "false";
+            const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+            return !isFreeMode && (savedUser.code === "TRIAL10" || savedUser.code === "FREE" || savedUser.role === "trial") && savedUser.role !== "admin";
+        }
+
+        function getTrialsUsed() {
+            return parseInt(localStorage.getItem("basmagia_free_trials_used") || "0");
+        }
+
+        function updateTrialNoticeUI() {}
+
+        function showTrialExhaustedScreen() {
+            if (timerInt) clearInterval(timerInt);
+            isQuizRunning = false;
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('flex');
+            document.getElementById('reopen-setup').classList.add('hidden');
+            const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="text-center py-4 px-2 space-y-3 my-auto">
+                    <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border-2 border-amber-400/50 flex items-center justify-center text-3xl mx-auto shadow-lg shadow-amber-500/20">🔒</div>
+                    <span class="text-[10px] font-extrabold bg-rose-500/20 text-rose-300 border border-rose-400/30 px-3 py-0.5 rounded-full">انتهت التجربة المجانية للمنصة</span>
+                    <h3 class="text-base sm:text-xl font-black text-white">لقد استنفدت محاولات التجربة المجانية!</h3>
+                    <p class="text-xs text-slate-300 leading-relaxed max-w-md mx-auto">
+                        يا بطل، لقد قمت بتجربة نظام الاختبار المجاني مرتين بنجاح.<br>
+                        لفتح <b>بنك الأسئلة الكامل (${rawQuestions.length} سؤال)</b> في مادة اللغة الإنجليزية وجميع المواد بلا حدود، اشترك الآن واستلم كود التفعيل الخاص بجهازك فوراً.
+                    </p>
+                    <div class="bg-slate-900/90 border border-white/10 rounded-2xl p-3 text-right text-[11px] text-slate-200 space-y-1 max-w-md mx-auto">
+                        <div>✨ فتح جميع أسئلة الاختيارات والصح والخطأ بلا حدود</div>
+                        <div>✨ تفعيل فوري للكود على هاتفك أو جهازك الشخصي</div>
+                        <div>✨ متاح اشتراك مادة منفردة أو الباقة الشاملة للفرقة</div>
+                    </div>
+                    <div class="space-y-2 pt-1 max-w-md mx-auto">
+                        <a href="https://wa.me/201286094595?text=${encodeURIComponent('السلام عليكم يا أ. بسام، أنا الطالب (' + (savedUser.name || '') + ') أنهيت التجربة المجانية وأريد الاشتراك والحصول على كود التفعيل الكامل.')}" target="_blank"
+                           class="glow-btn w-full py-3 rounded-xl font-black text-xs sm:text-sm text-white flex justify-center items-center gap-2 shadow-lg">
+                            <span>💬</span>
+                            <span>تواصل عبر واتساب لاستلام كود التفعيل الآن</span>
+                        </a>
+                        <a href="../index.html" class="block w-full py-2.5 rounded-xl font-bold text-xs bg-white/10 hover:bg-white/15 text-cyan-300 border border-cyan-400/30">
+                            🔑 لدي كود تفعيل بالفعل — اضغط هنا لإدخاله
+                        </a>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchMode(m) {
+            currentMode = m;
+            document.getElementById('mode-mcq').classList.toggle('active', m === 'mcq');
+            document.getElementById('mode-tf').classList.toggle('active', m === 'tf');
+            rawQuestions = banks[m].map((q, i) => ({...q, id: i + 1}));
+            document.getElementById('avail-count').innerText = rawQuestions.length;
+            document.getElementById('q-start').value = 1;
+            document.getElementById('q-end').value = rawQuestions.length;
+        }
+
+        const urlParams = new URLSearchParams(window.location.search);
+        switchMode(urlParams.get('mode') === 'tf' ? 'tf' : 'mcq');
+
+        function toggleShuffle() { isShuffle = !isShuffle; document.getElementById('box-shuffle').classList.toggle('active', isShuffle); document.getElementById('txt-shuffle').innerText = isShuffle ? 'عشوائي' : 'عادي'; }
+        function toggleQNum() {
+            showNum = !showNum;
+            document.getElementById('box-qnum').classList.toggle('active', showNum);
+            document.getElementById('txt-qnum').innerText = showNum ? 'ظاهر' : 'مخفي';
+            document.getElementById('bar-qnum').innerText = showNum ? '🆔 الرقم: ظاهر' : '🆔 الرقم: مخفي';
+        }
+        function quickToggleQNum() {
+            toggleQNum();
+            if (isQuizRunning && curr < activeQuestions.length) {
+                const q = activeQuestions[curr];
+                const qEl = document.getElementById('question-text');
+                if (qEl) qEl.innerText = (showNum ? q.id + '. ' : '') + q.t;
+            }
+        }
+        function toggleTimer() { isTimer = !isTimer; document.getElementById('box-timer').classList.toggle('active', isTimer); document.getElementById('txt-timer').innerText = isTimer ? 'مفعل' : 'معطل'; document.getElementById('timer-row').classList.toggle('hidden', !isTimer); document.getElementById('timer-row').classList.toggle('flex', isTimer); }
+
+        function openSetup() {
+            updateTrialNoticeUI();
+            document.getElementById('setup-screen').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('flex');
+            document.getElementById('reopen-setup').classList.add('hidden');
+            if (isQuizRunning && curr < activeQuestions.length) {
+                document.getElementById('resume-quiz-btn').classList.remove('hidden');
+                document.getElementById('resume-bottom-btn').classList.remove('hidden');
+            }
+        }
+
+        function resumeQuiz() {
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('flex');
+            document.getElementById('reopen-setup').classList.remove('hidden');
+            loadQ();
+        }
+
+        window.toggleBookmark = function(qId) {
+            const q = activeQuestions[curr];
+            const btn = document.getElementById('bookmark-btn');
+            const exists = bookmarkedList.find(b => b.id === qId);
+            if (exists) {
+                bookmarkedList = bookmarkedList.filter(b => b.id !== qId);
+                btn.classList.add('opacity-40', 'text-white');
+                btn.classList.remove('text-amber-400', 'opacity-100');
+            } else {
+                bookmarkedList.push(q);
+                btn.classList.remove('opacity-40', 'text-white');
+                btn.classList.add('text-amber-400', 'opacity-100');
+            }
+            const topBtn = document.getElementById('top-bookmarks-btn');
+            const topCount = document.getElementById('saved-count-top');
+            if (topCount) topCount.innerText = bookmarkedList.length;
+            if (topBtn) topBtn.classList.toggle('hidden', bookmarkedList.length === 0);
+        };
+
+        window.showBookmarks = function() {
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="space-y-2 text-left overflow-y-auto max-h-64 pr-1" dir="ltr">
+                    <h4 class="text-amber-300 font-black mb-2 text-center text-xs sm:text-sm" dir="rtl">⭐ الأسئلة الصعبة المحفوظة للمراجعة (${bookmarkedList.length})</h4>
+                    ${bookmarkedList.map(w => `
+                        <div class="bg-white/5 border-l-4 border-amber-400 rounded-xl p-3 text-xs space-y-1">
+                            <div class="font-black text-white">Q${w.id}: ${w.t}</div>
+                            <div class="text-emerald-400 font-bold mt-1">✅ Correct: ${w.o[w.a]}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <div class="flex gap-2 mt-3">
+                    ${isQuizRunning && curr < activeQuestions.length ? `<button onclick="loadQ()" class="bg-emerald-500 text-slate-950 flex-1 py-2.5 rounded-xl font-black text-xs">← العودة لاستكمال السؤال</button>` : ''}
+                    <button onclick="startQuizNow()" class="glow-btn flex-1 py-2.5 rounded-xl font-black text-xs text-white">🔄 إعادة الاختبار</button>
+                </div>
+            `;
+        };
+
+        function startQuizNow() {
+            if (isTrialRestricted()) {
+                const used = getTrialsUsed();
+                if (used >= 2) {
+                    showTrialExhaustedScreen();
+                    return;
+                }
+                localStorage.setItem("basmagia_free_trials_used", (used + 1).toString());
+            }
+
+            let s = parseInt(document.getElementById('q-start').value) || 1;
+            let e = parseInt(document.getElementById('q-end').value) || rawQuestions.length;
+            if (s < 1) s = 1; if (e > rawQuestions.length) e = rawQuestions.length; if (s > e) s = e;
+            activeQuestions = rawQuestions.slice(s - 1, e);
+            if (isShuffle) activeQuestions.sort(() => Math.random() - 0.5);
+            curr = 0; correct = 0; wrong = 0; wrongList = []; bookmarkedList = []; isQuizRunning = true;
+            document.getElementById('correct-count').innerText = 0;
+            document.getElementById('wrong-count').innerText = 0;
+            document.getElementById('q-total').innerText = activeQuestions.length;
+            const topBtn = document.getElementById('top-bookmarks-btn');
+            if (topBtn) topBtn.classList.add('hidden');
+            document.getElementById('setup-screen').classList.add('hidden');
+            document.getElementById('quiz-stage').classList.remove('hidden');
+            document.getElementById('quiz-stage').classList.add('flex');
+            document.getElementById('reopen-setup').classList.remove('hidden');
+            if (timerInt) clearInterval(timerInt);
+            const tDisp = document.getElementById('timer-disp');
+            if (isTimer) {
+                timeLeft = (parseInt(document.getElementById('timer-mins').value) || 15) * 60;
+                tDisp.classList.remove('hidden');
+                timerInt = setInterval(() => {
+                    timeLeft--;
+                    tDisp.innerText = '⏳ ' + Math.floor(timeLeft/60).toString().padStart(2,'0') + ':' + (timeLeft%60).toString().padStart(2,'0');
+                    if (timeLeft <= 0) { clearInterval(timerInt); finishQuiz(false); }
+                }, 1000);
+            } else { tDisp.classList.add('hidden'); }
+            loadQ();
+        }
+
+        function finishQuiz(stoppedAtTrialLimit = false) {
+            if (timerInt) clearInterval(timerInt);
+            isQuizRunning = false;
+            document.getElementById('progress-fill').style.width = '100%';
+            const answeredCount = stoppedAtTrialLimit ? 10 : activeQuestions.length;
+            if (correct > 0 && typeof submitLeaderboardScore === "function") {
+                submitLeaderboardScore('اللغة الإنجليزية', correct, answeredCount);
+            }
+            const usedNow = getTrialsUsed();
+            const trialInfoHTML = isTrialRestricted()
+                ? `<div class="bg-amber-500/15 border-2 border-amber-400/45 rounded-2xl p-3 text-xs font-bold text-amber-200 space-y-1">
+                    <div class="text-amber-300 font-black text-sm">⚡ تنبيه: الحد الأقصى للتجربة المجانية هو 10 أسئلة فقط!</div>
+                    <p class="text-[11px] text-slate-200 leading-relaxed">
+                        ${usedNow === 1
+                            ? 'لقد أنهيت 10 أسئلة كعينة مجانية. يمكنك تجربة اختبار آخر لمرة واحدة إضافية في هذه المادة أو أي مادة أخرى، أو الاشتراك لفتح البنك كاملاً!'
+                            : '🔒 لقد أنهيت آخر محاولة تجريبية مجانية لك! اشترك الآن للحصول على كود التفعيل وفتح جميع الأسئلة بلا حدود.'}
+                    </p>
+                   </div>`
+                : '';
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="text-center py-2 space-y-2.5">
+                    <div class="text-3xl">${stoppedAtTrialLimit ? '🎁' : '🏆'}</div>
+                    <h3 class="text-lg font-black text-white">${stoppedAtTrialLimit ? 'انتهت عينة التجربة المجانية (10 أسئلة)!' : 'انتهى الاختبار بنجاح!'}</h3>
+                    <p class="text-xs text-slate-300">نتيجتك: <b class="text-emerald-400">${correct}</b> صح من <b class="text-cyan-300">${answeredCount}</b></p>
+                    ${trialInfoHTML}
+                    <div class="flex flex-wrap gap-2 justify-center">
+                        <button onclick="startQuizNow()" class="glow-btn text-white font-black px-4 py-2 rounded-xl text-xs">${isTrialRestricted() && usedNow >= 2 ? '🔒 فتح باقي الأسئلة والاشتراك' : (isTrialRestricted() ? '🎁 بدء تجربة مجانية أخرى' : '🔄 إعادة الاختبار')}</button>
+                        ${wrongList.length > 0 ? `<button onclick="showMistakes()" class="bg-rose-500/20 border border-rose-400/40 text-rose-300 font-black px-3.5 py-2 rounded-xl text-xs">📋 الأخطاء (${wrongList.length})</button>` : ''}
+                        ${bookmarkedList.length > 0 ? `<button onclick="showBookmarks()" class="bg-amber-500/20 border border-amber-400/40 text-amber-300 font-black px-3.5 py-2 rounded-xl text-xs">⭐ المحفوظة (${bookmarkedList.length})</button>` : ''}
+                        <button onclick="openSetup()" class="bg-white/10 text-white font-bold px-3.5 py-2 rounded-xl text-xs">⚙️ الإعدادات</button>
+                    </div>
+
+                    <div id="feedback-box" class="bg-slate-900/90 border border-cyan-400/30 rounded-2xl p-3 text-right space-y-2 mt-2">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-black text-cyan-300">💬 شاركنا رأيك أو ملاحظاتك في الامتحان:</span>
+                            <div class="flex gap-1 text-sm cursor-pointer" id="star-rating">
+                                <span onclick="setRating(1)">⭐</span><span onclick="setRating(2)">⭐</span><span onclick="setRating(3)">⭐</span><span onclick="setRating(4)">⭐</span><span onclick="setRating(5)">⭐</span>
+                            </div>
+                        </div>
+                        <textarea id="feedback-text" rows="2" placeholder="اكتب رأيك في الأسئلة أو أي اقتراح أو ملاحظة للإدارة..." class="liquid-input w-full rounded-xl p-2 text-xs text-white outline-none resize-none"></textarea>
+                        <button onclick="submitStudentFeedback('اللغة الإنجليزية', ${correct}, ${answeredCount})" id="send-fb-btn" class="w-full py-2 rounded-xl font-black text-xs bg-emerald-500 hover:bg-emerald-400 text-slate-950 transition">
+                            📩 إرسال الرأي للإدارة
+                        </button>
+                    </div>
+                </div>`;
+        }
+
+        window.showMistakes = function() {
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="space-y-2 text-left overflow-y-auto max-h-64 pr-1" dir="ltr">
+                    ${wrongList.map(w => `
+                        <div class="bg-white/5 border-l-4 border-rose-500 rounded-xl p-3 text-xs space-y-1">
+                            <div class="font-black text-white">Q${w.id}: ${w.q}</div>
+                            <div class="text-rose-400">❌ Your Answer: ${w.sel}</div>
+                            <div class="text-emerald-400 font-bold">✅ Correct: ${w.cor}</div>
+                        </div>
+                    `).join('')}
+                </div>
+                <button onclick="startQuizNow()" class="glow-btn w-full py-2.5 rounded-xl font-black text-xs text-white mt-3">🔄 إعادة الاختبار</button>
+            `;
+        };
+
+        function loadQ() {
+            if (isTrialRestricted() && curr >= 10) return finishQuiz(true);
+            if (curr >= activeQuestions.length) return finishQuiz(false);
+
+            const q = activeQuestions[curr];
+            document.getElementById('q-curr').innerText = curr + 1;
+            document.getElementById('progress-fill').style.width = ((curr / activeQuestions.length) * 100) + '%';
+            const isBookmarked = bookmarkedList.find(b => b.id === q.id);
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="flex items-start justify-between gap-2.5 mb-2.5 p-3 sm:p-3.5 bg-white/[0.045] border border-white/12 rounded-2xl shadow-inner relative shrink-0" dir="ltr">
+                    <div id="question-text" class="text-sm sm:text-lg font-black text-left leading-relaxed flex-1 text-white">${(showNum ? q.id + '. ' : '') + q.t}</div>
+                    <button onclick="toggleBookmark(${q.id})" id="bookmark-btn" title="حفظ السؤال للمراجعة" class="bg-white/5 hover:bg-white/10 border border-white/15 rounded-xl px-2.5 py-1.5 text-xs transition shrink-0 flex items-center gap-1 ${isBookmarked ? 'text-amber-400 opacity-100 border-amber-400/40' : 'text-white opacity-45 hover:opacity-100'}">
+                        <span>⭐</span>
+                        <span class="text-[11px] font-bold hidden sm:inline">Save</span>
+                    </button>
+                </div>
+                <div id="options-container" class="space-y-2 shrink-0" dir="ltr"></div>
+            `;
+
+            const cont = document.getElementById('options-container');
+            const letters = ['A', 'B', 'C', 'D'];
+            q.o.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn w-full p-2.5 sm:p-3 rounded-xl text-left font-bold text-xs sm:text-sm flex items-center gap-2.5';
+                btn.innerHTML = `<span class="w-6 h-6 sm:w-7 sm:h-7 rounded-lg bg-white/10 flex items-center justify-center text-xs font-black text-cyan-300 shrink-0">${letters[idx] || (idx+1)}</span><span class="leading-snug">${opt}</span>`;
+                btn.onclick = () => {
+                    document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+                    if (idx === q.a) {
+                        btn.classList.add('correct'); correct++; document.getElementById('correct-count').innerText = correct;
+                    } else {
+                        btn.classList.add('wrong');
+                        document.querySelectorAll('.option-btn')[q.a].classList.add('correct');
+                        wrong++; document.getElementById('wrong-count').innerText = wrong;
+                        wrongList.push({ id: q.id, q: q.t, sel: opt, cor: q.o[q.a] });
+                    }
+                    setTimeout(() => { curr++; loadQ(); }, 650);
+                };
+                cont.appendChild(btn);
+            });
+        }
+    </script>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getFirestore, doc, setDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyD8H-9qYQwmOxrc0KguLaMXC4TnEzkzVAE",
+            authDomain: "basmagia-db.firebaseapp.com",
+            projectId: "basmagia-db",
+            storageBucket: "basmagia-db.firebasestorage.app",
+            messagingSenderId: "856738838094",
+            appId: "1:856738838094:web:9d2b84baf32567522cf51f"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const savedUser = JSON.parse(sessionStorage.getItem("basmagia_user") || "{}");
+        const fp = btoa(unescape(encodeURIComponent("DEV-" + navigator.userAgent.length + "-" + screen.width + "x" + screen.height))).substring(0, 16);
+
+        onSnapshot(doc(db, 'platform_settings', 'broadcast'), (docSnap) => {
+            const bar = document.getElementById("live-broadcast-bar");
+            const txt = document.getElementById("live-broadcast-text");
+            if (docSnap.exists() && docSnap.data().active && docSnap.data().message) {
+                if (txt) txt.innerText = "📢 " + docSnap.data().message;
+                bar.classList.remove("hidden");
+            } else {
+                bar.classList.add("hidden");
+            }
+        });
+
+        const pingOnline = () => {
+            setDoc(doc(db, 'online_users', fp), {
+                deviceId: fp,
+                studentName: savedUser.name || "طالب",
+                deviceType: /Mobile|Android|iP(hone|od)/i.test(navigator.userAgent) ? "موبايل 📱" : "كمبيوتر 💻",
+                page: "يمتحن: اللغة الإنجليزية",
+                lastSeen: Date.now()
+            }).catch(() => {});
+        };
+        setTimeout(pingOnline, 1500);
+        setInterval(pingOnline, 45000);
+
+        window.submitLeaderboardScore = async function(subject, score, total) {
+            try {
+                const pct = total > 0 ? Math.round((score / total) * 100) : 0;
+                await setDoc(doc(db, 'leaderboard', "LB-" + fp + "-" + subject), {
+                    studentName: savedUser.name || "طالب البصمجية",
+                    subject: subject,
+                    score: score,
+                    total: total,
+                    pct: pct,
+                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                    dateStr: new Date().toLocaleDateString("ar-EG"),
+                    timestamp: Date.now()
+                });
+            } catch(e) {}
+        };
+
+        let selectedStars = 5;
+        window.setRating = function(n) {
+            selectedStars = n;
+            const spans = document.querySelectorAll("#star-rating span");
+            spans.forEach((s, idx) => { s.style.opacity = idx < n ? "1" : "0.25"; });
+        };
+
+        window.submitStudentFeedback = async function(subjectName, cor, tot) {
+            const txtEl = document.getElementById("feedback-text");
+            const msg = txtEl ? txtEl.value.trim() : "";
+            if (!msg) return;
+            const btn = document.getElementById("send-fb-btn");
+            btn.disabled = true;
+            btn.innerText = "جاري الإرسال...";
+            try {
+                await setDoc(doc(db, 'student_feedbacks', "FB-" + Date.now()), {
+                    timestamp: Date.now(),
+                    dateStr: new Date().toLocaleDateString("ar-EG"),
+                    timeStr: new Date().toLocaleTimeString("ar-EG", { hour: '2-digit', minute: '2-digit' }),
+                    studentName: savedUser.name || "طالب بالفرقة الأولى",
+                    subject: subjectName,
+                    score: `${cor}/${tot}`,
+                    rating: selectedStars,
+                    message: msg
+                });
+                document.getElementById("feedback-box").innerHTML = `<div class="text-emerald-300 font-black text-xs text-center py-2">✅ شكراً لك! وصلت ملاحظتك للإدارة بنجاح ❤️</div>`;
+            } catch (e) {
+                btn.disabled = false;
+                btn.innerText = "📩 إرسال الرأي للإدارة";
+            }
+        };
+    </script>
+</body>
+</html>
